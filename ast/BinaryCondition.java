@@ -39,7 +39,7 @@ public class BinaryCondition implements Condition {
     public StringBuilder prettyPrint(StringBuilder sb) {
         // TODO Auto-generated method stub
     	left.prettyPrint(sb).toString();
-    	sb.append((bin == Operator.OR) ? "or" : "and");
+    	sb.append((bin == Operator.OR) ? "or " : "and ");
     	right.prettyPrint(sb).toString();
         return sb;
     }

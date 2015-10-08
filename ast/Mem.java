@@ -23,9 +23,9 @@ public class Mem implements Expr{
 	@Override
 	public StringBuilder prettyPrint(StringBuilder sb) {
 		// TODO Auto-generated method stub
-		sb.append("mem[");
+		sb.append("mem[ ");
 		finders.prettyPrint(sb);
-		sb.append("]");
+		sb.append("] ");
 		return sb;
 	}
 

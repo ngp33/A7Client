@@ -1,7 +1,7 @@
 package ast;
 
 public class Senses implements Expr {
-	private six pres;
+	protected six pres;
 	
 	public Senses(int which){
 		if (which == 1){
@@ -30,7 +30,7 @@ public class Senses implements Expr {
 	@Override
 	public StringBuilder prettyPrint(StringBuilder sb) {
 		// TODO Auto-generated method stub
-		sb.append(pres.toString());
+		sb.append(pres.toString() + " ");
 		return sb;
 	}
 	public enum six{

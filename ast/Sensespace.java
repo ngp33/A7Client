@@ -11,10 +11,9 @@ public class Sensespace extends Senses {
 	
 	@Override
 	public StringBuilder prettyPrint(StringBuilder sb){
-		super.prettyPrint(sb);
-		sb.append("[");
+		sb.append(pres.toString() + "[ ");
 		space.prettyPrint(sb);
-		sb.append("]");
+		sb.append("] ");
 		return sb;
 		
 	}

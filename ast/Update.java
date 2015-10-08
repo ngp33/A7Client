@@ -27,7 +27,7 @@ public class Update implements Node{
 	public StringBuilder prettyPrint(StringBuilder sb) {
 		// TODO Auto-generated method stub
 		m.prettyPrint(sb);
-		sb.append(":=");
+		sb.append(":= ");
 		e.prettyPrint(sb);
 		return sb;
 	}

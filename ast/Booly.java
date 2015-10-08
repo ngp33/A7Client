@@ -42,7 +42,10 @@ public class Booly implements Condition {
 			sb.append("!");
 		}
 		if (!(rel.equals(equalities.LT) || rel.equals(equalities.GT))){
-			sb.append("=");
+			sb.append("= ");
+		}
+		else{
+			sb.append(" ");
 		}
 		right.prettyPrint(sb);
 		return sb;

@@ -26,7 +26,7 @@ public class Num implements Expr {
 
 	@Override
 	public StringBuilder prettyPrint(StringBuilder sb) {
-		sb.append(val);
+		sb.append(val + " ");
 		return sb;
 	}
 
