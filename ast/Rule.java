@@ -29,7 +29,7 @@ public class Rule implements Node {
     @Override
     public StringBuilder prettyPrint(StringBuilder sb) {
         one.prettyPrint(sb);
-        sb.append("-->");
+        sb.append("--> ");
         two.prettyPrint(sb);
         return sb;
     }

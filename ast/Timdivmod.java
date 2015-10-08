@@ -28,10 +28,10 @@ public class Timdivmod implements Expr {
 		// TODO Auto-generated method stub
 		left.prettyPrint(sb);
 		if (mult == null){
-			sb.append("mod");
+			sb.append("mod ");
 		}
 		else{
-			sb.append(mult ? "*" : "/");
+			sb.append(mult ? "* " : "/ ");
 		}
 		right.prettyPrint(sb);
 		return sb;

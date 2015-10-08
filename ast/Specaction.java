@@ -10,7 +10,7 @@ public class Specaction extends Action{
 	
 	public StringBuilder prettyPrint(StringBuilder sb){
 		super.prettyPrint(sb);
-		sb.append("[");
+		sb.append("[ ");
 		eval.prettyPrint(sb);
 		sb.append("]");
 		return sb;

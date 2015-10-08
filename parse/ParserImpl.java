@@ -31,7 +31,6 @@ import exceptions.SyntaxError;
 import parse.Tokenizer.TokenizerIOException;
 
 class ParserImpl implements Parser {
-	private static int [] mem = new int [20];
 
     @Override
     public Program parse(Reader r) {
@@ -134,12 +133,18 @@ class ParserImpl implements Parser {
     public static Expr parseFactor(Tokenizer t) throws SyntaxError {
         // TODO
     	Expr e;
-    	if (t.peek().getType().equals(TokenType.MEM)){
-    		consume(t,TokenType.MEM);
-    		consume(t,TokenType.LBRACKET);
-    		e = parseExpression(t); //TODO make mem object
-    		consume(t,TokenType.RBRACKET);
-    		e = new Mem(e);
+    	if (t.peek().getType().equals(TokenType.MEM) || t.peek().isMemSugar()){
+    		e = memhandler(t);
+    		/*if (t.peek().isMemSugar()){
+    			
+    		}
+    		else{
+	    		consume(t,TokenType.MEM);
+	    		consume(t,TokenType.LBRACKET);
+	    		e = parseExpression(t); //TODO make mem object
+	    		consume(t,TokenType.RBRACKET);
+    		}
+    		e = new Mem(e);*/
     	}
     	else if (t.peek().getType().equals(TokenType.LPAREN)){
     		consume(t,TokenType.LPAREN);
@@ -196,7 +201,7 @@ class ParserImpl implements Parser {
     private static Updateact parseCommand(Tokenizer t) throws TokenizerIOException, SyntaxError{
     	Updatell e = new Updatell(); //TODO add the or-action part and the infinitely many part
     	
-    	while (t.peek().getType().equals(TokenType.MEM)){
+    	while (t.peek().getType().equals(TokenType.MEM) || t.peek().isMemSugar()){
     		Update u = parseUpdate(t);
     		e.add(u);
     	}
@@ -207,21 +212,19 @@ class ParserImpl implements Parser {
 		return new Updateact(e.toarray(),a);//TODO make this return something valuable
     }
     
-    /** This should be the full parseUpdate*/
     private static Update parseUpdate(Tokenizer t) throws TokenizerIOException, SyntaxError{ //TODO fix this
-    	consume(t,TokenType.MEM);
-    	consume(t,TokenType.LBRACKET);
-    	Expr e = parseExpression(t);
-    	consume(t,TokenType.RBRACKET);
+    	Mem andm = memhandler(t);
     	consume(t,TokenType.ASSIGN);
     	Expr p = parseExpression(t);
-    	return new Update(new Mem(e), p);
+    	return new Update(andm, p);
     }
     
     private static Action parseAction(Tokenizer t) throws SyntaxError{
     	TokenType l = t.peek().getType();
     	Hamlet tobe = actiontypes(l);
     	Action a;
+    	consume(t,t.peek().getType());//again, not clear but it would be a pain
+    	//to write this out for all the actiontypes.
     	if (tobe.equals(Hamlet.tag) || tobe.equals(Hamlet.serve)){
     		consume(t,TokenType.LBRACKET);
     		Expr e = parseExpression(t);
@@ -252,9 +255,9 @@ class ParserImpl implements Parser {
     		i = 4;
     		consume(t,TokenType.SMELL);
     	}
-    	consume(t,TokenType.LPAREN);
+    	consume(t,TokenType.LBRACKET);
     	Expr e = parseExpression(t);
-    	consume(t,TokenType.RPAREN);
+    	consume(t,TokenType.RBRACKET);
     	return ((i < 4) ? new Sensespace(i,e) : new Senses(i));
     }
     
@@ -332,6 +335,45 @@ class ParserImpl implements Parser {
     	for (int place = 0; place < to.length; place++){
     		if (to[place] == r){
     			return h[place];
+    		}
+    	}
+    	return null;
+    }
+    
+    
+    /**
+     * Processes an element that is supposed to represent some form of mem 
+     * (whether or not its syntactic sugar). consumes everything until the end of the mem
+     * @param t
+     * 		The tokenizer
+     * @return
+     * 		a new mem node from the information supplied by the input
+     * @throws SyntaxError 
+     */
+    private static Mem memhandler(Tokenizer t) throws SyntaxError{
+    	Expr e;
+    	if (t.peek().isMemSugar()){
+    		e = memsug(t.peek().getType());
+    		consume(t,t.peek().getType());//sort of defeats the purpose of the check...
+    	}
+    	else{
+    		consume(t,TokenType.MEM);
+    		consume(t,TokenType.LBRACKET);
+    		e = parseExpression(t); //TODO make mem object
+    		consume(t,TokenType.RBRACKET);
+    	}
+    	return new Mem(e);
+    }
+    
+    
+    private static Num memsug(TokenType t){
+    	TokenType [] topointo = {TokenType.ABV_MEMSIZE, TokenType.ABV_DEFENSE,
+    			TokenType.ABV_OFFENSE, TokenType.ABV_SIZE, TokenType.ABV_ENERGY,
+    			TokenType.ABV_PASS, TokenType.TAG, TokenType.ABV_POSTURE
+    	};
+    	for (int place = 0; place < topointo.length; place++){
+    		if (topointo[place].equals(t)){
+    			return new Num(place);
     		}
     	}
     	return null;
