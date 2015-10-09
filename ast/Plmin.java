@@ -1,6 +1,6 @@
 package ast;
 
-public class Plmin implements Expr{
+public class Plmin extends Twokids implements Expr{
 	
 	Boolean addition;
 	Expr left;

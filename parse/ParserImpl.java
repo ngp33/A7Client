@@ -1,7 +1,5 @@
 package parse;
 
-
-//FIGURE OUT THE THROW NEW UNSUPPORTED ERROR THINGS
 import java.io.Reader;
 
 import ast.Action;

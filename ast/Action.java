@@ -10,20 +10,20 @@ public class Action implements Node {
 
 	@Override
 	public int size() {
-		// TODO Auto-generated method stub
-		return 0;
+		return 1;
 	}
 
 	@Override
-	public Node nodeAt(int index) {
-		// TODO Auto-generated method stub
-		return null;
+	public Node nodeAt(int index) throws IndexOutOfBoundsException {
+		if (index == 0){
+			return this;
+		}
+		throw new IndexOutOfBoundsException();
 	}
 
 	@Override
 	public StringBuilder prettyPrint(StringBuilder sb) {
-		// TODO Auto-generated method stub
-		sb.append(type.toString()); //might not work?
+		sb.append(type.toString());
 		return sb;
 	}
 	

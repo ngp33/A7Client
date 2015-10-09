@@ -4,10 +4,7 @@ package ast;
  * A representation of a binary Boolean condition: 'and' or 'or'
  *
  */
-public class BinaryCondition implements Condition {
-	Condition left;
-	Condition right;
-	Operator bin;
+public class BinaryCondition extends Twokids implements Condition{
 
     /**
      * Create an AST representation of l op r.
@@ -19,35 +16,30 @@ public class BinaryCondition implements Condition {
         //TODO
     	left = l;
     	right = r;
-    	bin = op;
+    	link = op;
+    	symbol = makenice();
     }
 
 
-    @Override
-    public int size() {
-        // TODO Auto-generated method stub
-        return 0;
-    }
-
-    @Override
-    public Node nodeAt(int index) {
-        // TODO Auto-generated method stub
-        return null;
-    }
     
-    @Override
+    /*@Override
     public StringBuilder prettyPrint(StringBuilder sb) {
         // TODO Auto-generated method stub
     	left.prettyPrint(sb).toString();
-    	sb.append((bin == Operator.OR) ? "or " : "and ");
+    	sb.append((link == Operator.OR) ? "or " : "and ");
     	right.prettyPrint(sb).toString();
         return sb;
-    }
+    }*/
 
     @Override
     public String toString() {
         // TODO Auto-generated method stub
         return null;
+    }
+    
+    /** represents the operator in a nice printable way*/
+    public String makenice(){
+    	return (link == Operator.OR) ? "or " : "and ";
     }
 
     /**

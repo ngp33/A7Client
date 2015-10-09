@@ -1,6 +1,6 @@
 package ast;
 
-public class Timdivmod implements Expr {
+public class Timdivmod extends Twokids implements Expr {
 	Expr left;
 	Expr right;
 	Boolean mult;

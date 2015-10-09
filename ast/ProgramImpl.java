@@ -53,5 +53,20 @@ public class ProgramImpl implements Program {
         // TODO Auto-generated method stub
         return null;
     }
+    
+    /**Returns the list of all the nodes in the AST. The idea is that
+     * this will help when it comes time to randomly pick a node to mutate
+     * @return
+     * 		Node[]
+     */
+    private Node [] thelist(){
+    	Node [] n = new Node [size()];
+    	for (int place = 0; place < size(); place ++){
+    		n[place] = nodeAt(place);
+    	}
+    	return n;
+    }
+    
+    
 
 }

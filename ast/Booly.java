@@ -1,47 +1,37 @@
 package ast;
 
-public class Booly implements Condition {
-	Expr left;
-	Expr right;
-	equalities rel;
+public class Booly extends Twokids implements Condition {
 	
 	public Booly(Expr one, Expr two, equalities e){
 		left = one;
 		right = two;
-		rel = e;
+		link = e;
+		symbol = makenice();
 	}
 	
-	//somehow make it so this always assigns values to left and right and rel that work to be true or false depending on b.
-	public Booly(Boolean b){
-		//TODO
-	}
 
-	@Override
-	public int size() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public Node nodeAt(int index) {
-		// TODO Auto-generated method stub
+	private String makenice() {
+		if (link.equals(equalities.EQ)){
+			return "
+		}
 		return null;
 	}
+
 
 	@Override
 	public StringBuilder prettyPrint(StringBuilder sb) {
 		// TODO Auto-generated method stub
 		left.prettyPrint(sb);
-		if (rel.equals(equalities.LE) || rel.equals(equalities.LT)){
+		if (link.equals(equalities.LE) || link.equals(equalities.LT)){
 			sb.append("<");
 		}
-		else if (rel.equals(equalities.GE) || rel.equals(equalities.GT)){
+		else if (link.equals(equalities.GE) || link.equals(equalities.GT)){
 			sb.append(">");
 		}
-		else if (rel.equals(equalities.NE)){
+		else if (link.equals(equalities.NE)){
 			sb.append("!");
 		}
-		if (!(rel.equals(equalities.LT) || rel.equals(equalities.GT))){
+		if (!(link.equals(equalities.LT) || link.equals(equalities.GT))){
 			sb.append("= ");
 		}
 		else{
@@ -78,5 +68,6 @@ public class Booly implements Condition {
 	public enum equalities{
 		LT, LE, EQ, GT, GE, NE;
 	}
+	String [] printables
 
 }
