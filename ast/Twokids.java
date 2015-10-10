@@ -7,10 +7,10 @@ public abstract class Twokids implements Node{
 	protected String symbol;
 	
 	public StringBuilder prettyPrint(StringBuilder sb){
-		sb.append(left.prettyPrint(sb));
+		left.prettyPrint(sb);
 		sb.append(symbol); //maybe figure out a way to make this lowercase?
 		sb.append(" ");
-		sb.append(right.prettyPrint(sb));
+		right.prettyPrint(sb);
 		return sb;
 	}
 	
@@ -19,10 +19,11 @@ public abstract class Twokids implements Node{
 	}
 	
 	public Node nodeAt(int in){
+		int i = left.size();
 		if (in == 0){
 			return this;
 		}
-		if (left.size() < in){
+		if (in <= left.size()){
 			return left.nodeAt(in-1);
 		}
 		else{

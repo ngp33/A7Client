@@ -12,13 +12,28 @@ public class Booly extends Twokids implements Condition {
 
 	private String makenice() {
 		if (link.equals(equalities.EQ)){
-			return "
+			return "=";
+		}
+		else if (link.equals(equalities.LT)){
+			return "<";
+		}
+		else if (link.equals(equalities.LE)){
+			return "<=";
+		}
+		else if (link.equals(equalities.GT)){
+			return ">";
+		}
+		else if (link.equals(equalities.GE)){
+			return ">=";
+		}
+		else if (link.equals(equalities.NE)){
+			return "!=";
 		}
 		return null;
 	}
 
 
-	@Override
+	/*@Override
 	public StringBuilder prettyPrint(StringBuilder sb) {
 		// TODO Auto-generated method stub
 		left.prettyPrint(sb);
@@ -39,7 +54,7 @@ public class Booly extends Twokids implements Condition {
 		}
 		right.prettyPrint(sb);
 		return sb;
-	}
+	}*/
 
 	/*@Override
 	public Boolean getval() {
@@ -68,6 +83,4 @@ public class Booly extends Twokids implements Condition {
 	public enum equalities{
 		LT, LE, EQ, GT, GE, NE;
 	}
-	String [] printables
-
 }

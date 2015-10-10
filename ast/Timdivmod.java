@@ -1,29 +1,17 @@
 package ast;
 
 public class Timdivmod extends Twokids implements Expr {
-	Expr left;
-	Expr right;
+	
 	Boolean mult;
 	
 	public Timdivmod(Expr one, Expr two, Boolean times){
 		left = one;
 		right = two;
 		mult = times;
+		symbol = makenice();
 	}
 
-	@Override
-	public int size() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public Node nodeAt(int index) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
+	/*@Override
 	public StringBuilder prettyPrint(StringBuilder sb) {
 		// TODO Auto-generated method stub
 		left.prettyPrint(sb);
@@ -35,6 +23,13 @@ public class Timdivmod extends Twokids implements Expr {
 		}
 		right.prettyPrint(sb);
 		return sb;
+	}*/
+
+	private String makenice() {
+		if (mult == null){
+			return ("mod");
+		}
+		return (mult ? "*" : "/");
 	}
 
 	/*@Override

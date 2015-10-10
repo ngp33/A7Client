@@ -1,6 +1,6 @@
 package ast;
 
-public class Num implements Expr {
+public class Num extends Nokids implements Expr {
 	int val;
 	public Num(int anum){
 		val = anum;
@@ -11,18 +11,6 @@ public class Num implements Expr {
 		return val;
 		
 	}*/
-
-	@Override
-	public int size() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public Node nodeAt(int index) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 	@Override
 	public StringBuilder prettyPrint(StringBuilder sb) {

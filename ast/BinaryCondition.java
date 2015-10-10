@@ -39,7 +39,7 @@ public class BinaryCondition extends Twokids implements Condition{
     
     /** represents the operator in a nice printable way*/
     public String makenice(){
-    	return (link == Operator.OR) ? "or " : "and ";
+    	return (link == Operator.OR) ? "or" : "and";
     }
 
     /**

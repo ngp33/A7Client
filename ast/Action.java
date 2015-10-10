@@ -23,7 +23,7 @@ public class Action implements Node {
 
 	@Override
 	public StringBuilder prettyPrint(StringBuilder sb) {
-		sb.append(type.toString());
+		sb.append(type.toString() + " ");
 		return sb;
 	}
 	
