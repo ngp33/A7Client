@@ -8,7 +8,7 @@ public class Rule extends Twokids implements Node {
 	
 	public Rule next = null;
 	
-	public Rule(Condition a, Node b){
+	public Rule(Condition a, Updateact b){
 		left = a;
 		right = b;
 		symbol = "-->";

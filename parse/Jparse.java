@@ -51,6 +51,15 @@ public class Jparse {
 		Rule r = ParserImpl.parseRule(t);
 		System.out.println(r.prettyPrint(sb));
 	}
+	
+	@Test
+	public void command() throws SyntaxError{
+		s = new StringReader("nearby[3] = 0 and ENERGY > 2500 --> mem[7] := 17\nbud;");
+		t = new Tokenizer(s);
+		Rule r = ParserImpl.parseRule(t);
+		System.out.println(r.prettyPrint(sb));
+	}
+	
 	@Ignore
 	@Test
 	public void ruletest() throws SyntaxError{ //TODO make sure it handles negatives and braces.

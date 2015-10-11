@@ -3,12 +3,24 @@ package ast;
 public class Updateact extends Manykids implements Node {
 
 	public Updateact(Update [] u, Action a){
-		children = (a == null) ? new Node[u.length] : new Node [u.length + 1];
+		/*children = (a == null) ? new Node[u.length] : new Node [u.length + 1];
 		for (int place = 0; place < u.length; place++){
 			children[place] = u[place];
 		}
 		if (a != null){
 			children[u.length] = a;
+		}*/
+		
+		//If blocks are pretty slow so I just rewrote it with 1 instead of two
+		
+		if (a == null) {
+			children = new Node[u.length];
+		} else {
+			children = new Node[u.length+1];
+			children[u.length] = a;
+		}
+		for (int place = 0; place < u.length; place++) {
+			children[place] = u[place];
 		}
 	}
 	
@@ -35,13 +47,17 @@ public class Updateact extends Manykids implements Node {
 	
 	//It looks like part of the problem is that the prettyPrint on updateAction prints its children and not the semicolon.
 	
-	public StringBuilder prettyPrint(StringBuilder sb){
-		for (Node them : children){
-			them.prettyPrint(sb);
-			sb.append("  ");
+	public StringBuilder prettyPrint(StringBuilder sb) {
+		children[0].prettyPrint(sb);
+		
+		for (int i = 1; i < children.length; i++) {
+			sb.append("\n\t"); //Adding spaces to line it up with the first update seems unnecessary to keep it pretty.
+							   //I just added a tab.
+			children[1].prettyPrint(sb);
 		}
-		sb.insert(sb.length()-3,";"); // the two here is pretty arbitrary, not quite sure how to make this work/wh
-		return sb;//it does sometimes
+		
+		sb.append(";");
+		return sb;
 	}
 
 }

@@ -74,7 +74,7 @@ class ParserImpl implements Parser {
     public static Rule parseRule(Tokenizer t) throws SyntaxError {
     	Condition a = parseCondition(t);
     	consume(t,TokenType.ARR);
-    	Node b = parseCommand(t);
+    	Updateact b = parseCommand(t);
     	return new Rule(a,b);
         //throw new UnsupportedOperationException();
     }
