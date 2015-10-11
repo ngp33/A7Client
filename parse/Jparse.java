@@ -2,7 +2,10 @@ package parse;
 import org.junit.*;
 
 import ast.Expr;
+import ast.Node;
+import ast.ProgramImpl;
 import ast.Rule;
+import ast.Rulesll;
 import exceptions.SyntaxError;
 
 import static org.junit.Assert.*;
@@ -14,11 +17,8 @@ public class Jparse {
 	Tokenizer t;
 	StringBuilder sb = new StringBuilder();
 	
-	@Before
-	public void init(){
-		
-	}
 	
+	@Ignore
 	@Test
 	public void factornum() throws SyntaxError{
 		s = new StringReader("4");
@@ -29,6 +29,7 @@ public class Jparse {
 		assertTrue(sr.equals(("4 ")));
 	}
 	
+	@Ignore
 	@Test
 	public void factorneg() throws SyntaxError{
 		//TODO figure out factorneg
@@ -50,8 +51,9 @@ public class Jparse {
 		Rule r = ParserImpl.parseRule(t);
 		System.out.println(r.prettyPrint(sb));
 	}
+	@Ignore
 	@Test
-	public void ruletest() throws SyntaxError{
+	public void ruletest() throws SyntaxError{ //TODO make sure it handles negatives and braces.
 		String [] str = {"{ENERGY > SIZE * 400 and SIZE < 7} --> grow;",
 				"ahead[0] < -1 and ENERGY < 500 * SIZE --> eat;",
 				"(ahead[1] / 10 mod 100) != 17 and ahead[1] > 0 --> attack;",
@@ -69,6 +71,25 @@ public class Jparse {
 			t = new Tokenizer(s);
 			Rule r = ParserImpl.parseRule(t);
 			System.out.println(r.prettyPrint(sb));
+			sb = new StringBuilder();
+		}
+	}
+	@Ignore
+	@Test //the purpose of this is to test the nodeAt method. It at least sometimes works. Note that a
+	//program and semicolon both constitute a node. The nodeAt may be buggy.
+	public void nodeat() throws SyntaxError{
+		s = new StringReader("nearby[0] > 0 and nearby[3] = 0 --> backward;");
+		t = new Tokenizer(s);
+		Rule r = ParserImpl.parseRule(t);
+		Rulesll a = new Rulesll();
+		a.add(r);
+		ProgramImpl b = new ProgramImpl(a);
+		int c = b.size();
+		System.out.println(b.nodeAt(1).size());
+		System.out.println(b.nodeAt(2).size());
+		for (int large = 0; large < b.size(); large ++){
+			Node temp = b.nodeAt(large);
+			System.out.println(temp.prettyPrint(sb));
 			sb = new StringBuilder();
 		}
 	}

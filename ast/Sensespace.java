@@ -17,5 +17,16 @@ public class Sensespace extends Senses {
 		return sb;
 		
 	}
+	
+	public Node nodeAt(int index){
+		if (index == 0){
+			return this;
+		}
+		return (space.nodeAt(index-1));
+	}
+	
+	public int size(){
+		return space.size() + 1;
+	}
 
 }
