@@ -27,9 +27,9 @@ public class Action implements Node {
 		return sb;
 	}
 	
-	public enum Hamlet{
+	public enum Hamlet {
 		wait, forward, backward, left, right, eat, attack,
 		grow, bud, mate, tag, serve
-	};
+	}
 
 }

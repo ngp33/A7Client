@@ -6,7 +6,7 @@ public abstract class Twokids implements Node{
 	protected Object link;
 	protected String symbol;
 	
-	public StringBuilder prettyPrint(StringBuilder sb){
+	public StringBuilder prettyPrint(StringBuilder sb) {
 		left.prettyPrint(sb);
 		sb.append(symbol); //maybe figure out a way to make this lowercase?
 		sb.append(" ");

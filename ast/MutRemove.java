@@ -1,6 +1,6 @@
 package ast;
 
-public class Mutone implements Mutation {
+public class MutRemove implements Mutation {
 
 	@Override
 	public boolean equals(Mutation m) {

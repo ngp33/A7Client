@@ -44,9 +44,7 @@ public class Updateact extends Manykids implements Node {
 		}
 		return sb;
 	}*/
-	
-	//It looks like part of the problem is that the prettyPrint on updateAction prints its children and not the semicolon.
-	
+		
 	public StringBuilder prettyPrint(StringBuilder sb) {
 		children[0].prettyPrint(sb);
 		

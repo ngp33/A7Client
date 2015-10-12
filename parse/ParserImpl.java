@@ -10,6 +10,8 @@ import ast.Booly;
 import ast.Booly.equalities;
 import ast.Condition;
 import ast.Expr;
+import ast.MathOp;
+import ast.MathOp.MathOperator;
 import ast.Mem;
 import ast.Node;
 import ast.Num;
@@ -95,11 +97,13 @@ class ParserImpl implements Parser {
     	while (t.peek().isAddOp()){ //hopefully this is valid syntax?
     		if (t.peek().getType().equals(TokenType.PLUS)){
     			consume(t,TokenType.PLUS);
-    			e = new Plmin(e,parseTerm(t),true);
+    			//e = new Plmin(e,parseTerm(t),true);
+    			e = new MathOp(e, parseTerm(t), MathOperator.add);
     		}
     		else{
     			consume(t,TokenType.MINUS);
-    			e = new Plmin(e,parseTerm(t),false);
+    			//e = new Plmin(e,parseTerm(t),false);
+    			e = new MathOp(e, parseTerm(t), MathOperator.sub);
     		}
     	}
     	return e;
@@ -108,21 +112,22 @@ class ParserImpl implements Parser {
 
     public static Expr parseTerm(Tokenizer t) throws SyntaxError {
     	Expr f = parseFactor(t);
-    	Boolean mult;
+    	MathOperator mult;
     	while (t.peek().isMulOp()){
     		if (t.peek().getType().equals(TokenType.MUL)){
-    			mult = true;
+    			mult = MathOperator.mult;
     			consume(t,TokenType.MUL);
     		}
     		else if (t.peek().getType().equals(TokenType.DIV)){
-    			mult = false;
+    			mult = MathOperator.div;
     			consume(t,TokenType.DIV);
     		}
     		else{
-    			mult = null;
+    			mult = MathOperator.mod;
     			consume(t,TokenType.MOD);
     		}
-    		f = new Timdivmod(f,parseFactor(t),mult);
+    		//f = new Timdivmod(f,parseFactor(t),mult);
+    		f = new MathOp(f, parseFactor(t), mult);
     	}
     	return f;
         //throw new UnsupportedOperationException();

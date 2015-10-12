@@ -30,6 +30,14 @@ public class BinaryCondition extends Twokids implements Condition{
     	right.prettyPrint(sb).toString();
         return sb;
     }*/
+    
+    public StringBuilder prettyPrint(StringBuilder sb) {
+    	sb.append("{ ");
+    	super.prettyPrint(sb);
+    	sb.append("} ");
+    	
+    	return sb;
+    }
 
     @Override
     public String toString() {

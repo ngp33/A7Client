@@ -35,6 +35,7 @@ public class Jparse {
 		//TODO figure out factorneg
 	}
 	
+	@Ignore
 	@Test
 	public void thra() throws SyntaxError{
 		s = new StringReader("mem[7] != 17 --> mem[7] := 17;");
@@ -44,6 +45,8 @@ public class Jparse {
 		System.out.println(r.prettyPrint(sb));
 		
 	}
+	
+	@Ignore
 	@Test
 	public void rule2() throws SyntaxError{
 		s = new StringReader("nearby[3] = 0 and ENERGY > 2500 --> bud;");
@@ -52,9 +55,18 @@ public class Jparse {
 		System.out.println(r.prettyPrint(sb));
 	}
 	
+	@Ignore
 	@Test
 	public void command() throws SyntaxError{
 		s = new StringReader("nearby[3] = 0 and ENERGY > 2500 --> mem[7] := 17\nbud;");
+		t = new Tokenizer(s);
+		Rule r = ParserImpl.parseRule(t);
+		System.out.println(r.prettyPrint(sb));
+	}
+	
+	@Test
+	public void command1() throws SyntaxError{
+		s = new StringReader("{ ahead[1] < -1 and ENERGY > 2500 } or SIZE > 7 --> serve[4 + ENERGY / 42];");
 		t = new Tokenizer(s);
 		Rule r = ParserImpl.parseRule(t);
 		System.out.println(r.prettyPrint(sb));

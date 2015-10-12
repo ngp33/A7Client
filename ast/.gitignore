@@ -31,3 +31,8 @@
 /Updateact.class
 /Updatell.class
 /Command.class
+/MutRemove.class
+/MutSwap.class
+/MutReplace.class
+/MathOp.class
+/MathOp$MathOperator.class
