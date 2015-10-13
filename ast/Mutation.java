@@ -12,4 +12,7 @@ public interface Mutation {
      * @return Whether this mutation is the same type as {@code m}
      */
     boolean equals(Mutation m);
+    
+    /** Mutates a node*/
+    boolean Mutate(Node n);
 }

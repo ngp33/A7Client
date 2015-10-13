@@ -15,6 +15,17 @@ public class Specaction extends Action{
 		sb.append("]");
 		return sb;
 	}
+	
+	public int size(){
+		return eval.size()+1;
+	}
+	
+	public Node nodeAt(int index){
+		if (index == 0){
+			return this;
+		}
+		return (eval.nodeAt(index-1));
+	}
 	//TODO override methods,
 
 }

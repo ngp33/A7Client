@@ -16,25 +16,24 @@ public class Senses implements Expr {
 	}
 
 	@Override
-	public int size() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public Node nodeAt(int index) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public StringBuilder prettyPrint(StringBuilder sb) {
-		// TODO Auto-generated method stub
 		sb.append(pres.toString() + " ");
 		return sb;
 	}
+	
 	public enum six{
 		nearby, ahead, random, smell
+	}
+
+	@Override
+	public int size() {
+		return 1;
+	}
+
+	@Override
+	public Node nodeAt(int index) throws IndexOutOfBoundsException {
+		if (index == 0){ return this;}
+		throw new IndexOutOfBoundsException();
 	};
 
 }
