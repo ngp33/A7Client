@@ -1,24 +1,10 @@
 package ast;
 
-public class Action implements Node {
+public class Action extends Nokids implements Node {
 	Hamlet type;
-	Expr e = null;
 	
 	public Action(Hamlet input){
 		type = input;
-	}
-
-	@Override
-	public int size() {
-		return 1;
-	}
-
-	@Override
-	public Node nodeAt(int index) throws IndexOutOfBoundsException {
-		if (index == 0){
-			return this;
-		}
-		throw new IndexOutOfBoundsException();
 	}
 
 	@Override
@@ -30,6 +16,11 @@ public class Action implements Node {
 	public enum Hamlet {
 		wait, forward, backward, left, right, eat, attack,
 		grow, bud, mate, tag, serve
+	}
+
+	@Override
+	public Node copy() {
+		return new Action(type);
 	}
 
 }

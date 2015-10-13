@@ -24,6 +24,8 @@ public class Updateact extends Manykids implements Node {
 		}
 	}
 	
+	public Updateact() {}
+	
 	/*public Update[] getupdates(){
 		return u;
 	}
@@ -56,6 +58,10 @@ public class Updateact extends Manykids implements Node {
 		
 		sb.append(";");
 		return sb;
+	}
+
+	Manykids getRootCopy() {
+		return new Updateact();
 	}
 
 }

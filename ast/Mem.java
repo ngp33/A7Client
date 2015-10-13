@@ -5,6 +5,8 @@ public class Mem extends Onekid implements Expr{
 	public Mem(Expr e){
 		only = e;
 	}
+	
+	public Mem() {}
 
 	@Override
 	public StringBuilder prettyPrint(StringBuilder sb) {
@@ -13,6 +15,11 @@ public class Mem extends Onekid implements Expr{
 		only.prettyPrint(sb);
 		sb.append("] ");
 		return sb;
+	}
+
+	@Override
+	Onekid getRootCopy() {
+		return new Mem();
 	}
 
 }

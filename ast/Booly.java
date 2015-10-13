@@ -9,6 +9,8 @@ public class Booly extends Twokids implements Condition {
 		symbol = makenice();
 	}
 	
+	public Booly() {}
+	
 
 	private String makenice() {
 		if (link.equals(equalities.EQ)){
@@ -82,5 +84,11 @@ public class Booly extends Twokids implements Condition {
 	
 	public enum equalities{
 		LT, LE, EQ, GT, GE, NE;
+	}
+
+
+	@Override
+	Twokids getRootCopy() {
+		return new Booly();
 	}
 }

@@ -45,6 +45,12 @@ public interface Node {
     StringBuilder prettyPrint(StringBuilder sb);
     
     /**
+     * Returns a deep copy of this node. All children of the original node are
+     * copied and assigned as children of the new node.
+     */
+    Node copy();
+    
+    /**
      * Returns the pretty-print of the abstract syntax subtree rooted at this
      * node.
      * <p>

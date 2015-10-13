@@ -1,6 +1,7 @@
 package ast;
 
-public class Senses implements Expr {
+public class Senses extends Onekid implements Expr {
+	
 	protected six pres;
 	
 	public Senses(int which){
@@ -13,6 +14,10 @@ public class Senses implements Expr {
 		else{
 			pres = which == 3 ? six.random : six.smell; //I believe that true means random, and I will act under that assumption
 		}
+	}
+	
+	public Senses(six p) {
+		pres = p;
 	}
 
 	@Override
@@ -34,6 +39,11 @@ public class Senses implements Expr {
 	public Node nodeAt(int index) throws IndexOutOfBoundsException {
 		if (index == 0){ return this;}
 		throw new IndexOutOfBoundsException();
-	};
+	}
+
+	@Override
+	Onekid getRootCopy() {
+		return new Senses(pres);
+	}
 
 }

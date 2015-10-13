@@ -14,7 +14,9 @@ public class ProgramImpl extends Manykids implements Program {
 		children = r.toarray();
 	}
 
-    @Override
+    public ProgramImpl() {}
+
+	@Override
     public Program mutate() {
         // TODO Auto-generated method stub
         return null;
@@ -53,5 +55,10 @@ public class ProgramImpl extends Manykids implements Program {
     	}
     	return n;
     }
+
+	@Override
+	Manykids getRootCopy() {
+		return new ProgramImpl();
+	}
 
 }

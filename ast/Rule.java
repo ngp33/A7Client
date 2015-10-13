@@ -13,10 +13,19 @@ public class Rule extends Twokids implements Node {
 		right = b;
 		symbol = "-->";
 	}
+	
+	public Rule(Rule n) {
+		next = n;
+	}
     
     @Override
     public String toString() {
         // TODO Auto-generated method stub
         return null;
     }
+
+	@Override
+	Twokids getRootCopy() {
+		return new Rule(next);
+	}
 }

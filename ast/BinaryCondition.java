@@ -20,7 +20,7 @@ public class BinaryCondition extends Twokids implements Condition{
     	symbol = makenice();
     }
 
-
+    public BinaryCondition() {}
     
     /*@Override
     public StringBuilder prettyPrint(StringBuilder sb) {
@@ -56,6 +56,11 @@ public class BinaryCondition extends Twokids implements Condition{
     public enum Operator {
         OR, AND;
     }
+
+	@Override
+	Twokids getRootCopy() {
+		return new BinaryCondition();
+	}
 
 	/*@Override
 	public Boolean getval() {

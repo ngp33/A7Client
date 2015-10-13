@@ -15,5 +15,14 @@ public abstract class Onekid implements Node{
 	public int size(){
 		return only.size() + 1;
 	}
+	
+	abstract Onekid getRootCopy();
+	
+	public Node copy() {
+		Onekid clone = getRootCopy();
+		clone.only = (Expr) only.copy();
+		
+		return clone;
+	}
 
 }

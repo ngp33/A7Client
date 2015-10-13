@@ -1,7 +1,9 @@
 package ast;
 
 public class Num extends Nokids implements Expr {
+	
 	int val;
+	
 	public Num(int anum){
 		val = anum;
 	}
@@ -16,6 +18,11 @@ public class Num extends Nokids implements Expr {
 	public StringBuilder prettyPrint(StringBuilder sb) {
 		sb.append(val + " ");
 		return sb;
+	}
+
+	@Override
+	public Node copy() {
+		return new Num(val);
 	}
 
 }

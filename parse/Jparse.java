@@ -72,7 +72,7 @@ public class Jparse {
 		System.out.println(r.prettyPrint(sb));
 	}
 	
-	//@Ignore
+	@Ignore
 	@Test
 	public void ruletest() throws SyntaxError{ //TODO make sure it handles negatives and braces.
 		String [] str = {"{ENERGY > SIZE * 400 and SIZE < 7} --> grow;",

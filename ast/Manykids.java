@@ -1,5 +1,7 @@
 package ast;
 
+import java.util.Random;
+
 public abstract class Manykids implements Node {
 	Node [] children;
 	
@@ -23,6 +25,26 @@ public abstract class Manykids implements Node {
 			bigness += them.size();
 		}
 		return bigness;
+	}
+	
+	public Node getRandomKidToCopy() {
+		Random rand = new Random();
+		int i = rand.nextInt(children.length);
+		
+		return children[i].copy();
+	}
+	
+	abstract Manykids getRootCopy();
+	
+	public Node copy() {
+		Manykids clone = getRootCopy();
+		clone.children = new Node[children.length];
+		
+		for (int i = 0; i < children.length; i++) {
+			clone.children[i] = children[i].copy();
+		}
+		
+		return clone;
 	}
 
 }

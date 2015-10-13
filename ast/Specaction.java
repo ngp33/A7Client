@@ -12,7 +12,7 @@ public class Specaction extends Action{
 		super.prettyPrint(sb);
 		sb.append("[ ");
 		eval.prettyPrint(sb);
-		sb.append("]");
+		sb.append("] ");
 		return sb;
 	}
 	

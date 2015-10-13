@@ -11,6 +11,8 @@ public class MathOp extends Twokids implements Expr {
 		symbol = makenice();
 	}
 	
+	public MathOp() {}
+	
     public StringBuilder prettyPrint(StringBuilder sb) {
     	sb.append("( ");
     	super.prettyPrint(sb);
@@ -32,6 +34,11 @@ public class MathOp extends Twokids implements Expr {
 	
 	public enum MathOperator {
 		add, sub, mult, div, mod
+	}
+
+	@Override
+	Twokids getRootCopy() {
+		return new MathOp();
 	}
 	
 }

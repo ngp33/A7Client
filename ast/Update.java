@@ -1,6 +1,7 @@
 package ast;
 
-public class Update extends Twokids implements Node{
+public class Update extends Twokids implements Node {
+	
 	Update next;
 	
 	public Update(Mem memories, Expr ern){
@@ -8,6 +9,15 @@ public class Update extends Twokids implements Node{
 		right = ern;
 		next = null;
 		symbol = ":=";
-	}	
+	}
+	
+	public Update(Update n) {
+		next = n;
+	}
+
+	@Override
+	Twokids getRootCopy() {
+		return new Update(next);
+	}
 
 }
