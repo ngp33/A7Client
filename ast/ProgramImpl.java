@@ -1,5 +1,7 @@
 package ast;
 
+import mutation.Mutation;
+
 /**
  * A data structure representing a critter program.
  *

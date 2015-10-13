@@ -1,4 +1,4 @@
-package ast;
+package mutation;
 
 /**
  * A factory that produces the public static Mutation objects corresponding to each

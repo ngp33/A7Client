@@ -1,6 +1,6 @@
 package ast;
 
-public class Booly extends Twokids implements Condition {
+public class Booly extends TwokidsSameType implements Condition {
 	
 	public Booly(Expr one, Expr two, equalities e){
 		left = one;

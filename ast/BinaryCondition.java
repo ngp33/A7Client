@@ -1,10 +1,12 @@
 package ast;
 
+import java.util.Random;
+
 /**
  * A representation of a binary Boolean condition: 'and' or 'or'
  *
  */
-public class BinaryCondition extends Twokids implements Condition{
+public class BinaryCondition extends TwokidsSameType implements Condition, mutation.Removable {
 
     /**
      * Create an AST representation of l op r.
@@ -60,6 +62,12 @@ public class BinaryCondition extends Twokids implements Condition{
 	@Override
 	Twokids getRootCopy() {
 		return new BinaryCondition();
+	}
+	
+	public Node getReplacement() {
+		Random rand = new Random();
+		
+		return rand.nextBoolean() ? left : right;
 	}
 
 	/*@Override

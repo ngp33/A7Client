@@ -1,6 +1,8 @@
-package ast;
+package mutation;
 
-public class MutSwap implements Mutation {
+import ast.Node;
+
+public class MutSwap extends MutationImpl {
 
 	@Override
 	public boolean equals(Mutation m) {
@@ -11,7 +13,10 @@ public class MutSwap implements Mutation {
 	@Override
 	/** Biggest deal here is whether the node has 2+ children and whether they are of the same type*/
 	public boolean Mutate(Node n) {
-		// TODO Auto-generated method stub
+		if (n instanceof Swappable) {
+			((Swappable) n).swapKids();
+		}
+
 		return false;
 	}
 

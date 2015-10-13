@@ -50,6 +50,8 @@ public interface Node {
      */
     Node copy();
     
+    void replaceKid(Node old, Node replacement);
+    
     /**
      * Returns the pretty-print of the abstract syntax subtree rooted at this
      * node.

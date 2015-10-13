@@ -1,6 +1,8 @@
-package ast;
+package mutation;
 
-public class MutRemove implements Mutation {
+import ast.Node;
+
+public class MutRemove extends ParentConsciousMutation {
 
 	@Override
 	public boolean equals(Mutation m) {
@@ -10,7 +12,10 @@ public class MutRemove implements Mutation {
 
 	@Override
 	public boolean Mutate(Node n) {
-		// TODO Auto-generated method stub
+		if (n instanceof Removable) {
+			parent.replaceKid(n, ((Removable) n).getReplacement());
+		}
+		
 		return false;
 	}
 	

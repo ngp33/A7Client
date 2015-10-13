@@ -1,6 +1,6 @@
 package ast;
 
-public abstract class Twokids implements Node{
+public abstract class Twokids implements Node {
 	protected Node left;
 	protected Node right;
 	protected Object link;
@@ -43,6 +43,14 @@ public abstract class Twokids implements Node{
 		clone.symbol = symbol;
 		
 		return clone;
+	}
+	
+	public void replaceKid(Node old, Node replacement) {
+		if (old == left) {
+			left = replacement;
+		} else {
+			right = replacement;
+		}
 	}
 
 }

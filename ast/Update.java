@@ -1,6 +1,6 @@
 package ast;
 
-public class Update extends Twokids implements Node {
+public class Update extends Twokids implements Node, mutation.Removable {
 	
 	Update next;
 	
@@ -18,6 +18,10 @@ public class Update extends Twokids implements Node {
 	@Override
 	Twokids getRootCopy() {
 		return new Update(next);
+	}
+	
+	public Node getReplacement() {
+		return null;
 	}
 
 }

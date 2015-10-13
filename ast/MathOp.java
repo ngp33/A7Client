@@ -1,6 +1,8 @@
 package ast;
 
-public class MathOp extends Twokids implements Expr {
+import java.util.Random;
+
+public class MathOp extends TwokidsSameType implements Expr, mutation.Removable {
 
 	MathOperator op;
 	
@@ -41,4 +43,9 @@ public class MathOp extends Twokids implements Expr {
 		return new MathOp();
 	}
 	
+	public Node getReplacement() {
+		Random rand = new Random();
+		
+		return rand.nextBoolean() ? left : right;
+	}
 }

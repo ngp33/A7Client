@@ -1,6 +1,8 @@
 package ast;
 
 public class Updateact extends Manykids implements Node {
+	
+	boolean hasAction;
 
 	public Updateact(Update [] u, Action a){
 		/*children = (a == null) ? new Node[u.length] : new Node [u.length + 1];
@@ -15,10 +17,13 @@ public class Updateact extends Manykids implements Node {
 		
 		if (a == null) {
 			children = new Node[u.length];
+			hasAction = false;
 		} else {
 			children = new Node[u.length+1];
 			children[u.length] = a;
+			hasAction = true;
 		}
+		
 		for (int place = 0; place < u.length; place++) {
 			children[place] = u[place];
 		}
@@ -62,6 +67,14 @@ public class Updateact extends Manykids implements Node {
 
 	Manykids getRootCopy() {
 		return new Updateact();
+	}
+	
+	@Override
+	public Node getRandomKidCopy() {
+		if (hasAction) {
+			return super.getRandomKidCopy();
+		}
+		return null;
 	}
 
 }

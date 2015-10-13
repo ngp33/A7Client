@@ -37,3 +37,6 @@
 /MathOp.class
 /MathOp$MathOperator.class
 /MutDuplicate.class
+/TwokidsSameType.class
+/MemToUpdate.class
+/MemAccess.class

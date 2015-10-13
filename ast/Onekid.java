@@ -1,6 +1,6 @@
 package ast;
 
-public abstract class Onekid implements Node{
+public abstract class Onekid implements Node {
 	
 	Expr only;
 	
@@ -23,6 +23,10 @@ public abstract class Onekid implements Node{
 		clone.only = (Expr) only.copy();
 		
 		return clone;
+	}
+	
+	public void replaceKid(Node old, Node replacement) {
+		only = (Expr) replacement;
 	}
 
 }

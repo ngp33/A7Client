@@ -1,6 +1,6 @@
 package ast;
 
-public class Sensespace extends Senses {
+public class Sensespace extends Senses implements mutation.Removable {
 	
 	public Sensespace(int which, Expr where) {
 		super(which);
@@ -26,6 +26,10 @@ public class Sensespace extends Senses {
 	
 	public int size(){
 		return only.size() + 1;
+	}
+	
+	public Node getReplacement() {
+		return only;
 	}
 
 }

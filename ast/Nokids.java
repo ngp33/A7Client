@@ -12,4 +12,8 @@ public abstract class Nokids implements Node{
 	public int size(){
 		return 1;
 	}
+	
+	public void replaceKid(Node old, Node replacement) {
+		throw new UnsupportedOperationException();
+	}
 }

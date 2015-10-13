@@ -4,7 +4,7 @@ package ast;
  * A representation of a critter rule.
  */
 //TODO give the rule some time of arrow representation.
-public class Rule extends Twokids implements Node {
+public class Rule extends Twokids implements Node, mutation.Removable {
 	
 	public Rule next = null;
 	
@@ -27,5 +27,9 @@ public class Rule extends Twokids implements Node {
 	@Override
 	Twokids getRootCopy() {
 		return new Rule(next);
+	}
+	
+	public Node getReplacement() {
+		return null;
 	}
 }

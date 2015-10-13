@@ -1,6 +1,7 @@
 package ast;
 
-public class Action extends Nokids implements Node {
+public class Action extends Nokids implements Node, mutation.Removable {
+	
 	Hamlet type;
 	
 	public Action(Hamlet input){
@@ -21,6 +22,10 @@ public class Action extends Nokids implements Node {
 	@Override
 	public Node copy() {
 		return new Action(type);
+	}
+	
+	public Node getReplacement() {
+		return null;
 	}
 
 }

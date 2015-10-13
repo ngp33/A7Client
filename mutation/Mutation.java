@@ -1,9 +1,12 @@
-package ast;
+package mutation;
+
+import ast.Node;
 
 /**
  * A mutation to the AST
  */
 public interface Mutation {
+	
     /**
      * Compares the type of this mutation to {@code m}
      * 
@@ -15,4 +18,5 @@ public interface Mutation {
     
     /** Mutates a node*/
     boolean Mutate(Node n);
+    
 }

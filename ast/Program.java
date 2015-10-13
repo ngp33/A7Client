@@ -1,5 +1,7 @@
 package ast;
 
+import mutation.Mutation;
+
 /**
  * An abstraction of a critter program.
  */

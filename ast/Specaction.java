@@ -1,6 +1,6 @@
 package ast;
 
-public class Specaction extends Action{
+public class Specaction extends Action {
 	Expr eval;
 
 	public Specaction(Hamlet input, Expr e) {
