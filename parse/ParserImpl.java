@@ -28,7 +28,7 @@ import ast.Updatell;
 import exceptions.SyntaxError;
 import parse.Tokenizer.TokenizerIOException;
 
-class ParserImpl implements Parser {
+public class ParserImpl implements Parser {
 
     @Override
     public Program parse(Reader r) {
