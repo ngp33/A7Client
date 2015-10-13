@@ -1,5 +1,7 @@
 package ast;
 
+import java.util.Random;
+
 public class Updateact extends Manykids implements Node {
 	
 	boolean hasAction;
@@ -29,7 +31,9 @@ public class Updateact extends Manykids implements Node {
 		}
 	}
 	
-	public Updateact() {}
+	public Updateact(boolean hasAct) {
+		hasAction = hasAct;
+	}
 	
 	/*public Update[] getupdates(){
 		return u;
@@ -66,7 +70,7 @@ public class Updateact extends Manykids implements Node {
 	}
 
 	Manykids getRootCopy() {
-		return new Updateact();
+		return new Updateact(hasAction);
 	}
 	
 	@Override
@@ -75,6 +79,19 @@ public class Updateact extends Manykids implements Node {
 			return super.getRandomKidCopy();
 		}
 		return null;
+	}
+	
+	public void swapKids() {
+		Random rand = new Random();
+		
+		int i1 = rand.nextInt(children.length);
+		int i2 = rand.nextInt(children.length);
+		
+		if (children[i2] instanceof Action) {
+			return;
+		}
+		
+		swapKidsHelper(i1, i2);
 	}
 
 }

@@ -83,7 +83,22 @@ public abstract class Manykids implements Node, mutation.Swappable {
 	}
 	
 	public void swapKids() {
+		Random rand = new Random();
 		
+		int i1 = rand.nextInt(children.length);
+		int i2 = rand.nextInt(children.length);
+		
+		/*while (i1 == i2) {
+			i2 = rand.nextInt(children.length);
+		}*/
+		
+		swapKidsHelper(i1, i2);
+	}
+	
+	public void swapKidsHelper(int i1, int i2) {
+		Node temp = children[i1];
+		children[i1] = children[i2];
+		children[i2] = temp;
 	}
 
 }
