@@ -4,8 +4,8 @@ public class Update extends Twokids implements Node, mutation.Removable {
 	
 	Update next;
 	
-	public Update(Mem memories, Expr ern){
-		left = memories;
+	public Update(MemToUpdate andm, Expr ern){
+		left = andm;
 		right = ern;
 		next = null;
 		symbol = ":=";

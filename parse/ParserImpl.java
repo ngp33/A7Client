@@ -12,8 +12,9 @@ import ast.Condition;
 import ast.Expr;
 import ast.MathOp;
 import ast.MathOp.MathOperator;
-import ast.Mem;
-import ast.Node;
+import ast.MemAccess;
+import ast.MemToUpdate;
+import ast.Negative;
 import ast.Num;
 import ast.Program;
 import ast.ProgramImpl;
@@ -92,7 +93,7 @@ public class ParserImpl implements Parser {
     public static Expr parseExpression(Tokenizer t) throws SyntaxError {
     	//TODO
     	Expr e = parseTerm(t);
-    	while (t.peek().isAddOp()){ //hopefully this is valid syntax?
+    	while (t.peek().isAddOp()) {
     		if (t.peek().getType().equals(TokenType.PLUS)){
     			consume(t,TokenType.PLUS);
     			//e = new Plmin(e,parseTerm(t),true);
@@ -124,7 +125,6 @@ public class ParserImpl implements Parser {
     			mult = MathOperator.mod;
     			consume(t,TokenType.MOD);
     		}
-    		//f = new Timdivmod(f,parseFactor(t),mult);
     		f = new MathOp(f, parseFactor(t), mult);
     	}
     	return f;
@@ -135,17 +135,9 @@ public class ParserImpl implements Parser {
         // TODO
     	Expr e;
     	if (t.peek().getType().equals(TokenType.MEM) || t.peek().isMemSugar()){
-    		e = memhandler(t);
-    		/*if (t.peek().isMemSugar()){
-    			
-    		}
-    		else{
-	    		consume(t,TokenType.MEM);
-	    		consume(t,TokenType.LBRACKET);
-	    		e = parseExpression(t); //TODO make mem object
-	    		consume(t,TokenType.RBRACKET);
-    		}
-    		e = new Mem(e);*/
+    		//e = memhandler(t);
+    		e = new MemAccess(memhandler(t));
+    		
     	}
     	else if (t.peek().getType().equals(TokenType.LPAREN)){
     		consume(t,TokenType.LPAREN);
@@ -154,7 +146,8 @@ public class ParserImpl implements Parser {
     	}
     	else if (t.peek().getType().equals(TokenType.MINUS)){
     		consume(t,TokenType.MINUS);
-    		e = parseFactor(t); //TODO negate parsefactor here. Maybe by casting to num
+    		e = parseFactor(t); //TODO I doubt the negative works..
+    		e = new Negative(e);
     	}
     	else if (t.peek().isSensor()){
     		e = parseSensor(t);
@@ -214,7 +207,7 @@ public class ParserImpl implements Parser {
     }
     
     private static Update parseUpdate(Tokenizer t) throws TokenizerIOException, SyntaxError{ //TODO fix this
-    	Mem andm = memhandler(t);
+    	MemToUpdate andm = memhandler(t);
     	consume(t,TokenType.ASSIGN);
     	Expr p = parseExpression(t);
     	return new Update(andm, p);
@@ -351,7 +344,7 @@ public class ParserImpl implements Parser {
      * 		a new mem node from the information supplied by the input
      * @throws SyntaxError 
      */
-    private static Mem memhandler(Tokenizer t) throws SyntaxError{
+    private static MemToUpdate memhandler(Tokenizer t) throws SyntaxError{
     	Expr e;
     	if (t.peek().isMemSugar()){
     		e = memsug(t.peek().getType());
@@ -360,10 +353,10 @@ public class ParserImpl implements Parser {
     	else{
     		consume(t,TokenType.MEM);
     		consume(t,TokenType.LBRACKET);
-    		e = parseExpression(t); //TODO make mem object
+    		e = parseExpression(t);
     		consume(t,TokenType.RBRACKET);
     	}
-    	return new Mem(e);
+    	return new MemToUpdate(e);
     }
     
     

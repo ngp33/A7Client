@@ -1,6 +1,6 @@
 package ast;
 
-public abstract class Onekid implements Node {
+public abstract class Onekid implements Expr { //I changed this to Expr from Node. I don't think itll hurt...
 	
 	Expr only;
 	
