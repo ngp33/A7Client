@@ -1,6 +1,9 @@
 package ast;
 
 import mutation.Mutation;
+import mutation.MutationImpl;
+
+import java.util.Random;
 
 /**
  * A data structure representing a critter program.
@@ -12,6 +15,10 @@ public class ProgramImpl extends Manykids implements Program {
 	 * Initializes the programimpl
 	 * @param args	the rules that will go into the ProgramImpl.
 	 */
+	Random R = new Random();
+	String Mutationtype = ""; //this is what we will print for the type of mutation. 
+	//Mutation m = new MutationImpl(); TODO make a mutation object
+	
 	public ProgramImpl(Rulesll r){
 		children = r.toarray();
 	}
@@ -20,14 +27,17 @@ public class ProgramImpl extends Manykids implements Program {
 
 	@Override
     public Program mutate() {
-        // TODO Auto-generated method stub
-        return null;
+        // TODO figure out a way to know what mutations a node supports
+		int p = R.nextInt(size());
+		//Program f = mutate(p,) The mutation (see above comment)
+		//assign a new value to mutationtype
+        return this;
     }
 
     @Override
     public Program mutate(int index, Mutation m) {
-        // TODO Auto-generated method stub
-        return null;
+    	m.Mutate(nodeAt(index));
+        return this;
     }
 
     @Override
