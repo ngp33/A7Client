@@ -1,8 +1,8 @@
 package ast;
 
 public abstract class Twokids implements Node, mutation.Replacable {
-	protected Node left;
-	protected Node right;
+	public Node left;
+	public Node right;
 	protected Object link;
 	protected String symbol;
 	

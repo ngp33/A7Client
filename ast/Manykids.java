@@ -3,7 +3,7 @@ package ast;
 import java.util.Random;
 
 public abstract class Manykids implements Node, mutation.Swappable {
-	Node [] children;
+	public Node [] children;
 	
 	
 	public Node nodeAt (int there){
