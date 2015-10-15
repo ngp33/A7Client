@@ -2,6 +2,8 @@ package ast;
 
 import java.util.Random;
 
+import ast.Action.Hamlet;
+
 /**
  * A representation of a binary Boolean condition: 'and' or 'or'
  *
@@ -70,6 +72,22 @@ public class BinaryCondition extends TwokidsSameType implements Condition, mutat
 		return rand.nextBoolean() ? left : right;
 	}
 
+	@Override
+	public void transform() {
+		Random rand = new Random();
+		
+		link = Operator.values()[rand.nextInt(2)];
+	}
+	
+	@Override
+	public void fillInMissingKids(Program possibleKids) {
+		if (left == null) {
+			left = possibleKids.getRandomNode(Condition.class);
+		} else if (right == null) {
+			right = possibleKids.getRandomNode(Condition.class);
+		}
+	}
+
 	/*@Override
 	public Boolean getval() {
 		// TODO Auto-generated method stub
@@ -86,4 +104,5 @@ public class BinaryCondition extends TwokidsSameType implements Condition, mutat
     		return false;
     	}
 	}*/
+	
 }

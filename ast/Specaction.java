@@ -1,5 +1,7 @@
 package ast;
 
+import java.util.Random;
+
 public class Specaction extends Action {
 	Expr eval;
 
@@ -27,5 +29,16 @@ public class Specaction extends Action {
 		return (eval.nodeAt(index-1));
 	}
 	//TODO override methods,
+	
+	public Node copy() {
+		return new Specaction(type, (Expr) eval.copy());
+	}
 
+	@Override
+	public void transform() {
+		Random rand = new Random();
+		
+		type = Hamlet.values()[rand.nextInt(2)+10];
+	}
+	
 }

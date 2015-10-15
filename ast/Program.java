@@ -23,4 +23,6 @@ public interface Program extends Node {
      * @throws IndexOutOfBoundsException if {@code index} is not valid
      */
     Program mutate(int index, Mutation m);
+    
+    Node getRandomNode(Class<?> c);
 }

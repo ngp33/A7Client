@@ -1,5 +1,9 @@
 package ast;
 
+import java.util.Random;
+
+import ast.Action.Hamlet;
+
 public class Booly extends TwokidsSameType implements Condition {
 	
 	public Booly(Expr one, Expr two, equalities e){
@@ -91,4 +95,12 @@ public class Booly extends TwokidsSameType implements Condition {
 	Twokids getRootCopy() {
 		return new Booly();
 	}
+
+	@Override
+	public void transform() {
+		Random rand = new Random();
+		
+		link = equalities.values()[rand.nextInt(6)];
+	}
+	
 }

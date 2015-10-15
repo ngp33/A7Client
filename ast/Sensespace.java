@@ -1,6 +1,8 @@
 package ast;
 
-public class Sensespace extends Senses implements mutation.Removable {
+import java.util.Random;
+
+public class Sensespace extends Senses implements mutation.Removable, mutation.Insertable {
 	
 	public Sensespace(int which, Expr where) {
 		super(which);
@@ -8,6 +10,10 @@ public class Sensespace extends Senses implements mutation.Removable {
 		// TODO Auto-generated constructor stub
 	}
 	
+	public Sensespace() {
+		super(null);
+	}
+
 	@Override
 	public StringBuilder prettyPrint(StringBuilder sb){
 		sb.append(pres.toString() + "[ ");
@@ -30,6 +36,19 @@ public class Sensespace extends Senses implements mutation.Removable {
 	
 	public Node getReplacement() {
 		return only;
+	}
+	
+	@Override
+	public void transform() {
+		Random rand = new Random();
+		
+		pres = six.values()[rand.nextInt(3)];
+	}
+	
+	public void fillInMissingKids(Program possibleKids) {
+		if (only == null) {
+			only = (Expr) possibleKids.getRandomNode(Expr.class);
+		}
 	}
 
 }

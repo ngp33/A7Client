@@ -1,6 +1,8 @@
 package ast;
 
-public class Action extends Nokids implements Node, mutation.Removable {
+import java.util.Random;
+
+public class Action extends Nokids implements Node, mutation.Removable, mutation.Transformable {
 	
 	Hamlet type;
 	
@@ -26,6 +28,13 @@ public class Action extends Nokids implements Node, mutation.Removable {
 	
 	public Node getReplacement() {
 		return null;
+	}
+
+	@Override
+	public void transform() {
+		Random rand = new Random();
+		
+		type = Hamlet.values()[rand.nextInt(10)];
 	}
 
 }

@@ -1,6 +1,10 @@
 package ast;
 
-public class Num extends Nokids implements Expr {
+import java.util.Random;
+
+import ast.MathOp.MathOperator;
+
+public class Num extends Nokids implements Expr, mutation.Transformable, mutation.Reparentable {
 	
 	int val;
 	
@@ -23,6 +27,42 @@ public class Num extends Nokids implements Expr {
 	@Override
 	public Node copy() {
 		return new Num(val);
+	}
+	
+	@Override
+	public void transform() {
+		Random rand = new Random();
+		int div = rand.nextInt();
+		
+		while (div == 0) {
+			div = rand.nextInt();
+		}
+		
+		val += Integer.MAX_VALUE/div;
+	}
+	
+	//Cringe.
+	@Override
+	public mutation.Insertable getNewParent() {
+		mutation.Insertable newParent;
+		Random rand = new Random();
+		
+		int selector = rand.nextInt(3);
+		if (selector == 0) {
+			newParent = new MathOp();
+			((MathOp) newParent).op = MathOperator.values()[rand.nextInt(5)];
+			if (rand.nextBoolean()) {
+				((MathOp) newParent).left = this;
+			} else {
+				((MathOp) newParent).right = this;
+			}
+		} else if (selector == 1) {
+			newParent = new MemAccess(this);
+		} else {
+			newParent = new Sensespace(rand.nextInt(4) + 1, this);
+		}
+		
+		return newParent;
 	}
 
 }

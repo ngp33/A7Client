@@ -1,6 +1,6 @@
 package ast;
 
-public class Mem extends Onekid implements Expr{
+public class Mem extends Onekid implements Expr {
 	
 	public Mem(Expr e){
 		only = e;
@@ -20,6 +20,10 @@ public class Mem extends Onekid implements Expr{
 	@Override
 	Onekid getRootCopy() {
 		return new Mem();
+	}
+	
+	public void fillInMissingKids(Program possibleKids) {
+		//Just to get rid of the error for now. We're removing this class soon.
 	}
 
 }

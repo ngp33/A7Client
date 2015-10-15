@@ -1,6 +1,10 @@
 package ast;
 
-public class Senses extends Onekid implements Expr {
+import java.util.Random;
+
+import ast.MathOp.MathOperator;
+
+public class Senses extends Onekid implements Expr, mutation.Transformable, mutation.Reparentable {
 	
 	protected six pres;
 	
@@ -44,6 +48,40 @@ public class Senses extends Onekid implements Expr {
 	@Override
 	Onekid getRootCopy() {
 		return new Senses(pres);
+	}
+	
+	@Override
+	public Node copy() {
+		return getRootCopy();
+	}
+	
+	@Override
+	public void transform() {
+		//Nothing to change smell to without adding a child
+	}
+	
+	//Cringe x2.
+	@Override
+	public mutation.Insertable getNewParent() {
+		mutation.Insertable newParent;
+		Random rand = new Random();
+		
+		int selector = rand.nextInt(3);
+		if (selector == 0) {
+			newParent = new MathOp();
+			((MathOp) newParent).op = MathOperator.values()[rand.nextInt(5)];
+			if (rand.nextBoolean()) {
+				((MathOp) newParent).left = this;
+			} else {
+				((MathOp) newParent).right = this;
+			}
+		} else if (selector == 1) {
+			newParent = new MemAccess(this);
+		} else {
+			newParent = new Sensespace(rand.nextInt(4) + 1, this);
+		}
+		
+		return newParent;
 	}
 
 }

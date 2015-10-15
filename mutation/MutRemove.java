@@ -14,6 +14,7 @@ public class MutRemove extends ParentConsciousMutation {
 	public boolean Mutate(Node n) {
 		if (n instanceof Removable) {
 			parent.replaceKid(n, ((Removable) n).getReplacement());
+			return true;
 		}
 		
 		return false;

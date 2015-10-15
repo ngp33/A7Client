@@ -15,6 +15,7 @@ public class MutSwap extends MutationImpl {
 	public boolean Mutate(Node n) {
 		if (n instanceof Swappable) {
 			((Swappable) n).swapKids();
+			return true;
 		}
 
 		return false;

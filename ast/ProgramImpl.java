@@ -1,5 +1,7 @@
 package ast;
 
+import java.util.Random;
+
 import mutation.Mutation;
 import mutation.MutationImpl;
 
@@ -71,6 +73,36 @@ public class ProgramImpl extends Manykids implements Program {
 	@Override
 	Manykids getRootCopy() {
 		return new ProgramImpl();
+	}
+	
+	public Node getRandomNode(Class<?> type) {
+		int size = this.size();
+		int[] indexOrder = new int[size];
+		
+		for (int i = 0; i < size; i++) {
+			indexOrder[i] = i;
+		}
+		
+		Random rand = new Random();
+        
+        int j;
+        int temp;
+        for (int i = size-1; i > 0; i--) {
+        	j = rand.nextInt(i);
+        	temp = indexOrder[j];
+        	indexOrder[j] = indexOrder[i];
+        	indexOrder[i] = temp;
+        }
+
+        for (int i : indexOrder) {
+        	Node n = this.nodeAt(i);
+        	
+        	if (type.isInstance(n)) {
+        		return n;
+        	}
+        }
+		
+		return null;
 	}
 
 }

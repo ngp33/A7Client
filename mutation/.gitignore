@@ -9,3 +9,7 @@
 /ParentConsciousMutation.class
 /Swappable.class
 /MutationImpl.class
+/Transformable.class
+/Insertable.class
+/Reparentable.class
+/MutInsert.class

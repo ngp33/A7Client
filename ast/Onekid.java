@@ -20,6 +20,7 @@ public abstract class Onekid implements Node {
 	
 	public Node copy() {
 		Onekid clone = getRootCopy();
+		
 		clone.only = (Expr) only.copy();
 		
 		return clone;
@@ -28,5 +29,10 @@ public abstract class Onekid implements Node {
 	public void replaceKid(Node old, Node replacement) {
 		only = (Expr) replacement;
 	}
+	
+	/*public void fillInMissingKids(Program possibleKids) {
+		if (only == null) {
+			only = (Expr) possibleKids.getRandomNode(Expr.class);
+		}*/
 
 }
