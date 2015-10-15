@@ -14,10 +14,13 @@ public class MutInsert extends ParentConsciousMutation {
 	public boolean Mutate(Node n) {
 		if (n instanceof Reparentable) {
 			Insertable toInsert = ((Reparentable) n).getNewParent();
-			toInsert.fillInMissingKids(AST);
-			parent.replaceKid(n, (Node) toInsert);
+			if (toInsert.fillInMissingKids(AST)) {
+				parent.replaceKid(n, (Node) toInsert);
 			
-			return true;
+				return true;
+			}
+			
+			return false;
 		}
 		
 		return false;

@@ -80,12 +80,16 @@ public class BinaryCondition extends TwokidsSameType implements Condition, mutat
 	}
 	
 	@Override
-	public void fillInMissingKids(Program possibleKids) {
+	public boolean fillInMissingKids(Program possibleKids) {
 		if (left == null) {
 			left = possibleKids.getRandomNode(Condition.class);
+			if (left == null) return false;
 		} else if (right == null) {
 			right = possibleKids.getRandomNode(Condition.class);
+			if (right == null) return false;
 		}
+		
+		return true;
 	}
 
 	/*@Override

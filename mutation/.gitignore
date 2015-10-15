@@ -13,3 +13,5 @@
 /Insertable.class
 /Reparentable.class
 /MutInsert.class
+/MutTransform.class
+/MutReplace.class

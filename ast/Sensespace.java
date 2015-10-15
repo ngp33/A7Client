@@ -45,10 +45,12 @@ public class Sensespace extends Senses implements mutation.Removable, mutation.I
 		pres = six.values()[rand.nextInt(3)];
 	}
 	
-	public void fillInMissingKids(Program possibleKids) {
+	public boolean fillInMissingKids(Program possibleKids) {
 		if (only == null) {
 			only = (Expr) possibleKids.getRandomNode(Expr.class);
+			if (only == null) return false;
 		}
+		return true;
 	}
 
 }

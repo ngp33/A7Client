@@ -15,12 +15,16 @@ mutation.Transformable, mutation.Insertable, mutation.Reparentable {
 	}
 	
 	@Override
-	public void fillInMissingKids(Program possibleKids) {
+	public boolean fillInMissingKids(Program possibleKids) {
 		if (left == null) {
 			left = possibleKids.getRandomNode(Expr.class);
+			if (left == null) return false;
 		} else if (right == null) {
 			right = possibleKids.getRandomNode(Expr.class);
+			if (right == null) return false;
 		}
+		
+		return true;
 	}
 	
 	public mutation.Insertable getNewParent() {

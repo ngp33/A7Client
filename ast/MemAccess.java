@@ -26,10 +26,12 @@ mutation.Reparentable {
 		return only;
 	}
 	
-	public void fillInMissingKids(Program possibleKids) {
+	public boolean fillInMissingKids(Program possibleKids) {
 		if (only == null) {
 			only = (Expr) possibleKids.getRandomNode(Expr.class);
+			if (only == null) return false;
 		}
+		return true;
 	}
 
 	//I hate copy and pasting code but I don't want to spend too much time changing stuff around.
