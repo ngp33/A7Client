@@ -22,8 +22,10 @@ public class MutationTest {
 		t = new Tokenizer(s);
 		ProgramImpl r = ParserImpl.parseProgram(t);
 		
-		MutRemove mr = new MutRemove(r);
-		mr.Mutate(r.getRandomNode(Node.class));
+		MutRemove mr = new MutRemove();
+		mr.initiate(r);
+		System.out.println(mr.Mutate(r.nodeAt(0)));
+		System.out.println(mr.Mutate(r.nodeAt(1)));
 	}
 	
 }
