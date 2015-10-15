@@ -11,6 +11,7 @@ import ast.Node;
 import ast.ProgramImpl;
 import exceptions.SyntaxError;
 import mutation.*;
+import parse.Parser;
 import parse.ParserImpl;
 import parse.Tokenizer;
 
@@ -79,6 +80,14 @@ public class MutationTest {
 	@Test
 	public void replace(){
 		
+	}
+	
+	@Test
+	public void findparent(){
+		StringReader s = new StringReader("POSTURE != 17 --> POSTURE := 17;");
+		Parser p = new ParserImpl();
+		p.parse(s);
+		assert
 	}
 	
 }
