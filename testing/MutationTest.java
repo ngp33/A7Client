@@ -8,6 +8,7 @@ import org.junit.Ignore;
 import org.junit.Test;
 
 import ast.Node;
+import ast.Program;
 import ast.ProgramImpl;
 import exceptions.SyntaxError;
 import mutation.*;
@@ -17,7 +18,7 @@ import parse.Tokenizer;
 
 public class MutationTest {
 
-	
+	//@Ignore
 	@Test
 	public void remove() throws SyntaxError {
 		StringReader s = new StringReader("POSTURE != 17 --> POSTURE := 17; nearby[3] = 0 and ENERGY > 2500 --> bud; {ENERGY > SIZE * 400 and SIZE < 7} --> grow; ahead[0] < -1 and ENERGY < 500 * SIZE --> eat; (ahead[1] / 10 mod 100) != 17 and ahead[1] > 0 --> attack; ahead[1] < -5 --> forward; ahead[2] < -10 and ahead[1] = 0 --> forward; ahead[3] < -15 and ahead[1] = 0 --> forward; ahead[4] < -20 and ahead[1] = 0 --> forward; nearby[0] > 0 and nearby[3] = 0 --> backward; ahead[1] < -1 and { ENERGY > 2500 or SIZE > 7 } --> serve[ENERGY / 42]; random[3] = 1 --> left; 1 = 1 --> wait;");
@@ -36,7 +37,7 @@ public class MutationTest {
 		mr.findparent(r, 1);
 		assertTrue(mr.parent == r);
 		mr.Mutate(r.nodeAt(1));
-		for (int place = 0; place < r.size(); place++){
+		for (int place = 1; place < r.size(); place++){
 			mr.findparent(r, place);
 		}
 		System.out.println(r.prettyPrint(new StringBuilder()));
@@ -86,8 +87,19 @@ public class MutationTest {
 	public void findparent(){
 		StringReader s = new StringReader("POSTURE != 17 --> POSTURE := 17;");
 		Parser p = new ParserImpl();
-		p.parse(s);
-		assert
+		Program q = p.parse(s);
+		MutRemove m = new MutRemove();
+		m.initiate(q);
+		m.findparent(q, 1);
+		assertTrue(m.parent == q);
+		m.findparent(q, 2);
+		assertTrue(m.parent == q.nodeAt(1));
+		m.findparent(q, 3);
+		assertTrue(m.parent == q.nodeAt(2));
+		m.findparent(q, 4);
+		assertTrue(m.parent == q.nodeAt(3));
+		m.findparent(q, 5);
+		assertTrue(m.parent == q.nodeAt(2));
 	}
 	
 }
