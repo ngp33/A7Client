@@ -5,7 +5,7 @@ import ast.Program;
 
 public class MutSwap extends MutationImpl {
 	
-	public MutSwap(Program tree) {
+	public void initiate(Program tree) {
 		type = MutationType.swap;
 		AST = tree;
 	}

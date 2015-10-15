@@ -6,7 +6,7 @@ import ast.Program;
 
 public class MutDuplicate extends MutationImpl {
 	
-	public MutDuplicate(Program tree) {
+	public void initiate(Program tree) {
 		type = MutationType.duplicate;
 		AST = tree;
 	}

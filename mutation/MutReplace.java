@@ -5,7 +5,7 @@ import ast.Program;
 
 public class MutReplace extends ParentConsciousMutation {
 	
-	public MutReplace(Program tree) {
+	public void initiate(Program tree) {
 		type = MutationType.replace;
 		AST = tree;
 	}

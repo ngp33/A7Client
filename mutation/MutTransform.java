@@ -5,7 +5,7 @@ import ast.Program;
 
 public class MutTransform extends MutationImpl {
 	
-	public MutTransform(Program tree) {
+	public void initiate(Program tree) {
 		type = MutationType.transform;
 		AST = tree;
 	}

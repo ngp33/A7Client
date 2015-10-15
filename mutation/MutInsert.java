@@ -5,7 +5,7 @@ import ast.Program;
 
 public class MutInsert extends ParentConsciousMutation {
 	
-	public MutInsert(Program tree) {
+	public void initiate(Program tree) {
 		type = MutationType.insert;
 		AST = tree;
 	}

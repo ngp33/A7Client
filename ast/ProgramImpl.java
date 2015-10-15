@@ -18,7 +18,7 @@ public class ProgramImpl extends Manykids implements Program {
 	 * Initializes the programimpl
 	 * @param args	the rules that will go into the ProgramImpl.
 	 */
-	Mutation [] muttypes = MutationFactory.allMuts();
+	Mutation [] muttypes = MutationFactory.allMuts(this);
 	String Mutationtype = ""; //this is what we will print for the type of mutation. 
 	Random R = new Random();
 	
@@ -34,7 +34,7 @@ public class ProgramImpl extends Manykids implements Program {
 		int p = R.nextInt(size());
 		MutationFactory.randMutation(muttypes);
 		int place = 0;
-		while (usedMutate(p,muttypes[place])){
+		while (usedMutate(p, muttypes[place])){
 		}
 		//TODO update the Mutationtype string
         return this;

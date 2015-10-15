@@ -1,6 +1,7 @@
 package mutation;
 
 import ast.Node;
+import ast.Program;
 
 /**
  * A mutation to the AST
@@ -18,5 +19,7 @@ public interface Mutation {
     
     /** Mutates a node*/
     boolean Mutate(Node n);
+    
+    public void initiate(Program p);
     
 }

@@ -6,6 +6,8 @@ package mutation;
  */
 import java.util.Random;
 
+import ast.Program;
+
 public class MutationFactory {
 	
     public static Mutation getRemove() {
@@ -33,16 +35,21 @@ public class MutationFactory {
     }
     
     /** Returns an array of all the mutation objects*/
-    public static Mutation[] allMuts(){
+    public static Mutation[] allMuts(Program p){
     	Mutation mutone = getRemove();
     	Mutation muttwo = getSwap();
     	Mutation mutthree = getReplace();
     	Mutation mutfour = getTransform();
     	Mutation mutfive = getInsert();
     	Mutation mutsix = getDuplicate();
-    	return new Mutation [] {mutone, muttwo,
+    	Mutation [] m = new Mutation [] {mutone, muttwo,
     			mutthree, mutfour, mutfive, mutsix
     	};
+    	
+    	for (int place = 0; place < 6; place ++){
+    		m[place].initiate(p);
+    	}
+    	return m;
     	
     }
     

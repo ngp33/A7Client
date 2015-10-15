@@ -5,7 +5,7 @@ import ast.Program;
 
 public class MutRemove extends ParentConsciousMutation {
 	
-	public MutRemove(Program tree) {
+	public void initiate(Program tree) {
 		type = MutationType.remove;
 		AST = tree;
 	}
