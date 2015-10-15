@@ -1,6 +1,6 @@
 package ast;
 
-public class MemToUpdate extends Onekid {
+public class MemToUpdate extends Onekid implements Expr {
 	
 	public MemToUpdate(Expr e){
 		only = e;

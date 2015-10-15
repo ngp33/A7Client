@@ -15,6 +15,7 @@ import ast.MathOp.MathOperator;
 import ast.MemAccess;
 import ast.MemToUpdate;
 import ast.Negative;
+import ast.Node;
 import ast.Num;
 import ast.Program;
 import ast.ProgramImpl;
@@ -59,6 +60,7 @@ public class ParserImpl implements Parser {
     	while (t.hasNext()){
     		rll.add(parseRule(t));
     	}
+    	Node [] n = rll.toarray();
     	return new ProgramImpl(rll);
         //throw new UnsupportedOperationException();
     }
@@ -76,6 +78,7 @@ public class ParserImpl implements Parser {
     	Condition a = parseCondition(t);
     	consume(t,TokenType.ARR);
     	Updateact b = parseCommand(t);
+    	consume(t,TokenType.SEMICOLON);
     	return new Rule(a,b);
         //throw new UnsupportedOperationException();
     }

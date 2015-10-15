@@ -62,7 +62,9 @@ enum TokenType {
     ABV_POSTURE(MEMSUGAR, "POSTURE"),
     NUM(OTHER, "<number>"),
     ERROR(OTHER, "[error]"),
-    EOF(OTHER, "EOF");
+    EOF(OTHER, "EOF"),
+    DUB(OTHER, "//");
+
 
     private static final Map<String, TokenType> stringToTypeMap;
     static {

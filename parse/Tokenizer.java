@@ -19,6 +19,7 @@ import static parse.TokenType.RBRACE;
 import static parse.TokenType.RBRACKET;
 import static parse.TokenType.RPAREN;
 import static parse.TokenType.SEMICOLON;
+import static parse.TokenType.DUB;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -178,9 +179,15 @@ class Tokenizer implements Iterator<Token> {
         case '*':
             setNextTokenAndReset(MUL);
             break;
-        case '/':
+        /*case '/':
             setNextTokenAndReset(DIV);
-            break;
+            tokenReady = false;
+            if (peek().getType().equals(DIV)){
+            	lineNo++;
+            	lexOneToken();
+            }
+            tokenReady = true;
+            break;*/
         case '<':
             lexLAngle();
             break;
@@ -201,6 +208,8 @@ class Tokenizer implements Iterator<Token> {
                 lexIdentifier();
             else if (Character.isDigit(c))
                 lexNum();
+            else if (c == 47)
+            	lexslash();
             else unexpected();
         }
     }
@@ -303,6 +312,38 @@ class Tokenizer implements Iterator<Token> {
         catch (NumberFormatException e) {
             unexpected();
         }
+    }
+    
+    private void lexslash() throws IOException, EOFException {
+    	int c;
+        for (c = nextChar(false); c == 47; c =
+                nextChar(false))
+            buf.append((char) c);
+
+        String id = buf.toString();
+        TokenType tt = TokenType.getTypeFromString(id);
+        if (tt != null) {
+        	if (tt.equals(DIV)){
+        		setNextTokenAndReset(tt);
+        	}
+        	else if (tt.equals(DUB)){
+        		int ch = nextChar(false);
+        		for (; ch != -1 && ch != 10;ch = nextChar(false)) {
+        		}
+        		if (ch == 10) {
+        			lineNo ++;
+        			peek();
+        		}
+        		else{
+        			encounteredEOF();
+        		}
+        	}
+        }
+        else {
+            unexpected();
+        }
+
+        if (c != -1) buf.append((char) c);
     }
 
     /**

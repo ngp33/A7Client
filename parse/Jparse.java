@@ -49,9 +49,9 @@ public class Jparse {
 	@Ignore
 	@Test
 	public void rule2() throws SyntaxError{
-		s = new StringReader("nearby[3] = 0 and ENERGY > 2500 --> bud;");
+		s = new StringReader("nearby[3] = 0 and ENERGY > 2500 --> bud; //testing12 323 \n 1 = 1 --> wait;");
 		t = new Tokenizer(s);
-		Rule r = ParserImpl.parseRule(t);
+		ProgramImpl r = ParserImpl.parseProgram(t);
 		System.out.println(r.prettyPrint(sb));
 	}
 	
@@ -66,9 +66,9 @@ public class Jparse {
 	
 	@Test
 	public void command1() throws SyntaxError{
-		s = new StringReader("{ ahead[1] < -1 and ENERGY > 2500 } or SIZE > 7 --> serve[4 + ENERGY / 42];");
+		s = new StringReader("{ ahead[1] < -1 and ENERGY > 2500 } or SIZE > 7 --> serve[4 + ENERGY / 42]; //testhello ");
 		t = new Tokenizer(s);
-		Rule r = ParserImpl.parseRule(t);
+		ProgramImpl r = ParserImpl.parseProgram(t);
 		System.out.println(r.prettyPrint(sb));
 	}
 	

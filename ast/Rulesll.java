@@ -38,6 +38,7 @@ public class Rulesll {
 		while (now != null){
 			r[place] = now;
 			now = now.next;
+			place++;
 		}
 		return r;
 	}
