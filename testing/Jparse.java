@@ -1,4 +1,4 @@
-package parse;
+package testing;
 import org.junit.*;
 
 import ast.Expr;
@@ -7,6 +7,8 @@ import ast.ProgramImpl;
 import ast.Rule;
 import ast.Rulesll;
 import exceptions.SyntaxError;
+import parse.ParserImpl;
+import parse.Tokenizer;
 
 import static org.junit.Assert.*;
 

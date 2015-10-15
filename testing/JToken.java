@@ -1,7 +1,10 @@
-package parse;
+package testing;
 import org.junit.*;
 
 import exceptions.SyntaxError;
+import parse.ParserImpl;
+import parse.TokenType;
+import parse.Tokenizer;
 
 import static org.junit.Assert.*;
 
