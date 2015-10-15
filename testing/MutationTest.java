@@ -9,6 +9,7 @@ import org.junit.Test;
 
 import ast.Node;
 import ast.ProgramImpl;
+import ast.TwokidsSameType;
 import exceptions.SyntaxError;
 import mutation.*;
 import parse.ParserImpl;
@@ -16,7 +17,6 @@ import parse.Tokenizer;
 
 public class MutationTest {
 
-	@Ignore
 	@Test
 	public void remove() throws SyntaxError {
 		StringReader s = new StringReader("POSTURE != 17 --> POSTURE := 17; nearby[3] = 0 and ENERGY > 2500 --> bud; {ENERGY > SIZE * 400 and SIZE < 7} --> grow; ahead[0] < -1 and ENERGY < 500 * SIZE --> eat; (ahead[1] / 10 mod 100) != 17 and ahead[1] > 0 --> attack; ahead[1] < -5 --> forward; ahead[2] < -10 and ahead[1] = 0 --> forward; ahead[3] < -15 and ahead[1] = 0 --> forward; ahead[4] < -20 and ahead[1] = 0 --> forward; nearby[0] > 0 and nearby[3] = 0 --> backward; ahead[1] < -1 and { ENERGY > 2500 or SIZE > 7 } --> serve[ENERGY / 42]; random[3] = 1 --> left; 1 = 1 --> wait;");
@@ -51,24 +51,26 @@ public class MutationTest {
 		Tokenizer t = new Tokenizer(s);
 		ProgramImpl r = ParserImpl.parseProgram(t);
 		StringBuilder sb = new StringBuilder();
-		
-		Node nodeToMutate;
-		
+				
 		MutSwap ms = new MutSwap();
 		ms.initiate(r);
 		
 		System.out.println(r.prettyPrint(sb));
 		sb = new StringBuilder();
-		nodeToMutate = r.nodeAt(0);
+		
 		System.out.println(ms.Mutate(r.nodeAt(0)));
+		
 		System.out.println(r.prettyPrint(sb));
 		sb = new StringBuilder();
 
 		
-		nodeToMutate = r.nodeAt(1);
 		System.out.println(ms.Mutate(r.nodeAt(1)));
 		
 		
+		System.out.println(ms.Mutate(r.getRandomNode(TwokidsSameType.class)));
+		
+		System.out.println(r.prettyPrint(sb));
+		sb = new StringBuilder();
 	}
 	
 }
