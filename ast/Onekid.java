@@ -2,7 +2,7 @@ package ast;
 
 public abstract class Onekid implements Node, mutation.Replacable { 
 	
-	Expr only;
+	public Expr only;
 	
 	
 	public Node nodeAt(int place) throws IndexOutOfBoundsException{

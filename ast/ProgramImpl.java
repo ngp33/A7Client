@@ -3,6 +3,7 @@ package ast;
 import java.util.Random;
 
 import mutation.Mutation;
+import mutation.MutationFactory;
 import mutation.MutationImpl;
 
 import java.util.Random;
@@ -17,9 +18,9 @@ public class ProgramImpl extends Manykids implements Program {
 	 * Initializes the programimpl
 	 * @param args	the rules that will go into the ProgramImpl.
 	 */
-	Random R = new Random();
+	Mutation [] muttypes = MutationFactory.allMuts();
 	String Mutationtype = ""; //this is what we will print for the type of mutation. 
-	//Mutation m = new MutationImpl(); TODO make a mutation object
+	Random R = new Random();
 	
 	public ProgramImpl(Rulesll r){
 		children = r.toarray();
@@ -29,10 +30,13 @@ public class ProgramImpl extends Manykids implements Program {
 
 	@Override
     public Program mutate() {
-        // TODO figure out a way to know what mutations a node supports
+        
 		int p = R.nextInt(size());
-		//Program f = mutate(p,) The mutation (see above comment)
-		//assign a new value to mutationtype
+		MutationFactory.randMutation(muttypes);
+		int place = 0;
+		while (usedMutate(p,muttypes[place])){
+		}
+		//TODO update the Mutationtype string
         return this;
     }
 
@@ -40,6 +44,11 @@ public class ProgramImpl extends Manykids implements Program {
     public Program mutate(int index, Mutation m) {
     	m.Mutate(nodeAt(index));
         return this;
+    }
+    
+    /** executes mutation m on the node and returns true if the mutation was successful*/
+    public boolean usedMutate(int index, Mutation m) {
+    	return m.Mutate(nodeAt(index));
     }
 
     @Override
