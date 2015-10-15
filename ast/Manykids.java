@@ -16,7 +16,8 @@ public abstract class Manykids implements Node, mutation.Swappable {
 			place ++;
 			bigness += children[place].size();
 		}
-		return children[place].nodeAt(there-place-1);
+		bigness -= children[place].size();
+		return children[place].nodeAt(there-bigness-1);
 	}
 	
 	public int size(){
