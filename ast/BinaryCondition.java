@@ -77,6 +77,7 @@ public class BinaryCondition extends TwokidsSameType implements Condition, mutat
 		Random rand = new Random();
 		
 		link = Operator.values()[rand.nextInt(2)];
+		symbol = makenice();
 	}
 	
 	@Override

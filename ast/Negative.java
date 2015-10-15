@@ -3,7 +3,6 @@ package ast;
 import java.util.Random;
 
 import ast.MathOp.MathOperator;
-import mutation.Insertable;
 
 public class Negative extends Onekid implements Expr, mutation.Reparentable, mutation.Insertable {
 	

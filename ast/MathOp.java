@@ -54,6 +54,7 @@ public class MathOp extends TwokidsSameType implements Expr, mutation.Removable 
 		Random rand = new Random();
 		
 		link = MathOperator.values()[rand.nextInt(5)];
+		symbol = makenice();
 	}
 	
 	@Override

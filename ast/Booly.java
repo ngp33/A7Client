@@ -101,6 +101,7 @@ public class Booly extends TwokidsSameType implements Condition {
 		Random rand = new Random();
 		
 		link = equalities.values()[rand.nextInt(6)];
+		symbol = makenice();
 	}
 	
 }

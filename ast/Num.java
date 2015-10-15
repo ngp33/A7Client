@@ -38,7 +38,10 @@ public class Num extends Nokids implements Expr, mutation.Transformable, mutatio
 			div = rand.nextInt();
 		}
 		
-		val += Integer.MAX_VALUE/div;
+		int newVal = Integer.MAX_VALUE/div;
+		if (newVal < 0) return;
+		
+		val = newVal;
 	}
 	
 	//Cringe.

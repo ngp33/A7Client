@@ -75,7 +75,7 @@ public class Updateact extends Manykids implements Node, mutation.Replacable {
 	
 	@Override
 	public Node getRandomKidCopy() {
-		if (hasAction) {
+		if (!hasAction) {
 			return super.getRandomKidCopy();
 		}
 		return null;
