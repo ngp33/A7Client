@@ -26,6 +26,13 @@ public class MutationTest {
 		mr.initiate(r);
 		System.out.println(mr.Mutate(r.nodeAt(0)));
 		System.out.println(mr.Mutate(r.nodeAt(1)));
+		
+		/*for (int them = 0; them < r.size(); them ++){
+			System.out.println(r.nodeAt(them).prettyPrint(sb));
+			sb = new StringBuilder();
+		}*/
+		//MutRemove mr = new MutRemove(r);
+		//mr.Mutate(r.getRandomNode(Node.class));
 	}
 	
 }
