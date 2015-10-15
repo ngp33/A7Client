@@ -1,13 +1,17 @@
 package mutation;
 
 import ast.Node;
+import ast.Program;
 
 public class MutTransform extends MutationImpl {
-
-	@Override
-	public boolean equals(Mutation m) {
-		// TODO Auto-generated method stub
-		return false;
+	
+	public MutTransform(Program tree) {
+		type = MutationType.transform;
+		AST = tree;
+	}
+	
+	public MutTransform() {
+		type = MutationType.transform;
 	}
 
 	@Override

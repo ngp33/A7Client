@@ -1,13 +1,17 @@
 package mutation;
 
 import ast.Node;
+import ast.Program;
 
 public class MutInsert extends ParentConsciousMutation {
-
-	@Override
-	public boolean equals(Mutation m) {
-		// TODO Auto-generated method stub
-		return false;
+	
+	public MutInsert(Program tree) {
+		type = MutationType.insert;
+		AST = tree;
+	}
+	
+	public MutInsert() {
+		type = MutationType.insert;
 	}
 
 	@Override

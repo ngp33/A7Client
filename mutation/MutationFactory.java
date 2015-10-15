@@ -8,8 +8,6 @@ import java.util.Random;
 
 public class MutationFactory {
 	
-	
-	
     public static Mutation getRemove() {
         return new MutRemove();
     }
@@ -19,13 +17,11 @@ public class MutationFactory {
     }
 
     public static Mutation getReplace() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException();
+        return new MutReplace();
     }
 
     public static Mutation getTransform() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException();
+        return new MutTransform();
     }
 
     public static Mutation getInsert() {

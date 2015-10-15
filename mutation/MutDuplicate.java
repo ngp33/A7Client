@@ -2,13 +2,17 @@ package mutation;
 
 import ast.Manykids;
 import ast.Node;
+import ast.Program;
 
 public class MutDuplicate extends MutationImpl {
-
-	@Override
-	public boolean equals(Mutation m) {
-		// TODO Auto-generated method stub
-		return false;
+	
+	public MutDuplicate(Program tree) {
+		type = MutationType.duplicate;
+		AST = tree;
+	}
+	
+	public MutDuplicate() {
+		type = MutationType.duplicate;
 	}
 
 	@Override
