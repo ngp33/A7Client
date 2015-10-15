@@ -2,7 +2,7 @@ package ast;
 
 import java.util.Random;
 
-public class Updateact extends Manykids implements Node {
+public class Updateact extends Manykids implements Node, mutation.Replacable {
 	
 	boolean hasAction;
 
@@ -92,6 +92,10 @@ public class Updateact extends Manykids implements Node {
 		}
 		
 		swapKidsHelper(i1, i2);
+	}
+	
+	public Node getRandomReplacement(Program possibleKids) {
+		return possibleKids.getRandomNode(Updateact.class);
 	}
 
 }

@@ -83,5 +83,9 @@ public class Senses extends Onekid implements Expr, mutation.Transformable, muta
 		
 		return newParent;
 	}
+	
+	public Node getRandomReplacement(Program possibleKids) {
+		return possibleKids.getRandomNode(Expr.class);
+	}
 
 }

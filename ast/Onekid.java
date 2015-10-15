@@ -1,6 +1,6 @@
 package ast;
 
-public abstract class Onekid implements Node { 
+public abstract class Onekid implements Node, mutation.Replacable { 
 	
 	Expr only;
 	

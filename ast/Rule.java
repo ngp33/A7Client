@@ -32,4 +32,9 @@ public class Rule extends Twokids implements Node, mutation.Removable {
 	public Node getReplacement() {
 		return null;
 	}
+	
+	public Node getRandomReplacement(Program possibleKids) {
+		return possibleKids.getRandomNode(Rule.class);
+	}
+	
 }

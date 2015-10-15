@@ -1,6 +1,6 @@
 package ast;
 
-public abstract class Twokids implements Node {
+public abstract class Twokids implements Node, mutation.Replacable {
 	protected Node left;
 	protected Node right;
 	protected Object link;

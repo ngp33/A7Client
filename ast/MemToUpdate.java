@@ -19,7 +19,12 @@ public class MemToUpdate extends Onekid implements Expr {
 
 	@Override
 	Onekid getRootCopy() {
-		return new Mem();
+		return new MemToUpdate();
+	}
+
+	@Override
+	public Node getRandomReplacement(Program possibleKids) {
+		return possibleKids.getRandomNode(MemToUpdate.class);
 	}
 
 }

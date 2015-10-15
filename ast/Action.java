@@ -36,5 +36,10 @@ public class Action extends Nokids implements Node, mutation.Removable, mutation
 		
 		type = Hamlet.values()[rand.nextInt(10)];
 	}
+	
+	@Override
+	public Node getRandomReplacement(Program possibleKids) {
+		return possibleKids.getRandomNode(Action.class);
+	}
 
 }

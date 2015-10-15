@@ -57,5 +57,9 @@ mutation.Reparentable {
 		
 		return newParent;
 	}
+	
+	public Node getRandomReplacement(Program possibleKids) {
+		return possibleKids.getRandomNode(Expr.class);
+	}
 
 }

@@ -24,4 +24,9 @@ public class Update extends Twokids implements Node, mutation.Removable {
 		return null;
 	}
 
+	@Override
+	public Node getRandomReplacement(Program possibleKids) {
+		return possibleKids.getRandomNode(Update.class);
+	}
+
 }

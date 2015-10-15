@@ -6,7 +6,7 @@ public class Negative extends Onekid implements Expr {
 		only = e;
 	}
 	
-	public Negative(){}
+	public Negative() {}
 
 	@Override
 	public StringBuilder prettyPrint(StringBuilder sb) {
@@ -18,6 +18,10 @@ public class Negative extends Onekid implements Expr {
 	@Override
 	Onekid getRootCopy() {
 		return new Negative();
+	}
+	
+	public Node getRandomReplacement(Program possibleKids) {
+		return possibleKids.getRandomNode(Expr.class);
 	}
 
 }
