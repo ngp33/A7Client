@@ -5,6 +5,7 @@ import java.util.Random;
 import mutation.Mutation;
 import mutation.MutationFactory;
 import mutation.MutationImpl;
+import mutation.ParentConsciousMutation;
 
 import java.util.Random;
 
@@ -42,12 +43,15 @@ public class ProgramImpl extends Manykids implements Program {
 
     @Override
     public Program mutate(int index, Mutation m) {
-    	m.Mutate(nodeAt(index));
+    	usedMutate(index, m);
         return this;
     }
     
     /** executes mutation m on the node and returns true if the mutation was successful*/
     public boolean usedMutate(int index, Mutation m) {
+    	if (m instanceof ParentConsciousMutation) {
+    		((ParentConsciousMutation) m).findparent(this, index);
+    	}
     	return m.Mutate(nodeAt(index));
     }
 
