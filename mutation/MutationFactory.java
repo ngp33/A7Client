@@ -49,5 +49,13 @@ public class MutationFactory {
     /** effect: randomizes an array of mutation objects*/
     public static void randMutation(Mutation [] total){
     	Random rand = new Random();
+    	int temp;
+    	Mutation holder;
+    	for (int place = 0; place < total.length - 1; place++) {
+    		temp = rand.nextInt(total.length - place - 1);
+    		holder = total[place];
+    		total[place] = total[temp];
+    		total[temp] = holder;
+    	}
     }
 }

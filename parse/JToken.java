@@ -2,7 +2,6 @@ package parse;
 import org.junit.*;
 
 import exceptions.SyntaxError;
-import parse.Tokenizer.TokenizerIOException;
 
 import static org.junit.Assert.*;
 
