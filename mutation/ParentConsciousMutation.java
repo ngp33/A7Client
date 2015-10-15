@@ -11,7 +11,7 @@ public abstract class ParentConsciousMutation extends MutationImpl {
 	
 	//Will add methods depending on how mutations are implemented in the main program
 	
-	public Node findparent(Node root, int place){
+	public void findparent(Node root, int place){
 		final Node child = root.nodeAt(place);
 		boolean found = false;
 		Node potentialfather = null;
@@ -28,7 +28,7 @@ public abstract class ParentConsciousMutation extends MutationImpl {
 			}
 			place --;
 		}
-		return potentialfather;
+		parent = potentialfather;
 	}
 	
 	
