@@ -3,7 +3,7 @@ package ast;
 import java.util.Random;
 
 public class Specaction extends Action {
-	Expr eval;
+	public Expr eval;
 
 	public Specaction(Hamlet input, Expr e) {
 		super(input);

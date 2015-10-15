@@ -3,6 +3,7 @@ package mutation;
 import ast.Manykids;
 import ast.Node;
 import ast.Onekid;
+import ast.Specaction;
 import ast.Twokids;
 
 public abstract class ParentConsciousMutation extends MutationImpl {
@@ -25,6 +26,9 @@ public abstract class ParentConsciousMutation extends MutationImpl {
 			}
 			else if (potentialfather instanceof Manykids){
 				found = plural((Manykids) potentialfather, child);
+			}
+			else if (potentialfather instanceof Specaction){
+				found = ridiculous((Specaction) potentialfather, child);
 			}
 			place --;
 		}
@@ -51,6 +55,13 @@ public abstract class ParentConsciousMutation extends MutationImpl {
 			if (dad.children[place] == child){
 				return true;
 			}
+		}
+		return false;
+	}
+	
+	private boolean ridiculous(Specaction dad, Node child){
+		if (dad.eval == child){
+			return true;
 		}
 		return false;
 	}
