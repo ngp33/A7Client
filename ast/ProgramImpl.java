@@ -19,9 +19,6 @@ public class ProgramImpl extends Manykids implements Program {
 	 * Initializes the programimpl
 	 * @param args	the rules that will go into the ProgramImpl.
 	 */
-	Mutation [] muttypes = MutationFactory.allMuts(this);
-	public String Mutationtype = ""; //this is what we will print for the type of mutation. 
-	Random R = new Random();
 	
 	public ProgramImpl(Rulesll r){
 		children = r.toarray();
@@ -29,26 +26,52 @@ public class ProgramImpl extends Manykids implements Program {
 
     public ProgramImpl() {}
 
-	@Override
+	/*@Override
     public Program mutate() {
+		Mutation [] muttypes = MutationFactory.allMuts(this);
+		String Mutationtype = ""; //this is what we will print for the type of mutation. 
+		Random R = new Random();
         
 		int p = R.nextInt(size());
 		MutationFactory.randMutation(muttypes);
 		int place = 0;
-		while (usedMutate(p, muttypes[place])){
+		while (!usedMutate(p, muttypes[place])) {
+			place++;
 		}
 		//TODO update the Mutationtype string
 		Mutationtype = muttypes[place].type();
         return this;
+    }*/
+	
+	@Override
+    public Program mutate() {
+		Mutation [] muttypes = MutationFactory.allMuts(this);
+		String Mutationtype = ""; //this is what we will print for the type of mutation. 
+		Random R = new Random();
+        
+		//int p = R.nextInt(size());
+		MutationFactory.randMutation(muttypes);
+		
+		for (int p : getRandomSearchOrder()) {
+			for (int i = 0; i < muttypes.length; i++) {
+				if (usedMutate(p, muttypes[i])) {
+					return this;
+				}
+			}
+		}
+		
+		return null;
     }
 
     @Override
     public Program mutate(int index, Mutation m) {
-    	usedMutate(index, m);
-        return this;
+    	if (usedMutate(index, m)) {
+    		return this;
+    	}
+        return null;
     }
     
-    /** executes mutation m on the node and returns true if the mutation was successful*/
+    /** executes mutation m on the node and returns true if the mutation was legal*/
     public boolean usedMutate(int index, Mutation m) {
     	if (m instanceof ParentConsciousMutation) {
     		((ParentConsciousMutation) m).findparent(this, index);

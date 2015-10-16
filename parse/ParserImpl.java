@@ -40,8 +40,9 @@ public class ParserImpl implements Parser {
 			p = parseProgram(j); 
 		} catch (SyntaxError e) {
 			// TODO Auto-generated catch block
-			System.err.println("error");
-			e.printStackTrace();
+			/*System.err.println("error");
+			e.printStackTrace();*/
+			return null;
 		}
     	return p;
         //throw new UnsupportedOperationException(); 

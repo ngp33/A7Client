@@ -19,14 +19,19 @@ public class Main {
 		else if (args[0].equals("--mutate")){
 			//TODO make it print out what happened in the mutation. ie. what type of mutation at least.
 			Program g = open(args[2]);
-			if (g != null){
+			if (g != null) {
+				System.out.println("ORIGINAL:");
+				System.out.println(g.prettyPrint(s));
+				s = new StringBuilder();
+				
 				for (int i = 0; i < Integer.parseInt(args[1]); i++){
 					g.mutate();
-					ProgramImpl f = (ProgramImpl) g;
-					System.out.println(f.Mutationtype);
+					System.out.println("MUTATION " + i + ":");
 					System.out.println(g.prettyPrint(s));
 					s = new StringBuilder();
 				}
+			} else {
+				System.out.println("The file contains a syntax error.");
 			}
 		}
 		
