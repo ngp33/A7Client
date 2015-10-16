@@ -38,6 +38,7 @@ public class ProgramImpl extends Manykids implements Program {
 		while (usedMutate(p, muttypes[place])){
 		}
 		//TODO update the Mutationtype string
+		Mutationtype = muttypes[place].type();
         return this;
     }
 

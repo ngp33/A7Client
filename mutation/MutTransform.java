@@ -25,4 +25,9 @@ public class MutTransform extends MutationImpl {
 		return false;
 	}
 
+	@Override
+	public String type() {
+		return "The node was replaced with another node of the same type";
+	}
+
 }

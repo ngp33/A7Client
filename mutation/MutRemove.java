@@ -23,6 +23,13 @@ public class MutRemove extends ParentConsciousMutation {
 		
 		return false;
 	}
+
+	@Override
+	public String type() {
+		return "A node is removed. If its parent needs a replacement child, one of the nodes own children replaces it";
+	}
+	
+	
 	
 	/** takes a Node and mutates it according to rule 1 of mutations*/
 	//I think the biggest deciding factor for how this mutation affects a node is

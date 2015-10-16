@@ -24,4 +24,11 @@ public class MutSwap extends MutationImpl {
 		return false;
 	}
 
+	@Override
+	public String type() {
+		return "Two children of a node switched places with one another";
+	}
+	
+	
+
 }

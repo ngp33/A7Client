@@ -28,5 +28,10 @@ public class MutReplace extends ParentConsciousMutation {
 		
 		return false;
 	}
+
+	@Override
+	public String type() {
+		return "The node and its children were replaced by another node in the AST";
+	}
 	
 }

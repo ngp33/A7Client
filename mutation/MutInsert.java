@@ -30,4 +30,9 @@ public class MutInsert extends ParentConsciousMutation {
 		return false;
 	}
 
+	@Override
+	public String type() {
+		return "A random node is inserted as the parent of the mutated node";
+	}
+
 }

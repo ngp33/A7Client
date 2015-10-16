@@ -22,4 +22,6 @@ public interface Mutation {
     
     public void initiate(Program p);
     
+    public String type();
+    
 }

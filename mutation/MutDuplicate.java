@@ -33,4 +33,9 @@ public class MutDuplicate extends MutationImpl {
 		return false;
 	}
 
+	@Override
+	public String type() {
+		return "Takes one child of a node with many (>2), duplicates it and makes it an additional child";
+	}
+
 }
