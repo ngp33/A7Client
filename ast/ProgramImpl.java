@@ -20,7 +20,7 @@ public class ProgramImpl extends Manykids implements Program {
 	 * @param args	the rules that will go into the ProgramImpl.
 	 */
 	Mutation [] muttypes = MutationFactory.allMuts(this);
-	String Mutationtype = ""; //this is what we will print for the type of mutation. 
+	public String Mutationtype = ""; //this is what we will print for the type of mutation. 
 	Random R = new Random();
 	
 	public ProgramImpl(Rulesll r){
@@ -118,5 +118,6 @@ public class ProgramImpl extends Manykids implements Program {
 		
 		return null;
 	}
+
 
 }

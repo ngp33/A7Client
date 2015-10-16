@@ -19,10 +19,14 @@ public class Main {
 		else if (args[0].equals("--mutate")){
 			//TODO make it print out what happened in the mutation. ie. what type of mutation at least.
 			Program g = open(args[2]);
-			for (int i = 0; i < Integer.parseInt(args[1]); i++){
-				g.mutate();
-				g.prettyPrint(s);
-				s = new StringBuilder();
+			if (g != null){
+				for (int i = 0; i < Integer.parseInt(args[1]); i++){
+					g.mutate();
+					ProgramImpl f = (ProgramImpl) g;
+					System.out.println(f.Mutationtype);
+					g.prettyPrint(s);
+					s = new StringBuilder();
+				}
 			}
 		}
 		
@@ -38,7 +42,6 @@ public class Main {
 			Parser p = new ParserImpl();
 			q = p.parse(f);
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return q;
