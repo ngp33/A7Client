@@ -25,4 +25,6 @@ public interface Program extends Node {
     Program mutate(int index, Mutation m);
     
     Node getRandomNode(Class<?> c);
+    
+    Node getRandomNode(Class<?> c, Node[] ignoreList);
 }

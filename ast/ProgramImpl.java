@@ -89,7 +89,7 @@ public class ProgramImpl extends Manykids implements Program {
 		return new ProgramImpl();
 	}
 	
-	public Node getRandomNode(Class<?> type) {
+	public int[] getRandomSearchOrder() {
 		int size = this.size();
 		int[] indexOrder = new int[size];
 		
@@ -107,11 +107,40 @@ public class ProgramImpl extends Manykids implements Program {
         	indexOrder[j] = indexOrder[i];
         	indexOrder[i] = temp;
         }
+        
+        return indexOrder;
+	}
+	
+	public Node getRandomNode(Class<?> type) {
+		int[] indexOrder = getRandomSearchOrder();
 
         for (int i : indexOrder) {
         	Node n = this.nodeAt(i);
         	
         	if (type.isInstance(n)) {
+        		return n;
+        	}
+        }
+		
+		return null;
+	}
+	
+	private boolean notMemberOf(Node[] arr, Node n) {
+		for (Node a : arr) {
+			if (a == n) {
+				return false;
+			}
+		}
+		return true;
+	}
+	
+	public Node getRandomNode(Class<?> type, Node[] ignoreList) {
+		int[] indexOrder = getRandomSearchOrder();
+		
+		for (int i : indexOrder) {
+        	Node n = this.nodeAt(i);
+        	
+        	if (type.isInstance(n) && notMemberOf(ignoreList, n)) {
         		return n;
         	}
         }

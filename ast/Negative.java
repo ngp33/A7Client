@@ -24,8 +24,8 @@ public class Negative extends Onekid implements Expr, mutation.Reparentable, mut
 		return new Negative();
 	}
 	
-	public Node getRandomReplacement(Program possibleKids) {
-		return possibleKids.getRandomNode(Expr.class);
+	public Node getRandomReplacement(Program possibleKids, Node[] ignoreList) {
+		return possibleKids.getRandomNode(Expr.class, ignoreList);
 	}
 
 	@Override

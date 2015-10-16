@@ -23,8 +23,8 @@ public class MemToUpdate extends Onekid implements Expr {
 	}
 
 	@Override
-	public Node getRandomReplacement(Program possibleKids) {
-		return possibleKids.getRandomNode(MemToUpdate.class);
+	public Node getRandomReplacement(Program possibleKids, Node[] ignoreList) {
+		return possibleKids.getRandomNode(MemToUpdate.class, ignoreList);
 	}
 
 }

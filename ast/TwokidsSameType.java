@@ -43,8 +43,8 @@ mutation.Transformable, mutation.Insertable, mutation.Reparentable {
 		return newParent;
 	}
 	
-	public Node getRandomReplacement(Program possibleKids) {
-		return possibleKids.getRandomNode(Condition.class);
+	public Node getRandomReplacement(Program possibleKids, Node[] ignoreList) {
+		return possibleKids.getRandomNode(Condition.class, ignoreList);
 	}
 
 }

@@ -17,7 +17,7 @@ public class MutReplace extends ParentConsciousMutation {
 	@Override
 	public boolean Mutate(Node n) {
 		if (n instanceof Replacable) {
-			Node replacement = ((Replacable) n).getRandomReplacement(AST);
+			Node replacement = ((Replacable) n).getRandomReplacement(AST, new Node[] {});
 			
 			if (replacement == null) {
 				return false;

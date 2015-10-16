@@ -60,9 +60,13 @@ public abstract class Manykids implements Node, mutation.Swappable {
 		return clone;
 	}
 	
-	//Invariant: old is a reference to an object that is referenced in children exactly once.
+	//Precondition: old is a reference to an object that is referenced in children exactly once.
 	public void replaceKid(Node old, Node replacement) {
 		if (replacement == null) {
+			if (children.length == 1) {
+				return;
+			}
+			
 			Node[] newChildren = new Node[children.length-1];
 			
 			int j = 0;

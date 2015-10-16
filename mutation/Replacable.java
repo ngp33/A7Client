@@ -5,6 +5,6 @@ import ast.Program;
 
 public interface Replacable {
 
-	public Node getRandomReplacement(Program possibleKids);
+	public Node getRandomReplacement(Program possibleKids, Node[] ignoreList);
 	
 }

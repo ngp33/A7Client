@@ -81,8 +81,8 @@ public class MathOp extends TwokidsSameType implements Expr, mutation.Removable 
 	}
 	
 	@Override
-	public Node getRandomReplacement(Program possibleKids) {
-		return possibleKids.getRandomNode(Expr.class);
+	public Node getRandomReplacement(Program possibleKids, Node[] ignoreList) {
+		return possibleKids.getRandomNode(Expr.class, ignoreList);
 	}
 	
 }
