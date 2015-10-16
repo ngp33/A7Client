@@ -75,6 +75,7 @@ public class Senses extends Onekid implements Expr, mutation.Transformable, muta
 			} else {
 				((MathOp) newParent).right = this;
 			}
+			((MathOp) newParent).symbol = ((MathOp) newParent).makenice();
 		} else if (selector == 1) {
 			newParent = new MemAccess(this);
 		} else {
@@ -84,8 +85,8 @@ public class Senses extends Onekid implements Expr, mutation.Transformable, muta
 		return newParent;
 	}
 	
-	public Node getRandomReplacement(Program possibleKids, Node[] ignoreList) {
-		return possibleKids.getRandomNode(Expr.class, ignoreList);
+	public Node getRandomReplacement(Program possibleKids) {
+		return possibleKids.getRandomNode(Expr.class);
 	}
 
 }

@@ -94,8 +94,8 @@ public class Updateact extends Manykids implements Node, mutation.Replacable {
 		swapKidsHelper(i1, i2);
 	}
 	
-	public Node getRandomReplacement(Program possibleKids, Node[] ignoreList) {
-		return possibleKids.getRandomNode(Updateact.class, ignoreList);
+	public Node getRandomReplacement(Program possibleKids) {
+		return possibleKids.getRandomNode(Updateact.class);
 	}
 
 }

@@ -41,4 +41,8 @@ public class Specaction extends Action {
 		type = Hamlet.values()[rand.nextInt(2)+10];
 	}
 	
+	public void replaceKid(Node old, Node replacement) {
+		eval = (Expr) replacement;
+	}
+	
 }

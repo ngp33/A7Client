@@ -38,8 +38,8 @@ public class Action extends Nokids implements Node, mutation.Removable, mutation
 	}
 	
 	@Override
-	public Node getRandomReplacement(Program possibleKids, Node[] ignoreList) {
-		return possibleKids.getRandomNode(Action.class, ignoreList);
+	public Node getRandomReplacement(Program possibleKids) {
+		return possibleKids.getRandomNode(Action.class);
 	}
 
 }

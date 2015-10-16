@@ -107,6 +107,34 @@ public class MutationTest {
 		
 		for (int i = 1; i < r.size(); i++) {
 			Node n = r.nodeAt(i);
+			mr.findparent(r, i);
+			
+			if (mr.Mutate(n)) {
+				System.out.println("MUTATION ON " + i + ":");
+				System.out.println(r.prettyPrint(sb));
+				sb = new StringBuilder();
+			} else {
+				System.out.println("MUTATION ON " + i + " NOT SUPPORTED");
+			}
+		}
+	}
+	
+	@Ignore
+	@Test
+	public void replace2() throws SyntaxError {
+		StringReader s = new StringReader("mem[7] != 17 --> mem[7] := 17;");
+		Tokenizer t = new Tokenizer(s);
+		ProgramImpl r = ParserImpl.parseProgram(t);
+		StringBuilder sb = new StringBuilder();
+		
+		System.out.println(r.prettyPrint(sb));
+		sb = new StringBuilder();
+		
+		MutReplace mr = new MutReplace();
+		mr.initiate(r);
+		
+		for (int i = 1; i < r.size(); i++) {
+			Node n = r.nodeAt(i);
 			mr.loadAncestors(i);
 			mr.findparent(r, i);
 			
@@ -120,6 +148,8 @@ public class MutationTest {
 		}
 	}
 	
+	@Ignore
+	@Test
 	public void getAncestorsTest() throws SyntaxError {
 		StringReader s = new StringReader("mem[7] != 17 --> mem[7] := 17;");
 		Tokenizer t = new Tokenizer(s);
@@ -128,7 +158,11 @@ public class MutationTest {
 		MutReplace mr = new MutReplace();
 		mr.initiate(r);
 		
-		mr.loadAncestors(10);
+		System.out.println(r.nodeAt(8));
+		
+		mr.loadAncestors(8);
+		
+		mr.Mutate(r.nodeAt(8));
 	}
 	
 	@Ignore
@@ -152,6 +186,37 @@ public class MutationTest {
 				System.out.println("MUTATION ON " + i + ":");
 				System.out.println(r.prettyPrint(sb));
 				sb = new StringBuilder();
+			} else {
+				System.out.println("MUTATION ON " + i + " NOT SUPPORTED");
+			}
+		}
+	}
+	
+	@Test
+	public void insert() throws SyntaxError {
+		StringReader s = new StringReader("POSTURE != 17 --> POSTURE := 17; nearby[3] = 0 and ENERGY > 2500 --> bud; {ENERGY > SIZE * 400 and SIZE < 7} --> grow; ahead[0] < -1 and ENERGY < 500 * SIZE --> eat; (ahead[1] / 10 mod 100) != 17 and ahead[1] > 0 --> attack; ahead[1] < -5 --> forward; ahead[2] < -10 and ahead[1] = 0 --> forward; ahead[3] < -15 and ahead[1] = 0 --> forward; ahead[4] < -20 and ahead[1] = 0 --> forward; nearby[0] > 0 and nearby[3] = 0 --> backward; ahead[1] < -1 and { ENERGY > 2500 or SIZE > 7 } --> serve[ENERGY / 42]; random[3] = 1 --> left; 1 = 1 --> wait;");
+		Tokenizer t = new Tokenizer(s);
+		ProgramImpl r = ParserImpl.parseProgram(t);
+		StringBuilder sb = new StringBuilder();
+		
+		MutInsert mi = new MutInsert();
+		mi.initiate(r);
+		
+		System.out.println(r.prettyPrint(sb));
+		sb = new StringBuilder();
+		
+		for (int i = 1; i < r.size(); i++) {
+			Node n = r.nodeAt(i);
+			mi.findparent(r, i);
+			
+			if (mi.Mutate(n)) {
+				System.out.println("MUTATION ON " + i + ":");
+				System.out.println(r.prettyPrint(sb));
+				sb = new StringBuilder();
+				
+				s = new StringReader("POSTURE != 17 --> POSTURE := 17; nearby[3] = 0 and ENERGY > 2500 --> bud; {ENERGY > SIZE * 400 and SIZE < 7} --> grow; ahead[0] < -1 and ENERGY < 500 * SIZE --> eat; (ahead[1] / 10 mod 100) != 17 and ahead[1] > 0 --> attack; ahead[1] < -5 --> forward; ahead[2] < -10 and ahead[1] = 0 --> forward; ahead[3] < -15 and ahead[1] = 0 --> forward; ahead[4] < -20 and ahead[1] = 0 --> forward; nearby[0] > 0 and nearby[3] = 0 --> backward; ahead[1] < -1 and { ENERGY > 2500 or SIZE > 7 } --> serve[ENERGY / 42]; random[3] = 1 --> left; 1 = 1 --> wait;");
+				t = new Tokenizer(s);
+				r = ParserImpl.parseProgram(t);
 			} else {
 				System.out.println("MUTATION ON " + i + " NOT SUPPORTED");
 			}

@@ -27,7 +27,7 @@ public class JProgramMethods {
 		System.out.println(Arrays.toString(r.getRandomSearchOrder()));
 	}
 	
-	@Ignore
+	//@Ignore
 	@Test
 	public void test() throws SyntaxError {
 		StringReader s = new StringReader("mem[7] != 17 --> mem[7] := 17;");
@@ -40,7 +40,7 @@ public class JProgramMethods {
 		}
 	}
 	
-	
+	@Ignore
 	@Test
 	public void randomNodeWithIgnore() throws SyntaxError {
 		StringReader s = new StringReader("mem[7] != 17 --> mem[7] := 17;");

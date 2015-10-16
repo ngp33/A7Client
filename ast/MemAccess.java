@@ -49,8 +49,10 @@ mutation.Reparentable {
 			} else {
 				((MathOp) newParent).right = this;
 			}
+			((MathOp) newParent).symbol = ((MathOp) newParent).makenice();
 		} else if (selector == 1) {
-			newParent = new MemAccess(this);
+			newParent = new MemAccess();
+			((MemAccess) newParent).only = this;
 		} else {
 			newParent = new Sensespace(rand.nextInt(4) + 1, this);
 		}

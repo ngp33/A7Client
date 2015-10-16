@@ -59,6 +59,7 @@ public class Num extends Nokids implements Expr, mutation.Transformable, mutatio
 			} else {
 				((MathOp) newParent).right = this;
 			}
+			((MathOp) newParent).symbol = ((MathOp) newParent).makenice();
 		} else if (selector == 1) {
 			newParent = new MemAccess(this);
 		} else {

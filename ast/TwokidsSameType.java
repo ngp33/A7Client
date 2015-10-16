@@ -40,11 +40,13 @@ mutation.Transformable, mutation.Insertable, mutation.Reparentable {
 		
 		newParent.link = rand.nextBoolean() ? Operator.OR : Operator.AND;
 		
+		newParent.symbol = newParent.makenice();
+		
 		return newParent;
 	}
 	
-	public Node getRandomReplacement(Program possibleKids, Node[] ignoreList) {
-		return possibleKids.getRandomNode(Condition.class, ignoreList);
+	public Node getRandomReplacement(Program possibleKids) {
+		return possibleKids.getRandomNode(Condition.class);
 	}
 
 }

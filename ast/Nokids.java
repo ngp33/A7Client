@@ -17,8 +17,8 @@ public abstract class Nokids implements Node, mutation.Replacable {
 		throw new UnsupportedOperationException();
 	}
 	
-	public Node getRandomReplacement(Program possibleKids, Node[] ignoreList) {
-		return possibleKids.getRandomNode(Expr.class, ignoreList);
+	public Node getRandomReplacement(Program possibleKids) {
+		return possibleKids.getRandomNode(Expr.class);
 	}
 	
 	public String toString(){
