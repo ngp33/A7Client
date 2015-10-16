@@ -21,4 +21,8 @@ public abstract class Nokids implements Node, mutation.Replacable {
 		return possibleKids.getRandomNode(Expr.class, ignoreList);
 	}
 	
+	public String toString(){
+		StringBuilder sb = new StringBuilder();
+		return this.prettyPrint(sb).toString();
+	}
 }

@@ -57,7 +57,7 @@ public class Jparse {
 		System.out.println(r.prettyPrint(sb));
 	}
 	
-	@Ignore
+	//@Ignore
 	@Test
 	public void command() throws SyntaxError{
 		s = new StringReader("nearby[3] = 0 and ENERGY > 2500 --> mem[7] := 17\nbud;");

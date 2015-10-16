@@ -46,6 +46,21 @@ public class MutationTest {
 				System.out.println("MUTATION ON " + i + " NOT SUPPORTED");
 			}
 		}
+		/*nodeToMutate = r.nodeAt(0);
+		mr.findparent(nodeToMutate, 0);
+		System.out.println(mr.Mutate(r.nodeAt(0)));*/
+	
+		mr.findparent(r, 1);
+		assertTrue(mr.parent == r);
+		mr.Mutate(r.nodeAt(1));
+		int k = r.size();
+		for (int place = 1; place < 136; place++){
+			mr.findparent(r, place);
+		}
+		System.out.println(r.nodeAt(142).prettyPrint(new StringBuilder()));
+		for (int place = 136; place < k; place ++){
+			mr.findparent(r, place);
+		}
 	}
 	
 	@Ignore
@@ -191,4 +206,15 @@ public class MutationTest {
 		assertTrue(m.parent == q.nodeAt(2));
 	}
 	
+	@Test
+	public void checkancestor(){
+		StringReader s = new StringReader("POSTURE != 17 --> POSTURE := 17; nearby[3] = 0 and ENERGY > 2500 --> bud;");
+		Parser p = new ParserImpl();
+
+		Program q = p.parse(s);
+		MutReplace m = new MutReplace();
+		m.initiate(q);
+		System.out.println(q.nodeAt(13).prettyPrint(new StringBuilder()));
+		Node [] n = m.getAncestors(13);
+	}
 }

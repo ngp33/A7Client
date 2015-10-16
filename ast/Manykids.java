@@ -105,5 +105,10 @@ public abstract class Manykids implements Node, mutation.Swappable {
 		children[i1] = children[i2];
 		children[i2] = temp;
 	}
+	
+	public String toString(){
+		StringBuilder sb = new StringBuilder();
+		return this.prettyPrint(sb).toString();
+	}
 
 }

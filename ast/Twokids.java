@@ -52,5 +52,10 @@ public abstract class Twokids implements Node, mutation.Replacable {
 			right = replacement;
 		}
 	}
+	
+	public String toString(){
+		StringBuilder sb = new StringBuilder();
+		return this.prettyPrint(sb).toString();
+	}
 
 }

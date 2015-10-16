@@ -30,6 +30,11 @@ public abstract class Onekid implements Node, mutation.Replacable {
 		only = (Expr) replacement;
 	}
 	
+	public String toString(){
+		StringBuilder sb = new StringBuilder();
+		return (this.prettyPrint(sb).toString());
+	}
+	
 	/*public void fillInMissingKids(Program possibleKids) {
 		if (only == null) {
 			only = (Expr) possibleKids.getRandomNode(Expr.class);
