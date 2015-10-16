@@ -119,7 +119,7 @@ public class MutationTest {
 		}
 	}
 	
-	@Ignore
+	/*@Ignore
 	@Test
 	public void replace2() throws SyntaxError {
 		StringReader s = new StringReader("mem[7] != 17 --> mem[7] := 17;");
@@ -146,9 +146,9 @@ public class MutationTest {
 				System.out.println("MUTATION ON " + i + " NOT SUPPORTED");
 			}
 		}
-	}
+	}*/
 	
-	@Ignore
+	/*@Ignore
 	@Test
 	public void getAncestorsTest() throws SyntaxError {
 		StringReader s = new StringReader("mem[7] != 17 --> mem[7] := 17;");
@@ -163,7 +163,7 @@ public class MutationTest {
 		mr.loadAncestors(8);
 		
 		mr.Mutate(r.nodeAt(8));
-	}
+	}*/
 	
 	@Ignore
 	@Test
@@ -271,7 +271,7 @@ public class MutationTest {
 		assertTrue(m.parent == q.nodeAt(2));
 	}
 	
-	@Test
+	/*@Test
 	public void checkancestor(){
 		StringReader s = new StringReader("POSTURE != 17 --> POSTURE := 17; nearby[3] = 0 and ENERGY > 2500 --> bud;");
 		Parser p = new ParserImpl();
@@ -281,5 +281,5 @@ public class MutationTest {
 		m.initiate(q);
 		System.out.println(q.nodeAt(13).prettyPrint(new StringBuilder()));
 		Node [] n = m.getAncestors(13);
-	}
+	}*/
 }
