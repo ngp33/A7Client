@@ -24,7 +24,7 @@ public class Main {
 					g.mutate();
 					ProgramImpl f = (ProgramImpl) g;
 					System.out.println(f.Mutationtype);
-					g.prettyPrint(s);
+					System.out.println(g.prettyPrint(s));
 					s = new StringBuilder();
 				}
 			}

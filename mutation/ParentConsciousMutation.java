@@ -11,8 +11,21 @@ public abstract class ParentConsciousMutation extends MutationImpl {
 	public Node parent;
 	
 	//Will add methods depending on how mutations are implemented in the main program
+	public Node [] getAncestors(int place) {
+		if (place == 0){
+			return new Node[] {AST};
+		}
+		Node [] now = getAncestors(findparent(AST,place));
+		Node [] next = new Node [now.length + 1];
+		for (int there = 0; place < now.length; place ++){
+			next[there] = now[there];
+		}
+		next[now.length] = AST.nodeAt(place);
+		return next;
+	}
 	
-	public void findparent(Node root, int place){
+	
+	public int findparent(Node root, int place){
 		final Node child = root.nodeAt(place);
 		boolean found = false;
 		Node potentialfather = null;
@@ -33,6 +46,7 @@ public abstract class ParentConsciousMutation extends MutationImpl {
 			place --;
 		}
 		parent = potentialfather;
+		return place;
 	}
 	
 	
