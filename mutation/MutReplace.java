@@ -5,6 +5,8 @@ import ast.Program;
 
 public class MutReplace extends ParentConsciousMutation {
 	
+	Node[] ancestors;
+	
 	public void initiate(Program tree) {
 		type = MutationType.replace;
 		AST = tree;
@@ -17,7 +19,7 @@ public class MutReplace extends ParentConsciousMutation {
 	@Override
 	public boolean Mutate(Node n) {
 		if (n instanceof Replacable) {
-			Node replacement = ((Replacable) n).getRandomReplacement(AST, new Node[] {});
+			Node replacement = ((Replacable) n).getRandomReplacement(AST, ancestors);
 			
 			if (replacement == null) {
 				return false;
@@ -27,6 +29,23 @@ public class MutReplace extends ParentConsciousMutation {
 		}
 		
 		return false;
+	}
+	
+	public void loadAncestors(int place) {
+		ancestors = getAncestors(place);
+	}
+	
+	public Node [] getAncestors(int place) {
+		if (place == 0){
+			return new Node[] {AST};
+		}
+		Node [] now = getAncestors(findparent(AST,place));
+		Node [] next = new Node [now.length + 1];
+		for (int there = 0; there < now.length; there ++){
+			next[there] = now[there];
+		}
+		next[now.length] = AST.nodeAt(place);
+		return next;
 	}
 
 	@Override
