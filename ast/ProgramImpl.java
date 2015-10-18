@@ -2,6 +2,7 @@ package ast;
 
 import java.util.Random;
 
+import critter.Critter;
 import mutation.Mutation;
 import mutation.MutationFactory;
 import mutation.MutationImpl;
@@ -19,6 +20,7 @@ public class ProgramImpl extends Manykids implements Program {
 	 * Initializes the programimpl
 	 * @param args	the rules that will go into the ProgramImpl.
 	 */
+	public String Mutationtype = ""; //this is what we will print for the type of mutation.
 	
 	public ProgramImpl(Rulesll r){
 		children = r.toarray();
@@ -46,7 +48,6 @@ public class ProgramImpl extends Manykids implements Program {
 	@Override
     public Program mutate() {
 		Mutation [] muttypes = MutationFactory.allMuts(this);
-		String Mutationtype = ""; //this is what we will print for the type of mutation. 
 		Random R = new Random();
         
 		//int p = R.nextInt(size());
@@ -55,6 +56,7 @@ public class ProgramImpl extends Manykids implements Program {
 		for (int p : getRandomSearchOrder()) {
 			for (int i = 0; i < muttypes.length; i++) {
 				if (usedMutate(p, muttypes[i])) {
+					Mutationtype = muttypes[i].type();
 					return this;
 				}
 			}
@@ -169,6 +171,14 @@ public class ProgramImpl extends Manykids implements Program {
         }
 		
 		return null;
+	}
+	
+	/**Effect: Evaluates the program of a critter.
+	 * Returns: true if a rule encountered committed an action
+	 * @param c
+	 * @return
+	 */
+	public boolean eval(Critter c){
 	}
 
 

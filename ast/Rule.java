@@ -1,5 +1,7 @@
 package ast;
 
+import critter.Critter;
+
 /**
  * A representation of a critter rule.
  */
@@ -35,6 +37,12 @@ public class Rule extends Twokids implements Node, mutation.Removable {
 	
 	public Node getRandomReplacement(Program possibleKids) {
 		return possibleKids.getRandomNode(Rule.class);
+	}
+	
+	/**effect: alters critter c according to the rules
+	 * returns: true if an action occured*/
+	public boolean perform(Critter c){
+		return ((Condition) left).getval() ? false : ((Updateact) right).operate(c);
 	}
 	
 }

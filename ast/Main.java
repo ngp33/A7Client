@@ -28,6 +28,7 @@ public class Main {
 					g.mutate();
 					System.out.println("MUTATION " + i + ":");
 					System.out.println(g.prettyPrint(s));
+					System.out.println(((ProgramImpl) g).Mutationtype);
 					s = new StringBuilder();
 				}
 			} else {

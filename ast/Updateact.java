@@ -2,6 +2,8 @@ package ast;
 
 import java.util.Random;
 
+import critter.Critter;
+
 public class Updateact extends Manykids implements Node, mutation.Replacable {
 	
 	boolean hasAction;
@@ -96,6 +98,26 @@ public class Updateact extends Manykids implements Node, mutation.Replacable {
 	
 	public Node getRandomReplacement(Program possibleKids) {
 		return possibleKids.getRandomNode(Updateact.class);
+	}
+	
+	
+	/**Effect: alters the instance variables of critter c according to the rules updates and action.
+	 * returns: true if an action is committed
+	 * Should only be called if the rule is supposed to happen.
+	 * @param c
+	 * @return
+	 */
+	public boolean operate(Critter c){
+		for (int place = 0; place < children.length-1; place++){
+			((Update) children[place]).updatemem(c);
+		}
+		if (hasAction){
+			((Action) children[children.length]).commit();
+		}
+		else{ 
+			((Update) children[children.length]).updatemem(c);
+		}
+		return hasAction;
 	}
 
 }

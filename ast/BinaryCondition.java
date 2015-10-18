@@ -26,14 +26,6 @@ public class BinaryCondition extends TwokidsSameType implements Condition, mutat
 
     public BinaryCondition() {}
     
-    /*@Override
-    public StringBuilder prettyPrint(StringBuilder sb) {
-        // TODO Auto-generated method stub
-    	left.prettyPrint(sb).toString();
-    	sb.append((link == Operator.OR) ? "or " : "and ");
-    	right.prettyPrint(sb).toString();
-        return sb;
-    }*/
     
     public StringBuilder prettyPrint(StringBuilder sb) {
     	sb.append("{ ");
@@ -93,21 +85,21 @@ public class BinaryCondition extends TwokidsSameType implements Condition, mutat
 		return true;
 	}
 
-	/*@Override
+	@Override
 	public Boolean getval() {
 		// TODO Auto-generated method stub
-    	if (bin.equals(Operator.AND)){
-    		if (left.getval() && right.getval()){
+    	if (link.equals(Operator.AND)){
+    		if (((Condition) left).getval() && ((Condition) right).getval()){
     			return true;
     		}
     		return false;
     	}
     	else{
-    		if (left.getval() || right.getval()){
+    		if (((Condition) left).getval() || ((Condition) right).getval()){
     			return true;
     		}
     		return false;
     	}
-	}*/
+	}
 	
 }

@@ -1,5 +1,7 @@
 package ast;
 
+import critter.Critter;
+
 public class MemToUpdate extends Onekid {
 	
 	public MemToUpdate(Expr e){
@@ -25,6 +27,12 @@ public class MemToUpdate extends Onekid {
 	@Override
 	public Node getRandomReplacement(Program possibleKids) {
 		return possibleKids.getRandomNode(MemToUpdate.class);
+	}
+	
+	
+	/** returns the value of mem[only] if only < mem.length. Otherwise returns -1*/
+	public int value(Critter c){
+		return (only.value() < c.mem[0] && 0 <= only.value()) ? c.mem[only.value()] : -1;
 	}
 
 }

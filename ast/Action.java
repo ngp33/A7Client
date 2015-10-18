@@ -42,4 +42,8 @@ public class Action extends Nokids implements Node, mutation.Removable, mutation
 		return possibleKids.getRandomNode(Action.class);
 	}
 
+	public void commit() {
+		// TODO Auto-generated method stub
+	}
+
 }

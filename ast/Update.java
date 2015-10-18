@@ -1,5 +1,7 @@
 package ast;
 
+import critter.Critter;
+
 public class Update extends Twokids implements Node, mutation.Removable {
 	
 	Update next;
@@ -27,6 +29,20 @@ public class Update extends Twokids implements Node, mutation.Removable {
 	@Override
 	public Node getRandomReplacement(Program possibleKids) {
 		return possibleKids.getRandomNode(Update.class);
+	}
+
+	
+	//TODO make sure this handles mem out of bounds.
+	//TODO make sure this doesn't update mem which are immutable
+	/** updates the mem field of a critter if that mem field is
+	 * available for updating.*/
+	public void updatemem(Critter c) {
+		if (((MemToUpdate) left).value(c) != -1){
+			if (((MemToUpdate) left).only.value() >= 7){
+				c.mem[((MemToUpdate) left).only.value()] = ((Expr) right).value();
+			}
+		}
+		
 	}
 
 }
