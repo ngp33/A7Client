@@ -2,6 +2,8 @@ package ast;
 
 import java.util.Random;
 
+import critter.Critter;
+
 public class Action extends Nokids implements Node, mutation.Removable, mutation.Transformable {
 	
 	Hamlet type;
@@ -42,8 +44,14 @@ public class Action extends Nokids implements Node, mutation.Removable, mutation
 		return possibleKids.getRandomNode(Action.class);
 	}
 
-	public void commit() {
+	public void commit(Critter c) {
+		if (type.equals(Hamlet.attack)){ //Not sure if this is the way to do this for enums
+			
+		}
 		// TODO Auto-generated method stub
+	}
+	public void commit(Critter c, Critter victim){
+		Actionpacked.attack(c,victim);
 	}
 
 }

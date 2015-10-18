@@ -111,8 +111,8 @@ public class Updateact extends Manykids implements Node, mutation.Replacable {
 		for (int place = 0; place < children.length-1; place++){
 			((Update) children[place]).updatemem(c);
 		}
-		if (hasAction){
-			((Action) children[children.length]).commit();
+		if (hasAction){ //TODO make sure this calls a different commit if the action is attack
+			((Action) children[children.length]).commit(c);
 		}
 		else{ 
 			((Update) children[children.length]).updatemem(c);
