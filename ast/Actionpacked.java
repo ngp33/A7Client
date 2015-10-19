@@ -25,6 +25,7 @@ public class Actionpacked {
 			movement(c,true);
 			break;
 		case grow:
+			grow(c);
 			break;
 		case left:
 			turn(c,true);
@@ -49,6 +50,7 @@ public class Actionpacked {
 	
 	/**Updates the energy of the attacked critter. Does not handle the situation where
 	 * the critter dies. Maybe that's something TODO
+	 * Invariant: there actually is a critter that is being attacked...
 	 * @param attacker
 	 * @param victim
 	 */
@@ -56,6 +58,7 @@ public class Actionpacked {
 		double inside = attacker.w.DAMAGE_INC * (attacker.mem[3] * attacker.mem[2] - victim.mem[3] * victim.mem[1]);
 		int harm = (int) (attacker.w.BASE_DAMAGE * attacker.mem[3] * pfunct(inside));
 		victim.mem[4] -= harm;
+		attacker.mem[4] -= attacker.mem[3] * attacker.w.ATTACK_COST;
 	}
 	
 	/** used in calculating the attack damage*/
@@ -64,7 +67,7 @@ public class Actionpacked {
 	}
 	
 	
-	/** moves the critter TODO check that the move is valid
+	/** moves the critter TODO check that the move is valid.
 	 * Invariant: direction is between 0 and 5 inclusive*/
 	private static void movement(Critter c, boolean forward){
 		int [] newplace = dircoords(c,forward);
@@ -119,6 +122,34 @@ public class Actionpacked {
 	
 	private static void wait(Critter c){
 		c.mem[4] += c.w.SOLAR_FLUX * c.mem[3];
+	}
+	
+	
+	/** Checks to see if the space one ahead if {@code ahead = true} in the critter's direction
+	 * 	or one behind if {@code ahead = false} is empty.
+	 * 
+	 * @param c
+	 * @param ahead
+	 */
+	private static boolean checkempty(Critter c, boolean ahead){
+		return c.w.getNumRep(dircoords(c,ahead)) == 0 ? true : false;
+	}
+	
+	
+	
+	
+	/**Generates a new food hex with the proper amount of food in the place where the 
+	 * critter was when it died. //TODO implement
+	 * @param c
+	 */
+	public static void dies(Critter c){
+		
+	}
+	
+	/** Critter grows one unit bigger.*/
+	private static void grow(Critter c) {
+		c.mem[4] -= c.mem[3] * complexitycalc(c) * c.w.GROW_COST;
+		c.mem[3] ++;
 	}
 
 	

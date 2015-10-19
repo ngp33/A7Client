@@ -48,10 +48,14 @@ public class Action extends Nokids implements Node, mutation.Removable, mutation
 		if (type.equals(Hamlet.attack)){ //Not sure if this is the way to do this for enums
 			
 		}
+		if (c.mem[4] <= 0){
+			Actionpacked.dies(c);
+		}
 		// TODO Auto-generated method stub
 	}
 	public void commit(Critter c, Critter victim){
 		Actionpacked.attack(c,victim);
 	}
+	
 
 }
