@@ -16,8 +16,10 @@ public class Critter extends Hex {
 	 * @param species
 	 * @param data
 	 */
+	
 	public Critter(String species, int [] data) { 
 	}
+	
 	/**Effect: updates the critter's instance variables according to its rules. 
 	 * When the critter moves, you might have to create a new hex on the place where it was.
 	 */

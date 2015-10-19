@@ -16,5 +16,12 @@ public class World {
 		
 		grid[col][row] = h;
 	}
+	
+	
+	public int getNumRep(int [] rowcommacol){
+		//TODO
+		return 0;
+		
+	}
 
 }

@@ -1,6 +1,6 @@
 package ast;
 
-import critter.Critter;
+import world.Critter;
 
 public class MemToUpdate extends Onekid {
 	

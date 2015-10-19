@@ -59,7 +59,7 @@ public interface Node {
      * This method returns the same result as {@code prettyPrint(...).toString()}
      * @return The pretty-print of the AST rooted at this node.
      */
-    @Override
+
     String toString();
     
 }

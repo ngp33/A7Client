@@ -2,7 +2,7 @@ package ast;
 
 import java.util.Random;
 
-import critter.Critter;
+import world.Critter;
 
 public class Action extends Nokids implements Node, mutation.Removable, mutation.Transformable {
 	

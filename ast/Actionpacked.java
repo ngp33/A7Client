@@ -1,7 +1,7 @@
 package ast;
 
 import ast.Action.Hamlet;
-import critter.Critter;
+import world.Critter;
 import java.math.*;
 
 public class Actionpacked {
@@ -20,6 +20,7 @@ public class Actionpacked {
 		case bud: //TODO overload critter constructor to allow for bud
 			break;
 		case eat:
+			consume(c);
 			break;
 		case forward:
 			movement(c,true);
@@ -48,6 +49,15 @@ public class Actionpacked {
 		}
 	}
 	
+	private static void consume(Critter c) {
+		int n = c.w.getNumRep(dircoords(c,true));
+		if (n < 0) {
+			if (c.w.ENERGY_PER_SIZE * c.mem[3] < c.mem [4] + (-1-n)) { //too much food on the hex to be fully consumed
+				c.w.putFood()
+			}
+		}
+	}
+
 	/**Updates the energy of the attacked critter. Does not handle the situation where
 	 * the critter dies. Maybe that's something TODO
 	 * Invariant: there actually is a critter that is being attacked...

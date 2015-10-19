@@ -2,7 +2,7 @@ package ast;
 
 import java.util.Random;
 
-import critter.Critter;
+import world.Critter;
 
 public class Updateact extends Manykids implements Node, mutation.Replacable {
 	
