@@ -1,4 +1,4 @@
-package critter;
+package world;
 
 public class Rulehandler {
 	
@@ -18,7 +18,7 @@ public class Rulehandler {
 	 * @return
 	 */
 	private static boolean evaluateprogram(Critter c){
-		return c.p.eval(c);
+		return c.genes.eval(c);
 	}
 
 

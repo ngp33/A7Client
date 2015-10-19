@@ -2,7 +2,7 @@ package ast;
 
 import java.util.Random;
 
-import critter.Critter;
+import world.Critter;
 import mutation.Mutation;
 import mutation.MutationFactory;
 import mutation.MutationImpl;
