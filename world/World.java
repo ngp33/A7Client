@@ -18,10 +18,14 @@ public class World {
 	}
 	
 	
-	public int getNumRep(int [] rowcommacol){
+	public int getNumRep(int [] rowcommacol) {
 		//TODO
 		return 0;
 		
+	}
+	
+	public void putFood(int amount, int [] rowcommacol) {
+		//TODO
 	}
 
 }
