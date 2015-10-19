@@ -42,7 +42,7 @@ public class Rule extends Twokids implements Node, mutation.Removable {
 	/**effect: alters critter c according to the rules
 	 * returns: true if an action occured*/
 	public boolean perform(Critter c){
-		return ((Condition) left).getval() ? false : ((Updateact) right).operate(c);
+		return ((Condition) left).getval(c) ? false : ((Updateact) right).operate(c);
 	}
 	
 }

@@ -31,15 +31,15 @@ public class Actionpacked {
 		case left:
 			turn(c,true);
 			break;
-		case mate:
+		case mate: //TODO make it happen
 			break;
 		case right:
 			turn(c,false);
 			break;
-		case serve:
+		/*case serve:
 			break;
 		case tag:
-			break;
+			break;*/ //Should be handled in SpecAction
 		case wait:
 			wait(c);
 			break;
@@ -49,13 +49,25 @@ public class Actionpacked {
 		}
 	}
 	
+	/** should handle both cases of eating
+	 * 	1. When there is more food than the critter can consume
+	 * 	2. When the critter can consume all the food on the hex.
+	 * After the critter has eaten, it loses the energy for the eating action.
+	 * @param c
+	 */
 	private static void consume(Critter c) {
 		int n = c.w.getNumRep(dircoords(c,true));
 		if (n < 0) {
 			if (c.w.ENERGY_PER_SIZE * c.mem[3] < c.mem [4] + (-1-n)) { //too much food on the hex to be fully consumed
-				c.w.putFood()
+				c.w.putFood((-1-n) - (c.w.ENERGY_PER_SIZE * c.mem[3] - c.mem[4]), dircoords(c,true));
+				c.mem[4] = c.w.ENERGY_PER_SIZE * c.mem[3];
+			}
+			else{
+				c.mem[4] += (-1-n);
+				c.w.putFood(0,dircoords(c,true));
 			}
 		}
+		c.mem[4] -= c.mem[3];
 	}
 
 	/**Updates the energy of the attacked critter. Does not handle the situation where
@@ -95,7 +107,7 @@ public class Actionpacked {
 	 * @return the coordinates of the space ahead of the critter (based on its
 	 * orientation.
 	 */
-	private static int [] dircoords(Critter c, boolean ahead){
+	public static int [] dircoords(Critter c, boolean ahead){
 		int dir = ahead ? 1 : -1;
 		dir = c.direction >= 3 ? -dir : dir;
 		int tempdir = c.direction % 3;
@@ -141,7 +153,7 @@ public class Actionpacked {
 	 * @param c
 	 * @param ahead
 	 */
-	private static boolean checkempty(Critter c, boolean ahead){
+	public static boolean checkempty(Critter c, boolean ahead){
 		return c.w.getNumRep(dircoords(c,ahead)) == 0 ? true : false;
 	}
 	
@@ -161,6 +173,6 @@ public class Actionpacked {
 		c.mem[4] -= c.mem[3] * complexitycalc(c) * c.w.GROW_COST;
 		c.mem[3] ++;
 	}
-
+	
 	
 }

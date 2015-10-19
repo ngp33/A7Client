@@ -3,6 +3,7 @@ package ast;
 import java.util.Random;
 
 import ast.MathOp.MathOperator;
+import world.Critter;
 
 public class Senses extends Onekid implements Expr, mutation.Transformable, mutation.Reparentable {
 	
@@ -16,7 +17,7 @@ public class Senses extends Onekid implements Expr, mutation.Transformable, muta
 			pres = six.nearby;
 		}
 		else{
-			pres = which == 3 ? six.random : six.smell; //I believe that true means random, and I will act under that assumption
+			pres = which == 3 ? six.random : six.smell; 
 		}
 	}
 	
@@ -87,6 +88,12 @@ public class Senses extends Onekid implements Expr, mutation.Transformable, muta
 	
 	public Node getRandomReplacement(Program possibleKids) {
 		return possibleKids.getRandomNode(Expr.class);
+	}
+
+	@Override
+	public int value(Critter c) {
+		// the only one that isn't sensespace is smell, and that always returns 0 for now
+		return 0;
 	}
 
 }

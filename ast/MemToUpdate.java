@@ -32,7 +32,7 @@ public class MemToUpdate extends Onekid {
 	
 	/** returns the value of mem[only] if only < mem.length. Otherwise returns -1*/
 	public int value(Critter c){
-		return (only.value() < c.mem[0] && 0 <= only.value()) ? c.mem[only.value()] : -1;
+		return (only.value(c) < c.mem[0] && 0 <= only.value(c)) ? c.mem[only.value(c)] : 0;
 	}
 
 }

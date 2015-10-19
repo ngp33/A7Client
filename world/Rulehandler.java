@@ -3,12 +3,12 @@ package world;
 public class Rulehandler {
 	
 	/**Effect: alters the critters instance variables according to its rules
-	 * Invariant: c.mem[5] = 0 (or is it 1?)*/
+	 * Invariant: c.mem[5] = 1*/
 	public static void altercritter(Critter c){
 		while (c.mem[5] < 999 && !evaluateprogram(c)){
 			c.mem[5] ++;
 		}
-		c.mem[5] = 0;
+		c.mem[5] = 1;
 	}
 	
 	

@@ -3,6 +3,7 @@ package ast;
 import java.util.Random;
 
 import ast.MathOp.MathOperator;
+import world.Critter;
 
 public class MemAccess extends MemToUpdate implements Expr, mutation.Removable, mutation.Insertable,
 mutation.Reparentable {
@@ -63,5 +64,6 @@ mutation.Reparentable {
 	public Node getRandomReplacement(Program possibleKids) {
 		return possibleKids.getRandomNode(Expr.class);
 	}
+
 
 }

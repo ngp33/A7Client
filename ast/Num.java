@@ -3,6 +3,7 @@ package ast;
 import java.util.Random;
 
 import ast.MathOp.MathOperator;
+import world.Critter;
 
 public class Num extends Nokids implements Expr, mutation.Transformable, mutation.Reparentable {
 	
@@ -67,6 +68,11 @@ public class Num extends Nokids implements Expr, mutation.Transformable, mutatio
 		}
 		
 		return newParent;
+	}
+
+	@Override
+	public int value(Critter c) {
+		return val;
 	}
 
 }

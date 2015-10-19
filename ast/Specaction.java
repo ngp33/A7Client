@@ -2,6 +2,8 @@ package ast;
 
 import java.util.Random;
 
+import world.Critter;
+
 public class Specaction extends Action {
 	public Expr eval;
 
@@ -43,6 +45,16 @@ public class Specaction extends Action {
 	
 	public void replaceKid(Node old, Node replacement) {
 		eval = (Expr) replacement;
+	}
+	
+	public void commit(Critter c){
+		if (type.equals(Hamlet.serve)) {
+			if (Actionpacked.checkempty(c, true)) {
+				c.w.putFood(eval.value(), Actionpacked.dircoords(c, true));
+			}
+			c.mem[4] -= eval.value();
+		}
+		//TODO handle when the request is tag, not serve
 	}
 	
 }

@@ -2,12 +2,13 @@ package ast;
 
 import java.util.Random;
 
+import world.Critter;
+
 public class Sensespace extends Senses implements mutation.Removable, mutation.Insertable {
 	
 	public Sensespace(int which, Expr where) {
 		super(which);
 		only = where;
-		// TODO Auto-generated constructor stub
 	}
 	
 	public Sensespace() {
@@ -51,6 +52,10 @@ public class Sensespace extends Senses implements mutation.Removable, mutation.I
 			if (only == null) return false;
 		}
 		return true;
+	}
+	
+	public int value(Critter c){
+		return Sensespacked.sniff(c, this);
 	}
 
 }

@@ -3,6 +3,7 @@ package ast;
 import java.util.Random;
 
 import ast.Action.Hamlet;
+import world.Critter;
 
 public class Booly extends TwokidsSameType implements Condition {
 	
@@ -62,29 +63,31 @@ public class Booly extends TwokidsSameType implements Condition {
 		return sb;
 	}*/
 
-	/*@Override
-	public Boolean getval() {
-		if (rel.equals(equalities.LT)){
-			return (left.value() < right.value());
+	@Override
+	public Boolean getval(Critter c) {
+		Expr left = (Expr) this.left;
+		Expr right = (Expr) this.right;
+		if (link.equals(equalities.LT)){
+			return (left.value(c) < right.value(c));
 		}
-		else if (rel.equals(equalities.LE)){
-			return (left.value() <= right.value());
+		else if (link.equals(equalities.LE)){
+			return (left.value(c) <= right.value(c));
 		}
-		else if (rel.equals(equalities.EQ)){
-			return (left.value() == right.value());
+		else if (link.equals(equalities.EQ)){
+			return (left.value(c) == right.value(c));
 		}
-		else if (rel.equals(equalities.GT)){
-			return (left.value() > right.value());
+		else if (link.equals(equalities.GT)){
+			return (left.value(c) > right.value(c));
 		}
-		else if (rel.equals(equalities.GE)){
-			return (left.value() >= right.value());
+		else if (link.equals(equalities.GE)){
+			return (left.value(c) >= right.value(c));
 		}
-		else if (rel.equals(equalities.NE)){
-			return (left.value() != right.value());
+		else if (link.equals(equalities.NE)){
+			return (left.value(c) != right.value(c));
 		}
 		System.out.println("what did you input for the rel value? It's not right");
 		return false; // TODO make more useful.
-	}*/
+	}
 	
 	public enum equalities{
 		LT, LE, EQ, GT, GE, NE;
@@ -103,5 +106,6 @@ public class Booly extends TwokidsSameType implements Condition {
 		link = equalities.values()[rand.nextInt(6)];
 		symbol = makenice();
 	}
+
 	
 }

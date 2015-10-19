@@ -3,6 +3,7 @@ package ast;
 import java.util.Random;
 
 import ast.Action.Hamlet;
+import world.Critter;
 
 /**
  * A representation of a binary Boolean condition: 'and' or 'or'
@@ -86,16 +87,16 @@ public class BinaryCondition extends TwokidsSameType implements Condition, mutat
 	}
 
 	@Override
-	public Boolean getval() {
+	public Boolean getval(Critter c) {
 		// TODO Auto-generated method stub
     	if (link.equals(Operator.AND)){
-    		if (((Condition) left).getval() && ((Condition) right).getval()){
+    		if (((Condition) left).getval(c) && ((Condition) right).getval(c)){
     			return true;
     		}
     		return false;
     	}
     	else{
-    		if (((Condition) left).getval() || ((Condition) right).getval()){
+    		if (((Condition) left).getval(c) || ((Condition) right).getval(c)){
     			return true;
     		}
     		return false;

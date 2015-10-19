@@ -3,6 +3,7 @@ package ast;
 import java.util.Random;
 
 import ast.MathOp.MathOperator;
+import world.Critter;
 
 public class Negative extends Onekid implements Expr, mutation.Reparentable, mutation.Insertable {
 	
@@ -59,6 +60,11 @@ public class Negative extends Onekid implements Expr, mutation.Reparentable, mut
 		}
 		
 		return newParent;
+	}
+
+	@Override
+	public int value(Critter c) {
+		return only.value(c) * (-1);
 	}
 
 }
