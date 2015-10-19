@@ -1,11 +1,16 @@
 package world;
 
 public class Food extends Hex {
+	
+	int quantity;
 
 	@Override
 	int getNumRep() {
-		// TODO Auto-generated method stub
-		return 0;
+		return quantity;
+	}
+	
+	void addFood(int qty) {
+		quantity += qty;
 	}
 
 }
