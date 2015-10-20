@@ -1,4 +1,6 @@
 package world;
+import java.util.Random;
+
 import ast.ProgramImpl;
 
 public class Critter extends Hex {
@@ -10,6 +12,7 @@ public class Critter extends Hex {
 	public World w;
 	public int row;
 	public int column;
+	public Random r = new Random(); //this is useful to have for the random sense and I didn't want to keep generating random objects.
 		
 	/**Sets up the instance variables for a critter. Data is given in the order
 	 * specified in 4.1 of the a5 spec.
@@ -27,7 +30,7 @@ public class Critter extends Hex {
 		Rulehandler.altercritter(this);
 	}
 	@Override
-	int getNumRep() {
+	public int getNumRep() {
 		// TODO Auto-generated method stub
 		return 0;
 	}

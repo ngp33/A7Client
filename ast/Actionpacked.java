@@ -76,6 +76,7 @@ public class Actionpacked {
 	 * @param attacker
 	 * @param victim
 	 */
+	 //TODO make it truncate, not round
 	public static void attack(Critter attacker, Critter victim){
 		double inside = attacker.w.DAMAGE_INC * (attacker.mem[3] * attacker.mem[2] - victim.mem[3] * victim.mem[1]);
 		int harm = (int) (attacker.w.BASE_DAMAGE * attacker.mem[3] * pfunct(inside));
@@ -126,7 +127,7 @@ public class Actionpacked {
 	
 	/**Turns the critter left or right.
 	 * I don't think any additional check is required.*/
-	private static void turn(Critter c, boolean left) {
+	public static void turn(Critter c, boolean left) {
 		c.direction += 6;
 		c.direction = left ? c.direction - 1 : c.direction + 1;
 		c.direction = c.direction % 6;

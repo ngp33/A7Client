@@ -19,8 +19,7 @@ public class World {
 	
 	
 	public int getNumRep(int [] rowcommacol) {
-		//TODO
-		return 0;
+		return getHex(rowcommacol[0], rowcommacol[1]).getNumRep();
 		
 	}
 	
