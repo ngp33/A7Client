@@ -30,7 +30,6 @@ public class Specaction extends Action {
 		}
 		return (eval.nodeAt(index-1));
 	}
-	//TODO override methods,
 	
 	public Node copy() {
 		return new Specaction(type, (Expr) eval.copy());
@@ -50,9 +49,17 @@ public class Specaction extends Action {
 	public void commit(Critter c){
 		if (type.equals(Hamlet.serve)) {
 			if (Actionpacked.checkempty(c, true)) {
-				c.w.putFood(eval.value(), Actionpacked.dircoords(c, true));
+				c.w.putFood(eval.value(c), Actionpacked.dircoords(c, true));
 			}
-			c.mem[4] -= eval.value();
+			c.mem[4] -= eval.value(c);
+		}
+		else if (type.equals(Hamlet.tag)) {
+			int [] place = Actionpacked.dircoords(c, true);
+			if (c.w.getNumRep(place) > 0) {
+				Critter other = (Critter) c.w.getHex(place[0], place[1]);
+				other.mem[6] = eval.value(c);
+			}
+			c.mem[4] -= c.mem[3];	
 		}
 		//TODO handle when the request is tag, not serve
 	}

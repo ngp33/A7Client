@@ -2,6 +2,8 @@ package ast;
 
 import ast.Action.Hamlet;
 import world.Critter;
+import world.Hex;
+
 import java.math.*;
 
 public class Actionpacked {
@@ -18,6 +20,7 @@ public class Actionpacked {
 			movement(c,false);
 			break;
 		case bud: //TODO overload critter constructor to allow for bud
+			asexual(c);
 			break;
 		case eat:
 			consume(c);
@@ -32,6 +35,7 @@ public class Actionpacked {
 			turn(c,true);
 			break;
 		case mate: //TODO make it happen
+			mate(c);
 			break;
 		case right:
 			turn(c,false);
@@ -139,7 +143,7 @@ public class Actionpacked {
 	 * @param c
 	 * @return
 	 */
-	private static int complexitycalc(Critter c){
+	public static int complexitycalc(Critter c){
 		return (c.genes.children.length) * c.w.RULE_COST + (c.mem[1] + c.mem[2]) * c.w.ABILITY_COST;
 	}
 	
@@ -173,6 +177,17 @@ public class Actionpacked {
 	private static void grow(Critter c) {
 		c.mem[4] -= c.mem[3] * complexitycalc(c) * c.w.GROW_COST;
 		c.mem[3] ++;
+	}
+	
+	
+	/** A critters attempt to mate TODO make sure this handles energy consumption for
+	 * unsuccessful mating*/
+	private static void mate(Critter c) {
+		ActionMate.matewith(c);
+	}
+	
+	private static void asexual(Critter c) {
+		ActionMate.alone(c);
 	}
 	
 	

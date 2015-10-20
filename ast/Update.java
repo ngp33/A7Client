@@ -38,8 +38,8 @@ public class Update extends Twokids implements Node, mutation.Removable {
 	 * available for updating.*/
 	public void updatemem(Critter c) {
 		if (((MemToUpdate) left).value(c) != -1){
-			if (((MemToUpdate) left).only.value() >= 7){
-				c.mem[((MemToUpdate) left).only.value()] = ((Expr) right).value();
+			if (((MemToUpdate) left).only.value(c) >= 7){
+				c.mem[((MemToUpdate) left).only.value(c)] = ((Expr) right).value(c);
 			}
 		}
 		

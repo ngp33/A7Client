@@ -45,6 +45,10 @@ public class ProgramImpl extends Manykids implements Program {
         return this;
     }*/
 	
+	public ProgramImpl(Rule[] rules) {
+		children = rules;
+	}
+
 	@Override
     public Program mutate() {
 		Mutation [] muttypes = MutationFactory.allMuts(this);
