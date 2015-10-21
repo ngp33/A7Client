@@ -7,9 +7,9 @@ public class Critter extends Hex {
 	
 	public ProgramImpl genes;
 	public int direction;
-	public int [] mem = new int [w.MEM_SIZE];
-	String name;
 	public World w;
+	public int [] mem = new int [w.MIN_MEMORY];
+	String name;
 	public int row;
 	public int column;
 	public boolean matingdance;
