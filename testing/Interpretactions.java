@@ -59,6 +59,7 @@ public class Interpretactions {
 		assertTrue(c.row == 3);
 		assertTrue(c.col == 2);
 		assertTrue(c.mem[4] == 194); //energy test
+		//assertTrue(c.w.getHex(2, 2) instanceof )
 		c.movement(false);
 		assertTrue(c.row == 2);
 		assertTrue(c.col == 2);
@@ -73,6 +74,11 @@ public class Interpretactions {
 		c.movement(true);
 		assertTrue(c.row == 1);
 		assertTrue(c.col == 1);
+	}
+	
+	@Test
+	public void eat(){
+		
 	}
 	
 	

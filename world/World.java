@@ -67,6 +67,11 @@ public class World {
 		return getHex(rowcommacol[0], rowcommacol[1]).getNumRep();
 	}
 	
+	/**Clears a hex of whatever was on it before and puts a certain amount of food on it
+	 * 
+	 * @param amount
+	 * @param rowcommacol
+	 */
 	public void putFood(int amount, int [] rowcommacol) {
 		replace(new Food(amount), getHex(rowcommacol[0], rowcommacol[1]));
 	}
