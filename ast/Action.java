@@ -49,6 +49,9 @@ public class Action extends Nokids implements Node, mutation.Removable, mutation
 		if (c.mem[4] <= 0){
 			Actionpacked.dies(c);
 		}
+		//assert that mem[4] went down?
+		assert c.mem[4] <= c.mem[3] * c.w.ENERGY_PER_SIZE;
+		assert c.mem[4] > 0;
 		// TODO Auto-generated method stub
 	}
 

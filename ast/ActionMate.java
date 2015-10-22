@@ -39,24 +39,28 @@ public class ActionMate {
 	}
 
 	/** finds an open hex to place the baby critter and places it there
-	 * Effect: places the baby critter in the world if there is space, does nothing otherwise*/
+	 * Effect: places the baby critter in the world if there is space, does nothing otherwise
+	 * TODO finish this*/
 	private static boolean place(Critter baby, Critter c, Critter k) {
+		Critter firstpar = c;
+		Critter secondpar = k;
 		if (c.r.nextBoolean()) {
-			if (Actionpacked.checkempty(c, false)) {
-				baby.row = Actionpacked.dircoords(c, false) [0];
-				baby.column = Actionpacked.dircoords(c, false) [1];
-				return true;
-			}
+			firstpar = k;
+			secondpar = c;
 		}
-		else {
-			if (Actionpacked.checkempty(k,false)) {
-				baby.row = Actionpacked.dircoords(k, false) [0];
-				baby.column = Actionpacked.dircoords(k, false) [1];
-			}
+		if (babysit(baby, firstpar)) {
+			return true;
 		}
+		return (babysit(baby,secondpar));
 		
 	}
 	
+	/**Effect: places a baby if the space behind parent is empty. Does nothing otherwise
+	 * Returns: true if the baby was placed, false otherwise.
+	 * @param baby
+	 * @param parent
+	 * @return
+	 */
 	private static boolean babysit(Critter baby, Critter parent) {
 		if (Actionpacked.checkempty(parent, false)) {
 			baby.row = Actionpacked.dircoords(parent, false) [0];
@@ -158,7 +162,7 @@ public class ActionMate {
 		finishsetup(mem, c);
 		Critter k = new Critter(mem, c.r, p, c.w);
 		mutate(k);
-		c.mem[4] -= BUD_COST * Actionpacked.complexitycalc(c);
+		c.mem[4] -= c.w.BUD_COST * Actionpacked.complexitycalc(c);
 		if (Actionpacked.checkempty(c, false)) {
 			k.row = Actionpacked.dircoords(c, false)[0];
 			k.column = Actionpacked.dircoords(c, false) [1];

@@ -59,6 +59,7 @@ public class Actionpacked {
 	 * 	2. When the critter can consume all the food on the hex.
 	 * After the critter has eaten, it loses the energy for the eating action.
 	 * @param c
+	 * TODO this makes it so a critter cant really ever be full. Is that alright?
 	 */
 	private static void consume(Critter c) {
 		int n = c.w.getNumRep(dircoords(c,true));
@@ -109,7 +110,6 @@ public class Actionpacked {
 		int [] newplace = dircoords(c,forward);
 		c.row = newplace[0];
 		c.column = newplace[1];
-		//Make sure this only updates if the move is successful
 		c.mem[4] -= c.mem[3] * 3;
 	}
 	
@@ -179,7 +179,7 @@ public class Actionpacked {
 	 * @param c
 	 */
 	public static void dies(Critter c){
-		
+		c.w.putFood(c.w.FOOD_PER_SIZE * c.mem[3], new int [] {c.row, c.column});
 	}
 	
 	/** Critter grows one unit bigger.*/
