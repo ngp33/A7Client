@@ -15,7 +15,6 @@ public class ActionMate {
 	 * Effect: the energy of the critters involved decrease by the proper amount depending on whether or not
 	 * 		the mating was successful.*/
 	public static void matewith(Critter c) {
-		c.mem[4] -= c.w.MATE_COST * Actionpacked.complexitycalc(c);
 		c.matingdance = true;
 		Hex there = c.w.getHex(Actionpacked.dircoords(c,true)[0], Actionpacked.dircoords(c,true)[1]);
 		if (there instanceof Critter) {

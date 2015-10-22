@@ -19,7 +19,7 @@ public class Actionpacked {
 		case backward:
 			movement(c,false);
 			break;
-		case bud: //TODO overload critter constructor to allow for bud
+		case bud:
 			asexual(c);
 			break;
 		case eat:
@@ -34,7 +34,7 @@ public class Actionpacked {
 		case left:
 			turn(c,true);
 			break;
-		case mate: //TODO make it happen
+		case mate: 
 			mate(c);
 			break;
 		case right:
@@ -74,18 +74,19 @@ public class Actionpacked {
 		c.mem[4] -= c.mem[3];
 	}
 
-	/**Updates the energy of the attacked critter. Does not handle the situation where
-	 * the critter dies. Maybe that's something TODO
+	/**Updates the energy of the attacked critter.
 	 * Invariant: there actually is a critter that is being attacked...
 	 * @param attacker
 	 * @param victim
 	 */
-	 //TODO make it truncate, not round
 	public static void attack(Critter attacker, Critter victim){
 		double inside = attacker.w.DAMAGE_INC * (attacker.mem[3] * attacker.mem[2] - victim.mem[3] * victim.mem[1]);
-		int harm = (int) (attacker.w.BASE_DAMAGE * attacker.mem[3] * pfunct(inside));
+		int harm = Math.round((attacker.w.BASE_DAMAGE * attacker.mem[3] * pfunct(inside)));
 		victim.mem[4] -= harm;
 		attacker.mem[4] -= attacker.mem[3] * attacker.w.ATTACK_COST;
+		if (victim.mem[4] < 0) {
+			dies(victim);
+		}
 	}
 	
 	/** used in calculating the attack damage*/
@@ -96,11 +97,11 @@ public class Actionpacked {
 	
 	/** moves the critter TODO check that the move is valid.
 	 * Invariant: direction is between 0 and 5 inclusive*/
-	private static void movement(Critter c, boolean forward){
+	private static void movement(Critter c, boolean forward) {
 		int [] newplace = dircoords(c,forward);
 		c.row = newplace[0];
 		c.column = newplace[1];
-		//Make sure this only updates if the move is successful
+		//TODO Make sure this only updates if the move is successful... actually probably not
 		c.mem[4] -= c.mem[3] * 3;
 	}
 	
@@ -183,6 +184,7 @@ public class Actionpacked {
 	/** A critters attempt to mate TODO make sure this handles energy consumption for
 	 * unsuccessful mating*/
 	private static void mate(Critter c) {
+		c.mem[4] -= c.mem[3];
 		ActionMate.matewith(c);
 	}
 	
