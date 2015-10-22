@@ -13,4 +13,19 @@ public class Food extends Hex {
 		quantity += qty;
 	}
 
+	@Override
+	char getASCIIRep() {
+		if (quantity == 0) {
+			return '-';
+		} else {
+			return 'F';
+		}
+	}
+
+	@Override
+	String description() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

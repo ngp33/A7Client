@@ -7,4 +7,15 @@ public class Rock extends Hex {
 		return -1;
 	}
 
+	@Override
+	char getASCIIRep() {
+		return '#';
+	}
+
+	@Override
+	String description() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

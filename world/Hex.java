@@ -6,4 +6,8 @@ public abstract class Hex {
 	int col;
 	
 	abstract int getNumRep();
+	
+	abstract char getASCIIRep();
+	
+	abstract String description();
 }

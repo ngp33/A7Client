@@ -45,5 +45,16 @@ public class Critter extends Hex {
 		// TODO Auto-generated method stub
 		return 0;
 	}
-}
 
+	@Override
+	char getASCIIRep() {
+		return (char) direction;
+	}
+	
+	@Override
+	public String description() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+}
