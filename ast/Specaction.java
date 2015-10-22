@@ -49,7 +49,8 @@ public class Specaction extends Action {
 	public void commit(Critter c){
 		if (type.equals(Hamlet.serve)) {
 			if (Actionpacked.checkempty(c, true)) {
-				c.w.putFood(eval.value(c), Actionpacked.dircoords(c, true));
+				int amount = c.mem[4] >= eval.value(c) ? eval.value(c) : c.mem[4];
+				c.w.putFood(amount, Actionpacked.dircoords(c, true));
 			}
 			c.mem[4] -= eval.value(c);
 		}

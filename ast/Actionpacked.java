@@ -15,7 +15,8 @@ public class Actionpacked {
 	 */
 	public static void themove(Critter c, Hamlet type){
 		switch(type){
-		
+		case attack:
+			attack(c);
 		case backward:
 			movement(c,false);
 			break;
@@ -58,6 +59,7 @@ public class Actionpacked {
 	 * 	2. When the critter can consume all the food on the hex.
 	 * After the critter has eaten, it loses the energy for the eating action.
 	 * @param c
+	 * TODO this makes it so a critter cant really ever be full. Is that alright?
 	 */
 	private static void consume(Critter c) {
 		int n = c.w.getNumRep(dircoords(c,true));
@@ -79,10 +81,26 @@ public class Actionpacked {
 	 * @param attacker
 	 * @param victim
 	 */
+<<<<<<< HEAD
 	public static void attack(Critter attacker, Critter victim){
 		double inside = attacker.w.DAMAGE_INC * (attacker.mem[3] * attacker.mem[2] - victim.mem[3] * victim.mem[1]);
 		int harm = Math.round((attacker.w.BASE_DAMAGE * attacker.mem[3] * pfunct(inside)));
 		victim.mem[4] -= harm;
+=======
+	 //TODO make it truncate, not round
+	public static void attack(Critter attacker){
+		int [] c = dircoords(attacker, true);
+		Hex victim = attacker.w.getHex(c[0], c[1]);
+		if (victim instanceof Critter) {
+			Critter v = (Critter) victim;
+			double inside = attacker.w.DAMAGE_INC * (attacker.mem[3] * attacker.mem[2] - v.mem[3] * v.mem[1]);
+			int harm = Math.round((float) (attacker.w.BASE_DAMAGE * attacker.mem[3] * pfunct(inside)));
+			v.mem[4] -= harm;
+			if (v.mem[4] <= 0) {
+				dies(v);
+			}
+		}
+>>>>>>> Evaluator-in-progress
 		attacker.mem[4] -= attacker.mem[3] * attacker.w.ATTACK_COST;
 		if (victim.mem[4] < 0) {
 			dies(victim);
@@ -101,7 +119,10 @@ public class Actionpacked {
 		int [] newplace = dircoords(c,forward);
 		c.row = newplace[0];
 		c.column = newplace[1];
+<<<<<<< HEAD
 		//TODO Make sure this only updates if the move is successful... actually probably not
+=======
+>>>>>>> Evaluator-in-progress
 		c.mem[4] -= c.mem[3] * 3;
 	}
 	
@@ -171,7 +192,7 @@ public class Actionpacked {
 	 * @param c
 	 */
 	public static void dies(Critter c){
-		
+		c.w.putFood(c.w.FOOD_PER_SIZE * c.mem[3], new int [] {c.row, c.column});
 	}
 	
 	/** Critter grows one unit bigger.*/
