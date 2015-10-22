@@ -3,6 +3,10 @@ package world;
 public class Food extends Hex {
 	
 	int quantity;
+	
+	public Food(int amount) {
+		quantity = amount;
+	}
 
 	@Override
 	int getNumRep() {

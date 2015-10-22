@@ -58,10 +58,7 @@ public class Crittermethods {
 	public static void movement(Critter c, boolean forward) {
 		int [] newplace = dircoords(c,forward);
 		if (checkempty(c, forward)) {
-			c.w.setHex(c.row, c.col, c.w.getHex(newplace[0], newplace[1]));
-			c.row = newplace[0];
-			c.col = newplace[1];
-			c.w.setHex(newplace[0], newplace[1], c);
+			c.w.swap(c, c.w.getHex(newplace[0], newplace[1]));
 		}
 		c.mem[4] -= c.mem[3] * 3;
 	}
@@ -109,6 +106,10 @@ public class Crittermethods {
 		return (c.genes.children.length) * c.w.RULE_COST + (c.mem[1] + c.mem[2]) * c.w.ABILITY_COST;
 	}
 	
+	/**Effect: performs the wait action on c. Does nothing if the
+	 * critter is at maximum energy level.
+	 * @param c
+	 */
 	public static void wait(Critter c){
 		c.mem[4] += c.w.SOLAR_FLUX * c.mem[3];
 		c.mem[4] = c.mem[4] > c.mem[3] * c.w.ENERGY_PER_SIZE ? c.mem[3] * c.w.ENERGY_PER_SIZE : c.mem[4];
@@ -133,7 +134,7 @@ public class Crittermethods {
 	 * @param c
 	 */
 	public static void dies(Critter c){
-		c.w.putFood(c.w.FOOD_PER_SIZE * c.mem[3], new int [] {c.row, c.col});
+		c.w.replace(new Food(c.w.FOOD_PER_SIZE * c.mem[3]), c);
 	}
 	
 	/** Critter grows one unit bigger.*/
@@ -158,7 +159,7 @@ public class Crittermethods {
 	public static void serve(Critter c, int quantity) {
 		if (checkempty(c, true)) {
 			int amount = c.mem[4] >= quantity ? quantity : c.mem[4];
-			c.w.putFood(amount, dircoords(c, true));
+			c.w.putFood(amount, dircoords(c,true));
 		}
 		c.mem[4] -= quantity;
 	}

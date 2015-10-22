@@ -68,10 +68,10 @@ public class World {
 	}
 	
 	public void putFood(int amount, int [] rowcommacol) {
-		//TODO
+		replace(new Food(amount), getHex(rowcommacol[0], rowcommacol[1]));
 	}
 	
-	/**Swaps the position of hexes one and two. It updates their
+	/**Effect: Swaps the position of hexes one and two. It updates their
 	 * internal row/col information as well as the world's 
 	 * row/col information of them
 	 * @param one
@@ -88,8 +88,9 @@ public class World {
 		setHex(two.row, two.col, two);
 	}
 	
-	/** It replaces the hex goner with one. Again, this updates,
-	 * the hex position pointers within hex one and within the world.
+	/**Effect: It replaces the hex goner with one. Again, this updates,
+	 * the hex position pointers within hex one and within the world. Hex one
+	 * need not have an initialized row, col.
 	 * @param one
 	 * @param goner
 	 */
