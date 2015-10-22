@@ -1,7 +1,9 @@
-package ast;
+package world;
 
 import java.util.Random;
 
+import ast.ProgramImpl;
+import ast.Rule;
 import world.Critter;
 import world.Hex;
 
@@ -16,7 +18,7 @@ public class ActionMate {
 	 * 		the mating was successful.*/
 	public static void matewith(Critter c) {
 		c.matingdance = true;
-		Hex there = c.w.getHex(Actionpacked.dircoords(c,true)[0], Actionpacked.dircoords(c,true)[1]);
+		Hex there = c.w.getHex(Crittermethods.dircoords(c,true)[0], Crittermethods.dircoords(c,true)[1]);
 		if (there instanceof Critter) {
 			Critter specific = (Critter) there;
 			success(c,specific);
@@ -62,9 +64,9 @@ public class ActionMate {
 	 * @return
 	 */
 	private static boolean babysit(Critter baby, Critter parent) {
-		if (Actionpacked.checkempty(parent, false)) {
-			baby.row = Actionpacked.dircoords(parent, false) [0];
-			baby.column = Actionpacked.dircoords(parent, false) [1];
+		if (Crittermethods.checkempty(parent, false)) {
+			baby.row = Crittermethods.dircoords(parent, false) [0];
+			baby.column = Crittermethods.dircoords(parent, false) [1];
 			return true;
 		}
 		return false;
@@ -162,10 +164,10 @@ public class ActionMate {
 		finishsetup(mem, c);
 		Critter k = new Critter(mem, c.r, p, c.w);
 		mutate(k);
-		c.mem[4] -= c.w.BUD_COST * Actionpacked.complexitycalc(c);
-		if (Actionpacked.checkempty(c, false)) {
-			k.row = Actionpacked.dircoords(c, false)[0];
-			k.column = Actionpacked.dircoords(c, false) [1];
+		c.mem[4] -= c.w.BUD_COST * Crittermethods.complexitycalc(c);
+		if (Crittermethods.checkempty(c, false)) {
+			k.row = Crittermethods.dircoords(c, false)[0];
+			k.column = Crittermethods.dircoords(c, false) [1];
 		}
 	}
 	

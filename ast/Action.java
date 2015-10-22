@@ -47,7 +47,7 @@ public class Action extends Nokids implements Node, mutation.Removable, mutation
 	public void commit(Critter c) {
 		Actionpacked.themove(c,type);
 		if (c.mem[4] <= 0){
-			Actionpacked.dies(c);
+			c.dies();
 		}
 		//assert that mem[4] went down?
 		assert c.mem[4] <= c.mem[3] * c.w.ENERGY_PER_SIZE;

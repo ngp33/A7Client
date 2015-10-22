@@ -88,7 +88,6 @@ public class BinaryCondition extends TwokidsSameType implements Condition, mutat
 
 	@Override
 	public Boolean getval(Critter c) {
-		// TODO Auto-generated method stub
     	if (link.equals(Operator.AND)){
     		if (((Condition) left).getval(c) && ((Condition) right).getval(c)){
     			return true;

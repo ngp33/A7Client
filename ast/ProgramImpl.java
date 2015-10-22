@@ -183,8 +183,12 @@ public class ProgramImpl extends Manykids implements Program {
 	 * @return
 	 */
 	public boolean eval(Critter c){
-		
-		//TODO
+		for (int place = 0; place < children.length; place ++) {
+			if (((Rule) children[place]).perform(c)){
+				return true;
+			}
+		}
+		return false;
 	}
 
 

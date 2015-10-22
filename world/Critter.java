@@ -1,15 +1,14 @@
 package world;
 import java.util.Random;
-
 import ast.ProgramImpl;
 
 public class Critter extends Hex {
 	
 	public ProgramImpl genes;
 	public int direction;
-	public World w;
-	public int [] mem = new int [w.MIN_MEMORY];
+	public int [] mem = new int [w.MEM_SIZE];
 	String name;
+	public World w;
 	public int row;
 	public int column;
 	public boolean matingdance;
@@ -45,5 +44,66 @@ public class Critter extends Hex {
 		// TODO Auto-generated method stub
 		return 0;
 	}
+	
+	public void consume(){
+		Crittermethods.consume(this);
+	}
+	
+	public void attack(){
+		Crittermethods.attack(this);
+	}
+	
+	public void movement(boolean forward){
+		Crittermethods.movement(this,forward);
+	}
+	
+	public void turn(boolean left) {
+		Crittermethods.turn(this, left);
+	}
+	
+	public void waiting(){
+		Crittermethods.wait(this);
+	}
+	
+	public void dies() {
+		Crittermethods.dies(this);
+	}
+	
+	public void grow() {
+		Crittermethods.grow(this);
+	}
+	
+	public void mate() {
+		Crittermethods.mate(this);
+	}
+	
+	public void bud() {
+		Crittermethods.asexual(this);
+	}
+	
+	public void serve(int amount) {
+		Crittermethods.serve(this, amount);
+	}
+	
+	public void youreit(int num) {
+		Crittermethods.tag(this, num);
+	}
+	
+	public int nearby(int num) {
+		return Crittersenses.nearby(this, num);
+	}
+	
+	public int ahead(int num) {
+		return Crittersenses.spacesahead(this, num);
+	}
+	
+	public int smell() {
+		return 0;
+	}
+	
+	public int random(int num) {
+		return Crittersenses.rando(this, num);
+	}
+	
 }
 
