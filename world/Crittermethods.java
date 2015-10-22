@@ -58,7 +58,7 @@ public class Crittermethods {
 	public static void movement(Critter c, boolean forward) {
 		int [] newplace = dircoords(c,forward);
 		c.row = newplace[0];
-		c.column = newplace[1];
+		c.col = newplace[1];
 		c.mem[4] -= c.mem[3] * 3;
 	}
 	
@@ -75,7 +75,7 @@ public class Crittermethods {
 		dir = c.direction >= 3 ? -dir : dir;
 		int tempdir = c.direction % 3;
 		int row = c.row;
-		int col = c.column;
+		int col = c.col;
 		if (tempdir < 2){
 			row += dir;
 		}
@@ -107,6 +107,7 @@ public class Crittermethods {
 	
 	public static void wait(Critter c){
 		c.mem[4] += c.w.SOLAR_FLUX * c.mem[3];
+		c.mem[4] = c.mem[4] > c.mem[3] * c.w.ENERGY_PER_SIZE ? c.mem[3] * c.w.ENERGY_PER_SIZE : c.mem[4];
 	}
 	
 	
@@ -128,7 +129,7 @@ public class Crittermethods {
 	 * @param c
 	 */
 	public static void dies(Critter c){
-		c.w.putFood(c.w.FOOD_PER_SIZE * c.mem[3], new int [] {c.row, c.column});
+		c.w.putFood(c.w.FOOD_PER_SIZE * c.mem[3], new int [] {c.row, c.col});
 	}
 	
 	/** Critter grows one unit bigger.*/

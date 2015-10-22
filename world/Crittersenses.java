@@ -23,14 +23,14 @@ public class Crittersenses {
 	 * The critter may not examine itself using pseudomove.
 	 */
 	public static int pseudomove(Critter c, int where) {
-		int [] coords = new int [] {c.row, c.column};
+		int [] coords = new int [] {c.row, c.col};
 		for (int place = 0; place < where - 1; place ++){
 			int [] newplace = Crittermethods.dircoords(c,true);
 			c.row = newplace[0];
-			c.column = newplace[1];
+			c.col = newplace[1];
 		}
 		int returned = nearby(c, c.direction);
-		c.row = coords[0]; c.column = coords[1];
+		c.row = coords[0]; c.col = coords[1];
 		return returned;
 		
 	}

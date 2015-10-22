@@ -66,7 +66,7 @@ public class ActionMate {
 	private static boolean babysit(Critter baby, Critter parent) {
 		if (Crittermethods.checkempty(parent, false)) {
 			baby.row = Crittermethods.dircoords(parent, false) [0];
-			baby.column = Crittermethods.dircoords(parent, false) [1];
+			baby.col = Crittermethods.dircoords(parent, false) [1];
 			return true;
 		}
 		return false;
@@ -167,7 +167,7 @@ public class ActionMate {
 		c.mem[4] -= c.w.BUD_COST * Crittermethods.complexitycalc(c);
 		if (Crittermethods.checkempty(c, false)) {
 			k.row = Crittermethods.dircoords(c, false)[0];
-			k.column = Crittermethods.dircoords(c, false) [1];
+			k.col = Crittermethods.dircoords(c, false) [1];
 		}
 	}
 	

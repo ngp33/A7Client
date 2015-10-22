@@ -6,11 +6,9 @@ public class Critter extends Hex {
 	
 	public ProgramImpl genes;
 	public int direction;
-	public int [] mem = new int [w.MEM_SIZE];
-	String name;
 	public World w;
-	public int row;
-	public int column;
+	public int [] mem;
+	String name;
 	public boolean matingdance;
 	public Random r = new Random(); //this is useful to have for the random sense and I didn't want to keep generating random objects.
 		
@@ -19,6 +17,7 @@ public class Critter extends Hex {
 	 * @param species
 	 * @param data
 	 */
+	//TODO make this
 	
 	public Critter(String species, int [] data) { 
 	}
