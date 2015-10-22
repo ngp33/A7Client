@@ -53,12 +53,16 @@ public class Crittermethods {
 	}
 	
 	
-	/** moves the critter TODO check that the move is valid.
+	/** moves the critter TODO check that the move is valid and update world hex grid.
 	 * Invariant: direction is between 0 and 5 inclusive*/
 	public static void movement(Critter c, boolean forward) {
 		int [] newplace = dircoords(c,forward);
-		c.row = newplace[0];
-		c.col = newplace[1];
+		if (checkempty(c, forward)) {
+			c.w.setHex(c.row, c.col, c.w.getHex(newplace[0], newplace[1]));
+			c.row = newplace[0];
+			c.col = newplace[1];
+			c.w.setHex(newplace[0], newplace[1], c);
+		}
 		c.mem[4] -= c.mem[3] * 3;
 	}
 	

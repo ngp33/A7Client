@@ -70,5 +70,33 @@ public class World {
 	public void putFood(int amount, int [] rowcommacol) {
 		//TODO
 	}
+	
+	/**Swaps the position of hexes one and two. It updates their
+	 * internal row/col information as well as the world's 
+	 * row/col information of them
+	 * @param one
+	 * @param two
+	 */
+	public void swap(Hex one, Hex two) {
+		int temprow = one.row;
+		int tempcol = one.col;
+		one.row = two.row;
+		one.col = two.col;
+		two.row = temprow;
+		two.col = tempcol;
+		setHex(one.row, one.col, one);
+		setHex(two.row, two.col, two);
+	}
+	
+	/** It replaces the hex goner with one. Again, this updates,
+	 * the hex position pointers within hex one and within the world.
+	 * @param one
+	 * @param goner
+	 */
+	public void replace(Hex one, Hex goner) {
+		one.row = goner.row;
+		one.col = goner.col;
+		setHex(one.row, one.col, one);
+	}
 
 }

@@ -6,11 +6,11 @@ public class Food extends Hex {
 
 	@Override
 	int getNumRep() {
-		return quantity;
+		return -quantity-1;
 	}
 	
 	void addFood(int qty) {
-		quantity += qty;
+		quantity -= qty;
 	}
 
 }
