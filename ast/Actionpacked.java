@@ -15,7 +15,8 @@ public class Actionpacked {
 	 */
 	public static void themove(Critter c, Hamlet type){
 		switch(type){
-		
+		case attack:
+			attack(c);
 		case backward:
 			movement(c,false);
 			break;
@@ -81,10 +82,18 @@ public class Actionpacked {
 	 * @param victim
 	 */
 	 //TODO make it truncate, not round
-	public static void attack(Critter attacker, Critter victim){
-		double inside = attacker.w.DAMAGE_INC * (attacker.mem[3] * attacker.mem[2] - victim.mem[3] * victim.mem[1]);
-		int harm = (int) (attacker.w.BASE_DAMAGE * attacker.mem[3] * pfunct(inside));
-		victim.mem[4] -= harm;
+	public static void attack(Critter attacker){
+		int [] c = dircoords(attacker, true);
+		Hex victim = attacker.w.getHex(c[0], c[1]);
+		if (victim instanceof Critter) {
+			Critter v = (Critter) victim;
+			double inside = attacker.w.DAMAGE_INC * (attacker.mem[3] * attacker.mem[2] - v.mem[3] * v.mem[1]);
+			int harm = Math.round((float) (attacker.w.BASE_DAMAGE * attacker.mem[3] * pfunct(inside)));
+			v.mem[4] -= harm;
+			if (v.mem[4] <= 0) {
+				dies(v);
+			}
+		}
 		attacker.mem[4] -= attacker.mem[3] * attacker.w.ATTACK_COST;
 	}
 	

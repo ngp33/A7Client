@@ -15,7 +15,6 @@ public class ActionMate {
 	 * Effect: the energy of the critters involved decrease by the proper amount depending on whether or not
 	 * 		the mating was successful.*/
 	public static void matewith(Critter c) {
-		c.mem[4] -= c.w.MATE_COST * Actionpacked.complexitycalc(c);
 		c.matingdance = true;
 		Hex there = c.w.getHex(Actionpacked.dircoords(c,true)[0], Actionpacked.dircoords(c,true)[1]);
 		if (there instanceof Critter) {
@@ -41,11 +40,12 @@ public class ActionMate {
 
 	/** finds an open hex to place the baby critter and places it there
 	 * Effect: places the baby critter in the world if there is space, does nothing otherwise*/
-	private static void place(Critter baby, Critter c, Critter k) {
+	private static boolean place(Critter baby, Critter c, Critter k) {
 		if (c.r.nextBoolean()) {
 			if (Actionpacked.checkempty(c, false)) {
 				baby.row = Actionpacked.dircoords(c, false) [0];
 				baby.column = Actionpacked.dircoords(c, false) [1];
+				return true;
 			}
 		}
 		else {
@@ -55,6 +55,15 @@ public class ActionMate {
 			}
 		}
 		
+	}
+	
+	private static boolean babysit(Critter baby, Critter parent) {
+		if (Actionpacked.checkempty(parent, false)) {
+			baby.row = Actionpacked.dircoords(parent, false) [0];
+			baby.column = Actionpacked.dircoords(parent, false) [1];
+			return true;
+		}
+		return false;
 	}
 
 	/** makes a baby critter. Right now I choose a parent and then copy attibutes 0-2 from it TODO 
