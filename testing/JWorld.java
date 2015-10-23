@@ -21,12 +21,12 @@ public class JWorld {
 		World w = new World(8, 6);
 		
 		w.setHex(0, 0, new Food(5));
-		assertEquals(w.getHex(0, 0).description(), "5 units of food.");
+		assertEquals(w.getHex(0, 0).getHexInfo(), "5 units of food.");
 		
 		w.setHex(7, 5, new Food(0));
-		assertEquals(w.getHex(7, 5).description(), "An empty hex.");
+		assertEquals(w.getHex(7, 5).getHexInfo(), "An empty hex.");
 		
-		assertEquals(w.getHex(7, 7).description(), "A rock.");
+		assertEquals(w.getHex(7, 7).getHexInfo(), "A rock.");
 	}
 
 }

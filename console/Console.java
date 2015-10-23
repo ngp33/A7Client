@@ -124,7 +124,7 @@ public class Console {
      * @param r row of hex
      */
     private void hexInfo(int c, int r) {
-    	System.out.println(world.getHex(c, r).description());
+    	System.out.println(world.getHex(c, r).getHexInfo());
     }
 
     /**

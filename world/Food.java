@@ -33,18 +33,12 @@ public class Food extends Hex {
 	}
 
 	@Override
-	public String description() {
+	public String getHexInfo() {
 		if (quantity == 0) {
 			return "An empty hex.";
 		} else {
 			return quantity + " units of food.";
 		}
-	}
-
-	@Override
-	String getHexInfo() {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 }

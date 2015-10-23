@@ -16,7 +16,7 @@ public class Rock extends Hex {
 	}
 
 	@Override
-	public String description() {
+	public String getHexInfo() {
 		return "A rock.";
 	}
 

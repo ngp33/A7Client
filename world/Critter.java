@@ -134,7 +134,7 @@ public class Critter extends Hex {
 	}
 
 	@Override
-	String getHexInfo() {
+	public String getHexInfo() {
 		StringBuilder s = new StringBuilder();
 		StringBuilder sb = new StringBuilder();
 		s.append(name + "\n");
@@ -151,12 +151,6 @@ public class Critter extends Hex {
 	@Override
 	char getASCIIRep() {
 		return (char) direction;
-	}
-	
-	@Override
-	public String description() {
-		// TODO Auto-generated method stub
-		return null;
 	}
 	
 }

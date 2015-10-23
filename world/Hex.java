@@ -12,13 +12,11 @@ public abstract class Hex {
 	 * with hex <column, row> of section 6 of the A5 pdf.
 	 * @return
 	 */
-	abstract String getHexInfo();
+	public abstract String getHexInfo();
 	
 	//Might be a good move to put info for the hexes so its easy to build
 	//The info in 6. I could do it easily for critter if you want
 
 	abstract char getASCIIRep();
-	
-	public abstract String description();
 
 }
