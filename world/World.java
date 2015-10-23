@@ -67,8 +67,48 @@ public class World {
 		return getHex(rowcommacol[0], rowcommacol[1]).getNumRep();
 	}
 	
+	/**Clears a hex of whatever was on it before and puts a certain amount of food on it
+	 * Note, putfood -1, rowcommacol returns a
+	 * 
+	 * @param amount
+	 * @param rowcommacol
+	 */
 	public void putFood(int amount, int [] rowcommacol) {
-		//TODO
+		replace(new Food(amount), getHex(rowcommacol[0], rowcommacol[1]));
+	}
+	
+	/**Makes a new hex without any food on it */
+	public void putEmpty(int [] rowcommacol) {
+		replace(new Food(-1), getHex(rowcommacol[0], rowcommacol[1]));
+	}
+	
+	/**Effect: Swaps the position of hexes one and two. It updates their
+	 * internal row/col information as well as the world's 
+	 * row/col information of them
+	 * @param one
+	 * @param two
+	 */
+	public void swap(Hex one, Hex two) {
+		int temprow = one.row;
+		int tempcol = one.col;
+		one.row = two.row;
+		one.col = two.col;
+		two.row = temprow;
+		two.col = tempcol;
+		setHex(one.row, one.col, one);
+		setHex(two.row, two.col, two);
+	}
+	
+	/**Effect: It replaces the hex goner with one. Again, this updates,
+	 * the hex position pointers within hex one and within the world. Hex one
+	 * need not have an initialized row, col.
+	 * @param one
+	 * @param goner
+	 */
+	public void replace(Hex one, Hex goner) {
+		one.row = goner.row;
+		one.col = goner.col;
+		setHex(one.row, one.col, one);
 	}
 
 }

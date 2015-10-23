@@ -93,7 +93,7 @@ public class Senses extends Onekid implements Expr, mutation.Transformable, muta
 	@Override
 	public int value(Critter c) {
 		// the only one that isn't sensespace is smell, and that always returns 0 for now
-		return 0;
+		return c.smell();
 	}
 
 }

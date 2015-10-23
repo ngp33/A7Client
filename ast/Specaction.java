@@ -48,21 +48,11 @@ public class Specaction extends Action {
 	
 	public void commit(Critter c){
 		if (type.equals(Hamlet.serve)) {
-			if (Actionpacked.checkempty(c, true)) {
-				int amount = c.mem[4] >= eval.value(c) ? eval.value(c) : c.mem[4];
-				c.w.putFood(amount, Actionpacked.dircoords(c, true));
-			}
-			c.mem[4] -= eval.value(c);
+			c.serve(eval.value(c));
 		}
 		else if (type.equals(Hamlet.tag)) {
-			int [] place = Actionpacked.dircoords(c, true);
-			if (c.w.getNumRep(place) > 0) {
-				Critter other = (Critter) c.w.getHex(place[0], place[1]);
-				other.mem[6] = eval.value(c);
-			}
-			c.mem[4] -= c.mem[3];	
+			c.youreit(eval.value(c));
 		}
-		//TODO handle when the request is tag, not serve
 	}
 	
 }
