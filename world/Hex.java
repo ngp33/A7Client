@@ -9,5 +9,5 @@ public abstract class Hex {
 	
 	abstract char getASCIIRep();
 	
-	abstract String description();
+	public abstract String description();
 }

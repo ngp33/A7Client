@@ -3,6 +3,16 @@ package world;
 public class Food extends Hex {
 	
 	int quantity;
+	
+	
+	public Food(int init) {
+		quantity = init;
+	}
+	
+	public Food() {
+		quantity = 0;
+	}
+	
 
 	@Override
 	int getNumRep() {
@@ -23,9 +33,12 @@ public class Food extends Hex {
 	}
 
 	@Override
-	String description() {
-		// TODO Auto-generated method stub
-		return null;
+	public String description() {
+		if (quantity == 0) {
+			return "An empty hex.";
+		} else {
+			return quantity + " units of food.";
+		}
 	}
 
 }

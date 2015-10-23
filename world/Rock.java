@@ -1,6 +1,9 @@
 package world;
 
 public class Rock extends Hex {
+	
+	public Rock() {}
+	
 
 	@Override
 	int getNumRep() {
@@ -13,9 +16,8 @@ public class Rock extends Hex {
 	}
 
 	@Override
-	String description() {
-		// TODO Auto-generated method stub
-		return null;
+	public String description() {
+		return "A rock.";
 	}
 
 }

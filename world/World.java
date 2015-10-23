@@ -3,6 +3,7 @@ package world;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import parse.Parser;
 import parse.ParserImpl;
@@ -10,8 +11,9 @@ import parse.ParserImpl;
 public class World {
 	
 	Hex[][] grid;
-	int time;
+	ArrayList<Critter> critters;
 	
+	int time;
 	int rows;
 	int columns;
 	
@@ -72,8 +74,8 @@ public class World {
 			INITIAL_ENERGY = getNumberFromLine(f);
 			MIN_MEMORY = getNumberFromLine(f);
 		} catch (IOException e) {
-			e.printStackTrace();
-			System.exit(0);
+			System.out.println("constants.txt does not exist or is not correct.");
+			throw new RuntimeException(); // Not sure what exception to throw when constants.txt is bad.
 		}
 	}
 	
@@ -109,7 +111,7 @@ public class World {
 	
 	public boolean isInGrid(int row, int col) {
 		int i = 2*row - col;
-		return (i >= 0 && i < 2*rows - columns);
+		return (col >= 0 && col < columns && i >= 0 && i < 2*rows - columns);
 	}
 	
 	public int getNumRep(int [] rowcommacol) {
@@ -117,11 +119,53 @@ public class World {
 	}
 	
 	public void putFood(int amount, int [] rowcommacol) {
-		//TODO
+		// Has the hex already been checked to be of type Food?
+		Food f = (Food) getHex(rowcommacol[0], rowcommacol[1]);
+		f.addFood(amount);
+	}
+	
+	public void addCritter(Critter c) {
+		critters.add(c);
+	}
+	
+	public void advance() {
+		for (Critter c : critters) {
+			c.timestep(); // Executes critter's program?
+		}
+		time++;
 	}
 	
 	public void advanceTime(int amount) {
-		time += amount;
+		for (int i = 0; i < amount; i++) {
+			advance();
+		}
+	}
+	
+	public StringBuilder getInfo() {
+		StringBuilder result = new StringBuilder();
+		result.append("Time elapsed: " + time + "\n");
+		result.append("Critters alive: " + critters.size() + "\n");
+		appendASCIIMap(result);
+		
+		return result;
+	}
+	
+	private void appendASCIIMap(StringBuilder sb) {
+		boolean odd = true;
+		for (int i = 0; i < grid[0].length; i++) {
+			if (odd) {
+				for (int j = 0; j < grid.length; j++) {
+					sb.append(" ");
+					sb.append(grid[j][i].getASCIIRep());
+				}
+			} else {
+				for (int j = 0; j < grid.length; j++) {
+					sb.append(grid[j][i].getASCIIRep());
+					sb.append(" ");
+				}
+			}
+			odd = !odd;
+		}
 	}
 
 }
