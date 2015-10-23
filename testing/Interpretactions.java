@@ -78,6 +78,31 @@ public class Interpretactions {
 	
 	@Test
 	public void eat(){
+		w.putFood(200, new int [] {2,3});
+		c.consume();
+		assertTrue(c.mem[4] == 398);
+		w.putFood(1000, new int [] {2,3});
+		c.consume();
+		assertTrue(c.mem[4] == 998);
+		assertTrue(w.getNumRep(new int [] {2,3} ) == -399);
+	}
+	
+	@Test
+	public void serve() {
+		c.serve(100);
+		assertTrue(c.mem[4] == 98);
+		c.turn(false);
+		c.serve(200);
+		assertTrue(w.getNumRep(new int [] {3,3}) == -99);
+		assertTrue(w.getNumRep(new int [] {2,2}) == - 400);
+	}
+	
+	public void bud() {
+		c.bud();
+		assertTrue(w.getNumRep(new int [] {1, 2}) > 0);
+	}
+	
+	public void attack() {
 		
 	}
 	

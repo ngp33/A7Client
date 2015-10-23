@@ -1,6 +1,7 @@
 package world;
 import java.util.Random;
 import ast.ProgramImpl;
+import ast.Rule;
 
 public class Critter extends Hex {
 	
@@ -8,21 +9,35 @@ public class Critter extends Hex {
 	public int direction;
 	public World w;
 	public int [] mem;
-	String name;
+	private String name;
 	public boolean matingdance;
 	public Random r = new Random(); //this is useful to have for the random sense and I didn't want to keep generating random objects.
+	public Rule mostrecentrule;
 		
 	/**Sets up the instance variables for a critter. Data is given in the order
 	 * specified in 4.1 of the a5 spec.
 	 * @param species
 	 * @param data
 	 */
-	//TODO make this
-	
-	public Critter(String species, int [] data) { 
+	//The purpose of r is so that we don't have to keep generating new random objects
+	public Critter(String species, int [] data, Random r, ProgramImpl rules, World w) { 
+		this(data,r,rules,w);
+		name = species;
+		int [] mem = new int [data[0]];
+		for (int place = 0; place < 5; place++) {
+			mem[place] = data[place];
+		}
+		mem[5] = 1;
+		mem[6] = 0;
+		mem[7] = data[5];
+		for (int them = 8; them < data[0]; them ++) {
+			mem[them] = 0;
+		}
+		this.mem = mem;
+		
 	}
 	
-	public Critter(int [] mem, Random r, ProgramImpl genetics, World wrld) {
+	public Critter(int [] mem, Random r, ProgramImpl genetics, World wrld) { //Give the new critter a name
 		genes = genetics;
 		direction = 0;
 		w = wrld;
@@ -38,10 +53,24 @@ public class Critter extends Hex {
 		matingdance = false;
 		Rulehandler.altercritter(this);
 	}
+	
+	/**This is the heavyweight getNumRep for critters which returns the detailed 
+	 * appearance of the critter on the hex. The tradeoff is that this version
+	 * requires knowledge of the observing critter.
+	 * @param c
+	 * @return
+	 */
+	public int getNumRep(Critter c) {
+		int compdir = ((c.direction - direction) + 6) % 6;
+		return mem[3] * 100000 + mem[6] * 1000 + mem[7] * 10 + compdir;
+	}
+	
+	/**This is the lightweight getNumRep for critters which just returns a value
+	 * which implies that the hex contains a critter, but no detail about the critter
+	 */
 	@Override
 	public int getNumRep() {
-		// TODO Auto-generated method stub
-		return 0;
+		return 1;
 	}
 	
 	public void consume(){
@@ -102,6 +131,21 @@ public class Critter extends Hex {
 	
 	public int random(int num) {
 		return Crittersenses.rando(this, num);
+	}
+
+	@Override
+	String getHexInfo() {
+		StringBuilder s = new StringBuilder();
+		StringBuilder sb = new StringBuilder();
+		s.append(name + "\n");
+		for (int them : mem) {
+			s.append(them);
+		}
+		s.append("\n");
+		s.append(genes.prettyPrint(sb) + "\n");
+		sb = new StringBuilder();
+		s.append(mostrecentrule != null ? mostrecentrule.prettyPrint(sb).toString() : "No rule executed yet");
+		return s.toString();
 	}
 	
 }

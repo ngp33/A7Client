@@ -68,12 +68,18 @@ public class World {
 	}
 	
 	/**Clears a hex of whatever was on it before and puts a certain amount of food on it
+	 * Note, putfood -1, rowcommacol returns a
 	 * 
 	 * @param amount
 	 * @param rowcommacol
 	 */
 	public void putFood(int amount, int [] rowcommacol) {
 		replace(new Food(amount), getHex(rowcommacol[0], rowcommacol[1]));
+	}
+	
+	/**Makes a new hex without any food on it */
+	public void putEmpty(int [] rowcommacol) {
+		replace(new Food(-1), getHex(rowcommacol[0], rowcommacol[1]));
 	}
 	
 	/**Effect: Swaps the position of hexes one and two. It updates their

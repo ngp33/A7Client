@@ -12,18 +12,21 @@ public class Crittermethods {
 	 * TODO this makes it so a critter cant really ever be full. Is that alright?
 	 */
 	public static void consume(Critter c) {
+		c.mem[4] -= c.mem[3];
+		if (c.mem[4] <= 0) {
+			c.dies();
+		}
 		int n = c.w.getNumRep(dircoords(c,true));
-		if (n < 0) {
-			if (c.w.ENERGY_PER_SIZE * c.mem[3] < c.mem [4] + (-1-n)) { //too much food on the hex to be fully consumed
-				c.w.putFood((-1-n) - (c.w.ENERGY_PER_SIZE * c.mem[3] - c.mem[4]), dircoords(c,true));
+		if (n < c.w.ROCK_VALUE) {
+			if (c.w.ENERGY_PER_SIZE * c.mem[3] < c.mem [4] + (c.w.ROCK_VALUE-n)) { //too much food on the hex to be fully consumed
+				c.w.putFood((c.w.ROCK_VALUE-n) - (c.w.ENERGY_PER_SIZE * c.mem[3] - c.mem[4]), dircoords(c,true));
 				c.mem[4] = c.w.ENERGY_PER_SIZE * c.mem[3];
 			}
 			else{
-				c.mem[4] += (-1-n);
-				c.w.putFood(0,dircoords(c,true));
+				c.mem[4] += (c.w.ROCK_VALUE - n);
+				c.w.putEmpty(dircoords(c,true));
 			}
 		}
-		c.mem[4] -= c.mem[3];
 	}
 
 	/**Updates the energy of the attacked critter.
@@ -140,7 +143,9 @@ public class Crittermethods {
 	/** Critter grows one unit bigger.*/
 	public static void grow(Critter c) {
 		c.mem[4] -= c.mem[3] * complexitycalc(c) * c.w.GROW_COST;
-		c.mem[3] ++;
+		if (c.mem[3] < 99) {
+			c.mem[3] ++;
+		}
 	}
 	
 	

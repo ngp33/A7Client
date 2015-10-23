@@ -185,6 +185,7 @@ public class ProgramImpl extends Manykids implements Program {
 	public boolean eval(Critter c){
 		for (int place = 0; place < children.length; place ++) {
 			if (((Rule) children[place]).perform(c)){
+				c.mostrecentrule = (Rule) children[place];
 				return true;
 			}
 		}
