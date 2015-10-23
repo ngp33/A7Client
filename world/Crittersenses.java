@@ -4,13 +4,12 @@ package world;
 public class Crittersenses {
 	/** returns the value of the hex ahead according to the spec
 	 * Not quite sure what to do if ahead isn't on the map. Will look it up TODO
-	 *TODO make sure it handles negative aheads too.
 	 * @param c
 	 * @param where
 	 * @return
 	 */
 	public static int spacesahead(Critter c, int where){
-		if (where == 0){
+		if (where <= 0){
 			return c.getNumRep(c);
 		}
 		else{
@@ -42,12 +41,16 @@ public class Crittersenses {
 	 * @return
 	 */
 	public static int nearby(Critter c, int direction) {
+		if (direction < 0) {
+			direction = - direction;
+		}
+		direction = direction % 6;
 		int remember = c.direction;
 		c.direction = direction;
 		int [] place = Crittermethods.dircoords(c,true);
 		int then = c.w.getNumRep(place);
 		if (then > 0 ){
-			((Critter) c.w.getHex(place[0], place[1])).getNumRep(c);
+			return ((Critter) c.w.getHex(place[0], place[1])).getNumRep(c);
 		}
 		c.direction = remember;
 		return then;

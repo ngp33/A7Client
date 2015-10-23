@@ -96,8 +96,8 @@ public class MathOp extends TwokidsSameType implements Expr, mutation.Removable 
 			case add: return left.value(c) + right.value(c);
 			case sub: return left.value(c) - right.value(c);
 			case mult: return left.value(c) * right.value(c);
-			case div: return left.value(c) / right.value(c);
-			case mod: return left.value(c) % right.value(c);
+			case div: return right.value(c) == 0 ? 0 : left.value(c) / right.value(c);
+			case mod: return right.value(c) == 0 ? 0 : left.value(c) % right.value(c);
 			default:
 				throw new UnsupportedOperationException(); //This should never be an issue because
 		}//The problem would have come up when the sentence was parsed in the first place. This would be a programmer

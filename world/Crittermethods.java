@@ -8,7 +8,6 @@ public class Crittermethods {
 	 * 	1. When there is more food than the critter can consume, critter leaves extra food on the hex
 	 * 	2. Critter consumes all the food on the hex when he can.
 	 * @param c
-	 * TODO this makes it so a critter cant really ever be full. Is that alright?
 	 */
 	public static void consume(Critter c) {
 		c.mem[4] -= c.mem[3];
@@ -28,11 +27,9 @@ public class Crittermethods {
 	}
 
 	/**Updates the energy of the attacked critter.
-	 * Invariant: there actually is a critter that is being attacked...
 	 * @param attacker
 	 * @param victim
 	 */
-	 //TODO make it truncate, not round
 	public static void attack(Critter attacker){
 		attacker.mem[4] -= attacker.mem[3] * attacker.w.ATTACK_COST;
 		if (!death(attacker)) {
@@ -56,7 +53,7 @@ public class Crittermethods {
 	}
 	
 	
-	/** moves the critter TODO check that the move is valid and update world hex grid.
+	/** moves the critter
 	 * Invariant: direction is between 0 and 5 inclusive*/
 	public static void movement(Critter c, boolean forward) {
 		c.mem[4] -= c.mem[3];
@@ -138,15 +135,15 @@ public class Crittermethods {
 	
 	
 	
-	/**Generates a new food hex with the proper amount of food in the place where the 
-	 * critter was when it died. //TODO implement
+	/**Effect: Generates a new food hex with the proper amount of food in the place where the 
+	 * critter was when it died.
 	 * @param c
 	 */
 	public static void dies(Critter c){
 		c.w.replace(new Food(c.w.FOOD_PER_SIZE * c.mem[3]), c);
 	}
 	
-	/** Critter grows one unit bigger.*/
+	/** Critter grows one unit bigger. Critter can't get bigger than size 99*/
 	public static void grow(Critter c) {
 		c.mem[4] -= c.mem[3] * complexitycalc(c) * c.w.GROW_COST;
 		if (!death(c)) {
@@ -157,7 +154,7 @@ public class Crittermethods {
 	}
 	
 	
-	/** A critters attempt to mate TODO make sure this handles energy consumption for
+	/** A critters attempt to mate 
 	 * unsuccessful mating*/
 	public static void mate(Critter c) {
 		ActionMate.matewith(c);
@@ -181,11 +178,12 @@ public class Crittermethods {
 
 	}
 
+	/**Effect: tags a critter directly ahead*/
 	public static void tag(Critter c, int num) {
 		int [] place = dircoords(c, true);
 		c.mem[4] -= c.mem[3];
 		if (!death(c)) {
-			if (c.w.getNumRep(place) > 0) {
+			if (c.w.getNumRep(place) > 0 && num >= 0 && num <= 99) {
 				Critter other = (Critter) c.w.getHex(place[0], place[1]);
 				other.mem[6] = num;
 			}
