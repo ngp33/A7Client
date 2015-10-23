@@ -148,5 +148,15 @@ public class Critter extends Hex {
 		return s.toString();
 	}
 	
+	@Override
+	char getASCIIRep() {
+		return (char) direction;
+	}
+	
+	@Override
+	public String description() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
 }
-

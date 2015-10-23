@@ -4,9 +4,15 @@ public class Food extends Hex {
 	
 	int quantity;
 	
-	public Food(int amount) {
-		quantity = amount;
+	
+	public Food(int init) {
+		quantity = init;
 	}
+	
+	public Food() {
+		quantity = 0;
+	}
+
 
 	@Override
 	int getNumRep() {
@@ -15,6 +21,30 @@ public class Food extends Hex {
 	
 	void addFood(int qty) {
 		quantity -= qty;
+	}
+
+	@Override
+	char getASCIIRep() {
+		if (quantity == 0) {
+			return '-';
+		} else {
+			return 'F';
+		}
+	}
+
+	@Override
+	public String description() {
+		if (quantity == 0) {
+			return "An empty hex.";
+		} else {
+			return quantity + " units of food.";
+		}
+	}
+
+	@Override
+	String getHexInfo() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
