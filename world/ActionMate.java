@@ -17,6 +17,7 @@ public class ActionMate {
 	 * Effect: the energy of the critters involved decrease by the proper amount depending on whether or not
 	 * 		the mating was successful.*/
 	public static void matewith(Critter c) {
+		c.mem[4] -= c.mem[3];
 		c.matingdance = true;
 		Hex there = c.w.getHex(Crittermethods.dircoords(c,true)[0], Crittermethods.dircoords(c,true)[1]);
 		if (there instanceof Critter) {
@@ -34,15 +35,19 @@ public class ActionMate {
 	 */
 	private static void success(Critter c, Critter specific) {
 		if (specific.matingdance) {
-			Critter baby = makenewcritter(c, specific);
-			mutate(baby);
-			place(baby,c, specific);
+			c.mem[4] += c.mem[3] - c.w.MATE_COST * Crittermethods.complexitycalc(c);
+			specific.mem[4] += specific.mem[3] - specific.w.MATE_COST * Crittermethods.complexitycalc(specific);
+			if (!Crittermethods.death(c) && !Crittermethods.death(specific)) {
+				Critter baby = makenewcritter(c, specific);
+				mutate(baby);
+				place(baby,c, specific);
+			}
 		}
 	}
 
 	/** finds an open hex to place the baby critter and places it there
 	 * Effect: places the baby critter in the world if there is space, does nothing otherwise
-	 * TODO finish this*/
+	 */
 	private static boolean place(Critter baby, Critter c, Critter k) {
 		Critter firstpar = c;
 		Critter secondpar = k;
@@ -151,23 +156,28 @@ public class ActionMate {
 	
 	/** effect: mutates critter c's AST according to the spec. TODO implement it*/
 	private static void mutate(Critter c) {
-		
+		while (c.r.nextInt(4) == 1) {
+			c.genes.mutate();
+		}
 	}
 	
 	
 	/** creates and places a new critter in the world according to laws of budding*/
 	public static void alone(Critter c) {
-		ProgramImpl p = (ProgramImpl) c.genes.copy();
-		int [] mem = new int [c.mem[0]];
-		mem[1] = c.mem[1];
-		mem[2] = c.mem[2];
-		finishsetup(mem, c);
-		Critter k = new Critter(mem, c.r, p, c.w);
-		mutate(k);
 		c.mem[4] -= c.w.BUD_COST * Crittermethods.complexitycalc(c);
-		if (Crittermethods.checkempty(c, false)) {
-			k.row = Crittermethods.dircoords(c, false)[0];
-			k.col = Crittermethods.dircoords(c, false) [1];
+		if (!Crittermethods.death(c)) {
+			ProgramImpl p = (ProgramImpl) c.genes.copy();
+			int [] mem = new int [c.mem[0]];
+			mem[1] = c.mem[1];
+			mem[2] = c.mem[2];
+			finishsetup(mem, c);
+			Critter k = new Critter(mem, c.r, p, c.w);
+			mutate(k);
+			c.mem[4] -= c.w.BUD_COST * Crittermethods.complexitycalc(c);
+			if (Crittermethods.checkempty(c, false)) {
+				k.row = Crittermethods.dircoords(c, false)[0];
+				k.col = Crittermethods.dircoords(c, false) [1];
+			}
 		}
 	}
 	

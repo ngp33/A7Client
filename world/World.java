@@ -115,7 +115,10 @@ public class World {
 	}
 	
 	public int getNumRep(int [] rowcommacol) {
-		return getHex(rowcommacol[0], rowcommacol[1]).getNumRep();
+		if (isInGrid(rowcommacol[0], rowcommacol[1])) {
+			return getHex(rowcommacol[0], rowcommacol[1]).getNumRep();
+		}
+		return -1;
 	}
 	
 	/**Clears a hex of whatever was on it before and puts a certain amount of food on it
@@ -128,7 +131,8 @@ public class World {
 		replace(new Food(amount), getHex(rowcommacol[0], rowcommacol[1]));
 	}
 	
-	/**Makes a new hex without any food on it */
+	/**Effect: Makes a new hex without any food on it. 
+	 * Invariant: There exists a hex at rowcommacol */
 	public void putEmpty(int [] rowcommacol) {
 		replace(new Food(-1), getHex(rowcommacol[0], rowcommacol[1]));
 	}

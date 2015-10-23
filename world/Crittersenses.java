@@ -11,7 +11,7 @@ public class Crittersenses {
 	 */
 	public static int spacesahead(Critter c, int where){
 		if (where == 0){
-			return c.getNumRep();
+			return c.getNumRep(c);
 		}
 		else{
 			return pseudomove(c,where);
@@ -44,7 +44,11 @@ public class Crittersenses {
 	public static int nearby(Critter c, int direction) {
 		int remember = c.direction;
 		c.direction = direction;
-		int then = c.w.getNumRep(Crittermethods.dircoords(c,true));
+		int [] place = Crittermethods.dircoords(c,true);
+		int then = c.w.getNumRep(place);
+		if (then > 0 ){
+			((Critter) c.w.getHex(place[0], place[1])).getNumRep(c);
+		}
 		c.direction = remember;
 		return then;
 	}

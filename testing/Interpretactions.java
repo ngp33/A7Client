@@ -23,11 +23,11 @@ public class Interpretactions {
 		parsing = new ParserImpl();
 		p = (ProgramImpl) parsing.parse(new StringReader ("1 = 1 --> wait;"));
 		w = new World (5,5);
-		c = new Critter(new int [] {8,4,3,2,200,1,0,10}, new Random(), p, w);
+		c = new Critter(new int [] {8,2,2,2,200,1,0,10}, new Random(), p, w);
 		c.direction = 0;
 		c.row = 2;
 		c.col = 2;
-		//Max energy: 500
+		//Max energy: 1000
 		//current energy: 200
 	}
 	
@@ -54,6 +54,8 @@ public class Interpretactions {
 	}
 	
 	@Test
+	//Make sure this test ensures that the world wasn't 'modified' (ie, trashed).
+	
 	public void move() {
 		c.movement(true);
 		assertTrue(c.row == 3);
@@ -81,10 +83,11 @@ public class Interpretactions {
 		w.putFood(200, new int [] {2,3});
 		c.consume();
 		assertTrue(c.mem[4] == 398);
+		assertTrue(c.w.getNumRep(new int [] {3,2}) == 0);
 		w.putFood(1000, new int [] {2,3});
 		c.consume();
-		assertTrue(c.mem[4] == 998);
-		assertTrue(w.getNumRep(new int [] {2,3} ) == -399);
+		assertTrue(c.mem[4] == 1000);
+		assertTrue(w.getNumRep(new int [] {2,3} ) == -397);
 	}
 	
 	@Test
@@ -93,17 +96,40 @@ public class Interpretactions {
 		assertTrue(c.mem[4] == 98);
 		c.turn(false);
 		c.serve(200);
-		assertTrue(w.getNumRep(new int [] {3,3}) == -99);
-		assertTrue(w.getNumRep(new int [] {2,2}) == - 400);
+		assertTrue(w.getNumRep(new int [] {3,3}) == -97);
+		assertTrue(w.getNumRep(new int [] {2,2}) == - 401);
 	}
 	
 	public void bud() {
+		c.mem = new int [] {8,2,2,2,1000,1,0,10, 9};
 		c.bud();
+		assertTrue(c.mem[4] == 82); // mostly testing the complexity rule calculator.
 		assertTrue(w.getNumRep(new int [] {1, 2}) > 0);
+		StringBuilder sb = new StringBuilder();
+		Critter child = ((Critter) w.getHex(1, 2));
+		child.genes.prettyPrint(sb);
+		
+
+		assertTrue(child.mem[0] == c.mem[0]);
+		assertTrue(child.mem[1] == c.mem[1]);
+		assertTrue(child.mem[2] == c.mem[2]);
+		assertTrue(child.mem[3] == 1);
+		assertTrue(child.mem[4] == 250);
+		assertTrue(child.mem[5] == 1);
+		assertTrue(child.mem[6] == 0);
+		assertTrue(child.mem[7] == 0);
+		assertTrue(child.mem[8] == 0);
 	}
 	
 	public void attack() {
-		
+		c.mem[4] = 1000;
+		c.bud();
+		Critter b = (Critter) w.getHex(1,2);
+		c.mem[4] = 1000;
+		c.direction = 3;
+		c.attack();
+		assertTrue(c.mem[4] == 990);
+		assertTrue(b.mem[4] == 121 ); //I did the calculation for attack damage. Hopefully this is right.
 	}
 	
 	
