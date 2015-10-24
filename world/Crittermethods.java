@@ -128,7 +128,14 @@ public class Crittermethods {
 	 */
 	public static boolean checkempty(Critter c, boolean ahead){
 		if (c.w.isInGrid(dircoords(c,ahead)[0], dircoords(c,ahead)[1])) {
-			return c.w.getNumRep(dircoords(c,ahead)) == 0 ? true : false;
+			return c.w.getNumRep(dircoords(c,ahead)) == 0;
+		}
+		return false;
+	}
+	
+	private static boolean checkfood(Critter c, boolean ahead){
+		if (c.w.isInGrid(dircoords(c,ahead)[0], dircoords(c,ahead)[1])) {
+			return (c.w.getNumRep(dircoords(c,ahead)) < c.w.ROCK_VALUE || checkempty(c,ahead));
 		}
 		return false;
 	}
@@ -169,9 +176,11 @@ public class Crittermethods {
 	public static void serve(Critter c, int quantity) {
 		c.mem[4] -= c.mem[3];
 		if (!death(c)) { //I was tempted not to include this line, but I think a critter might be able to spawn a rock
-			if (checkempty(c, true)) { //without it
+			if (checkfood(c, true)) { //without it
 				int amount = c.mem[4] >= quantity ? quantity : c.mem[4];
-				c.w.putFood(amount, dircoords(c,true));
+				Food f = (Food) c.w.getHex(dircoords(c,true)[0], dircoords(c,true)[1]);
+				f.addFood(amount);
+				//c.w.putFood(amount, dircoords(c,true));
 			}
 			c.mem[4] -= quantity;
 			death(c);

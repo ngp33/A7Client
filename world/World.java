@@ -224,7 +224,7 @@ public class World {
 	public void emptyworld() {
 		for (int place = 0; place < columns; place ++) {
 			for (int ptwo = 0; ptwo <rows - columns/2; ptwo ++) {
-				Hex here = new Food(-1);
+				Hex here = new Food();
 				here.col = place;
 				here.row = ptwo + (place+1)/2; 
 				grid[place][ptwo] = here;

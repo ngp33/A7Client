@@ -104,6 +104,13 @@ public class Interpretactions {
 	}
 	
 	@Test
+	public void shortserve() {
+		c.serve(100);
+		c.serve(40);
+		assertTrue(w.getNumRep(new int [] {3,2}) == -141);
+	}
+	
+	@Test
 	public void bud() {
 		c.mem = new int [] {9,2,2,2,1000,1,0,10, 9};
 		c.bud();
