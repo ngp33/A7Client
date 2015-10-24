@@ -38,7 +38,8 @@ public class Crittermethods {
 			if (victim instanceof Critter) {
 				Critter v = (Critter) victim;
 				double inside = attacker.w.DAMAGE_INC * (attacker.mem[3] * attacker.mem[2] - v.mem[3] * v.mem[1]);
-				int harm = Math.round((float) (attacker.w.BASE_DAMAGE * attacker.mem[3] * pfunct(inside)));
+				float damage = (float) (attacker.w.BASE_DAMAGE * attacker.mem[3] * pfunct(inside));
+				int harm = Math.round(damage);
 				v.mem[4] -= harm;
 				if (v.mem[4] <= 0) {
 					dies(v);
@@ -49,7 +50,7 @@ public class Crittermethods {
 	
 	/** used in calculating the attack damage*/
 	private static double pfunct(double val){
-		return 1/(1 + Math.exp(val));
+		return 1/(1 + Math.exp(-val));
 	}
 	
 	

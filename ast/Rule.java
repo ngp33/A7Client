@@ -20,11 +20,11 @@ public class Rule extends Twokids implements Node, mutation.Removable {
 		next = n;
 	}
     
-    @Override
+    /*@Override
     public String toString() {
         // TODO Auto-generated method stub
         return null;
-    }
+    }*/
 
 	@Override
 	Twokids getRootCopy() {

@@ -55,7 +55,7 @@ public class World {
 			FileReader f = new FileReader("constants.txt");
 			
 			BASE_DAMAGE = getNumberFromLine(f);
-			DAMAGE_INC = getNumberFromLine(f);
+			DAMAGE_INC = getFloatFromLine(f);
 			ENERGY_PER_SIZE = getNumberFromLine(f);
 			FOOD_PER_SIZE = getNumberFromLine(f);
 			MAX_SMELL_DISTANCE = getNumberFromLine(f);
@@ -83,14 +83,21 @@ public class World {
 		String num = "";
 		char c = 0;
 		
-		while (c != '\n') {
+		while (c != '\n' && c != ".".charAt(0)) {
 			c = (char) f.read();
-			if (c > 47 && c < 58) {
+			if ((c > 47 && c < 58) || c == 45) { //this didnt handle negatives so I added an or for -
 				num = num + c;
 			}
 		}
 		
 		return Integer.parseInt(num);
+	}
+	
+	private float getFloatFromLine(FileReader f) throws IOException {
+		int one = getNumberFromLine(f);
+		int two = getNumberFromLine(f);
+		String num = one + "." + two;
+		return Float.parseFloat(num);
 	}
 	
 	public Hex getHex(int row, int col) {

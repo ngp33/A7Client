@@ -36,11 +36,11 @@ public class BinaryCondition extends TwokidsSameType implements Condition, mutat
     	return sb;
     }
 
-    @Override
+    /*@Override
     public String toString() {
         // TODO Auto-generated method stub
         return null;
-    }
+    }*/
     
     /** represents the operator in a nice printable way*/
     public String makenice(){

@@ -154,10 +154,15 @@ public class ActionMate {
 		}
 	}
 	
-	/** effect: mutates critter c's AST according to the spec. TODO implement it*/
+	/** effect: mutates critter c's AST according to the spec.*/
 	private static void mutate(Critter c) {
+		
+		String original = new StringBuilder(c.genes.toString()).toString();
 		while (c.r.nextInt(4) == 1) {
 			c.genes.mutate();
+			while (original.toString().equals(c.genes.toString())) { //This is supposed to make sure that
+				c.genes.mutate(); //A mutation actually occurs when the first loop guard is true.
+			}
 		}
 	}
 	
@@ -168,15 +173,15 @@ public class ActionMate {
 		if (!Crittermethods.death(c)) {
 			ProgramImpl p = (ProgramImpl) c.genes.copy();
 			int [] mem = new int [c.mem[0]];
+			mem[0] = c.mem[0];
 			mem[1] = c.mem[1];
 			mem[2] = c.mem[2];
 			finishsetup(mem, c);
 			Critter k = new Critter(mem, c.r, p, c.w);
 			mutate(k);
-			c.mem[4] -= c.w.BUD_COST * Crittermethods.complexitycalc(c);
 			if (Crittermethods.checkempty(c, false)) {
-				k.row = Crittermethods.dircoords(c, false)[0];
-				k.col = Crittermethods.dircoords(c, false) [1];
+				int [] loc = Crittermethods.dircoords(c, false);
+				c.w.replace(k, c.w.getHex(loc[0], loc[1]));
 			}
 		}
 	}
