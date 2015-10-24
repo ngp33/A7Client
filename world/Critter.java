@@ -47,7 +47,8 @@ public class Critter extends Hex {
 	}
 	
 	/**Effect: updates the critter's instance variables according to its rules. 
-	 * When the critter moves, you might have to create a new hex on the place where it was.
+	 * It pretty much just handles everything that should happen to a critter when
+	 * a time step passes.
 	 */
 	public void timestep(){
 		matingdance = false;

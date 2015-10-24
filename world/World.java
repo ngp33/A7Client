@@ -95,7 +95,7 @@ public class World {
 	
 	public Hex getHex(int row, int col) {
 		if (isInGrid(row, col)) {
-			row -= row/2;
+			row -= (col + 1)/2; //I changed this. It was row -= row/2
 			
 			return grid[col][row];
 		} else {
@@ -104,7 +104,7 @@ public class World {
 	}
 	
 	public void setHex(int row, int col, Hex h) {
-		row -= row/2;
+		row -= (col + 1)/2; //I changed this too. It was row -= row/2
 		
 		grid[col][row] = h;
 	}
@@ -210,6 +210,18 @@ public class World {
 				}
 			}
 			odd = !odd;
+		}
+	}
+	
+	/**sets up an empty world (ie. all hexes are empty). This might be good as an overloaded constructor */
+	public void emptyworld() {
+		for (int place = 0; place < columns; place ++) {
+			for (int ptwo = 0; ptwo <rows - columns/2; ptwo ++) {
+				Hex here = new Food(-1);
+				here.col = place;
+				here.row = ptwo + (place+1)/2; 
+				grid[place][ptwo] = here;
+			}
 		}
 	}
 

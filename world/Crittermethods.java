@@ -56,7 +56,7 @@ public class Crittermethods {
 	/** moves the critter
 	 * Invariant: direction is between 0 and 5 inclusive*/
 	public static void movement(Critter c, boolean forward) {
-		c.mem[4] -= c.mem[3];
+		c.mem[4] -= c.mem[3] * c.w.MOVE_COST;
 		if (!death(c)) {
 			int [] newplace = dircoords(c,forward);
 			if (checkempty(c, forward)) {

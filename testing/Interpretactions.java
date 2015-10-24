@@ -22,7 +22,8 @@ public class Interpretactions {
 	public void init() {
 		parsing = new ParserImpl();
 		p = (ProgramImpl) parsing.parse(new StringReader ("1 = 1 --> wait;"));
-		w = new World (5,5);
+		w = new World (7,5);
+		w.emptyworld();
 		c = new Critter(new int [] {8,2,2,2,200,1,0,10}, new Random(), p, w);
 		c.direction = 0;
 		c.row = 2;
@@ -54,7 +55,7 @@ public class Interpretactions {
 	}
 	
 	@Test
-	//Make sure this test ensures that the world wasn't 'modified' (ie, trashed).
+	//TODO Make sure this test ensures that the world wasn't 'modified' (ie, trashed).
 	
 	public void move() {
 		c.movement(true);
@@ -80,7 +81,7 @@ public class Interpretactions {
 	
 	@Test
 	public void eat(){
-		w.putFood(200, new int [] {2,3});
+		w.putFood(200, new int [] {3,2});
 		c.consume();
 		assertTrue(c.mem[4] == 398);
 		assertTrue(c.w.getNumRep(new int [] {3,2}) == 0);
