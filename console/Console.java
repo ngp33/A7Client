@@ -133,9 +133,9 @@ public class Console {
 	        		continue;
 	        	}
 	        	if (line.substring(0, 5).equals("name ")) {
-	        		name = line.substring(6);
+	        		name = line.substring(5);
 	        	} else {
-	        		System.out.println("Invaid world file.");
+	        		System.out.println("Invaid world file: Name line malformed.");
         			return;
 	        	}
 	        	line = reader.readLine();
@@ -147,27 +147,30 @@ public class Console {
 	        		line = reader.readLine();
 	        		continue;
 	        	}
-	        	if (line.substring(0, 6).equals("world ")) {
-	        		line = line.substring(7);
+	        	if (line.substring(0, 5).equals("size ")) {
+	        		line = line.substring(5);
 	        		int div = line.indexOf(' ');
 	        		
 	        		if (div == -1) {
-	        			System.out.println("Invaid world file.");
+	        			System.out.println("Invaid world file: Size line malformed.");
 	        			return;
 	        		}
 	        		
-	        		rows = Integer.parseInt(line.substring(0, div));
-	        		cols = Integer.parseInt(line.substring(div+1));
+	        		cols = Integer.parseInt(line.substring(0, div));
+	        		rows = Integer.parseInt(line.substring(div+1));
 	        	} else {
-	        		System.out.println("Invaid world file.");
+	        		System.out.println("Invaid world file: Size line malformed.");
         			return;
 	        	}
 	        	line = reader.readLine();
 	        }
 	        
 	        // Check if necessary stuff is missing
-	        if (world == null || rows <= 0 || cols <= 0) {
+	        if (name == null || rows <= 0 || cols <= 0) {
 	        	System.out.println("Invalid world file.");
+	        	System.out.println("Name" + name);
+	        	System.out.println(rows);
+	        	System.out.println(cols);
 	        	return;
 	        }
 	        
@@ -183,7 +186,7 @@ public class Console {
 	        		int div = line.indexOf(' ');
 	        		
 	        		if (div == -1) {
-	        			System.out.println("Invaid world file.");
+	        			System.out.println("Invaid world file: Rock line malformed.");
 	        			return;
 	        		}
 	        		
@@ -196,7 +199,7 @@ public class Console {
 	        		int div = line.indexOf(' ');
 	        		
 	        		if (div == -1) {
-	        			System.out.println("Invaid world file.");
+	        			System.out.println("Invaid world file: Food line malformed.");
 	        			return;
 	        		}
 	        		
@@ -204,7 +207,7 @@ public class Console {
 	        		int div2 = line2.indexOf(' ');
 	        		
 	        		if (div2 == -1) {
-	        			System.out.println("Invalid world file.");
+	        			System.out.println("Invalid world file: Food line malformed.");
 	        			return;
 	        		}
 	        		
@@ -219,7 +222,7 @@ public class Console {
 	        		String[] segments = line.split("\\s+"); // If there's time later, use split() in above cases.
 	        		
 	        		if (segments.length != 4) {
-	        			System.out.println("Invalid world file.");
+	        			System.out.println("Invalid world file: Critter line malformed.");
 	        			return;
 	        		}
 	        		
@@ -232,6 +235,9 @@ public class Console {
 	        		critter.direction = dir;
 	        		
 	        		world.setHex(r, c, critter);
+	        	} else {
+	        		System.out.println("Invalid world file.");
+	        		return;
 	        	}
 	        }
 	        

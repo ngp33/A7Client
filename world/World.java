@@ -48,7 +48,7 @@ public class World {
 			FileReader f = new FileReader("constants.txt");
 			
 			BASE_DAMAGE = getNumberFromLine(f);
-			DAMAGE_INC = getNumberFromLine(f);
+			DAMAGE_INC = getFloatFromLine(f);
 			ENERGY_PER_SIZE = getNumberFromLine(f);
 			FOOD_PER_SIZE = getNumberFromLine(f);
 			MAX_SMELL_DISTANCE = getNumberFromLine(f);
@@ -116,6 +116,9 @@ public class World {
 		rows = numRows;
 		columns = numCols;
 		
+		System.out.println(COLUMNS);
+		System.out.println(ROWS);
+		
 		//grid = new Hex[numCols][numRows - (numCols + 1) / 2];
 		grid = new Hex[numCols][numRows - numCols/2];
 		
@@ -139,7 +142,7 @@ public class World {
 		String num = "";
 		char c = 0;
 		
-		while (c != '\n' && c != ".".charAt(0)) {
+		while (c != '\n') {
 			c = (char) f.read();
 			if ((c > 47 && c < 58) || c == 45) { //this didnt handle negatives so I added an or for -
 				num = num + c;
@@ -150,11 +153,25 @@ public class World {
 	}
 	
 	private float getFloatFromLine(FileReader f) throws IOException {
+		String num = "";
+		char c = 0;
+		
+		while (c != '\n') {
+			c = (char) f.read();
+			if ((c > 47 && c < 58) || c == 45 || c == 46) { //this didnt handle negatives so I added an or for -
+				num = num + c;
+			}
+		}
+		
+		return Float.parseFloat(num);
+	}
+	
+	/*private float getFloatFromLine(FileReader f) throws IOException {
 		int one = getNumberFromLine(f);
 		int two = getNumberFromLine(f);
 		String num = one + "." + two;
 		return Float.parseFloat(num);
-	}
+	}*/
 	
 	public Hex getHex(int row, int col) {
 		if (isInGrid(row, col)) {
