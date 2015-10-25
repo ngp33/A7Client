@@ -13,7 +13,8 @@ public class World {
 	Hex[][] grid;
 	ArrayList<Critter> critters;
 	
-	int time;
+	String name; // Not sure what this is for yet but it's included in the world file.
+	int time = 0;
 	int rows;
 	int columns;
 	
@@ -38,17 +39,9 @@ public class World {
 	public final int MIN_MEMORY;
 	
 	
-	public World(int numRows, int numCols) {
-		if (numRows < numCols/2 + 1) {
-			//TODO What to do?
-		}
-		rows = numRows;
-		columns = numCols;
-		
-		//grid = new Hex[numCols][numRows - (numCols + 1) / 2];
-		grid = new Hex[numCols][numRows - numCols/2];
-		
-		time = 0;
+	public World() {
+		name = "Untitled";
+		critters = new ArrayList<Critter>();
 		
 		// This would look cleaner in its own method, but I need to do it inside the constructor.
 		try {
@@ -77,6 +70,69 @@ public class World {
 			System.out.println("constants.txt does not exist or is not correct.");
 			throw new RuntimeException(); // Not sure what exception to throw when constants.txt is bad.
 		}
+		
+		setupGrid(ROWS, COLUMNS);
+	}
+	
+	public World(int numRows, int numCols, String n) {
+		name = n;
+		critters = new ArrayList<Critter>();
+		
+		try {
+			FileReader f = new FileReader("constants.txt");
+			
+			BASE_DAMAGE = getNumberFromLine(f);
+			DAMAGE_INC = getNumberFromLine(f);
+			ENERGY_PER_SIZE = getNumberFromLine(f);
+			FOOD_PER_SIZE = getNumberFromLine(f);
+			MAX_SMELL_DISTANCE = getNumberFromLine(f);
+			ROCK_VALUE = getNumberFromLine(f);
+			COLUMNS = getNumberFromLine(f);
+			ROWS = getNumberFromLine(f);
+			MAX_RULES_PER_TURN = getNumberFromLine(f);
+			SOLAR_FLUX = getNumberFromLine(f);
+			MOVE_COST = getNumberFromLine(f);
+			ATTACK_COST = getNumberFromLine(f);
+			GROW_COST = getNumberFromLine(f);
+			BUD_COST = getNumberFromLine(f);
+			MATE_COST = getNumberFromLine(f);
+			RULE_COST = getNumberFromLine(f);
+			ABILITY_COST = getNumberFromLine(f);
+			INITIAL_ENERGY = getNumberFromLine(f);
+			MIN_MEMORY = getNumberFromLine(f);
+		} catch (IOException e) {
+			System.out.println("constants.txt does not exist or is not correct.");
+			throw new RuntimeException(); // Not sure what exception to throw when constants.txt is bad.
+		}
+		
+		if (numRows < numCols/2 + 1) {
+			setupGrid(ROWS, COLUMNS);
+		}
+		setupGrid(numRows, numCols);
+	}
+	
+	
+	private void setupGrid(int numRows, int numCols) {
+		rows = numRows;
+		columns = numCols;
+		
+		//grid = new Hex[numCols][numRows - (numCols + 1) / 2];
+		grid = new Hex[numCols][numRows - numCols/2];
+		
+		for (int i = 0; i < grid.length; i++) {
+			for (int j = 0; j < grid[0].length; j++) {
+				grid[i][j] = new Food(0); // The hexes in the grid array that aren't part of the world will be
+										  // made rocks by getHex.
+			}
+		}
+	}
+	
+	public int getNumColumns() {
+		return columns;
+	}
+	
+	public int getNumRows() {
+		return rows;
 	}
 	
 	private int getNumberFromLine(FileReader f) throws IOException {
@@ -104,9 +160,11 @@ public class World {
 	}
 	
 	public void setHex(int row, int col, Hex h) {
-		row -= row/2;
-		
-		grid[col][row] = h;
+		if (isInGrid(row, col)) {
+			row -= row/2;
+			
+			grid[col][row] = h;
+		}
 	}
 	
 	public boolean isInGrid(int row, int col) {
@@ -192,20 +250,28 @@ public class World {
 	}
 	
 	private void appendASCIIMap(StringBuilder sb) {
-		boolean odd = true;
-		for (int i = 0; i < grid[0].length; i++) {
-			if (odd) {
-				for (int j = 0; j < grid.length; j++) {
-					sb.append(" ");
+		boolean evenNumRows = grid.length % 2 == 0;
+		boolean even = evenNumRows;
+		int i = grid[0].length - 1;
+		
+		while (i >= 0) {
+			if (even) {
+				for (int j = 1; j < grid.length; j+=2) {
+					sb.append("  ");
 					sb.append(grid[j][i].getASCIIRep());
+					sb.append(" ");
 				}
+				sb.append("\n");
 			} else {
-				for (int j = 0; j < grid.length; j++) {
+				sb.append(grid[0][i].getASCIIRep());
+				for (int j = 2; j < grid.length; j+=2) {
+					sb.append("   ");
 					sb.append(grid[j][i].getASCIIRep());
-					sb.append(" ");
 				}
+				sb.append("\n");
+				i--;
 			}
-			odd = !odd;
+			even = !even;
 		}
 	}
 

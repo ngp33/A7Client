@@ -9,7 +9,7 @@ public class JWorld {
 
 	@Test
 	public void worldConstants() {
-		World w = new World(8, 6);
+		World w = new World(8, 6, "");
 		
 		assertEquals(w.BASE_DAMAGE, 100);
 		assertEquals(w.COLUMNS, 50);
@@ -18,7 +18,7 @@ public class JWorld {
 	
 	@Test
 	public void worldSetGet() {
-		World w = new World(8, 6);
+		World w = new World(8, 6, "");
 		
 		w.setHex(0, 0, new Food(5));
 		assertEquals(w.getHex(0, 0).getHexInfo(), "5 units of food.");
@@ -27,6 +27,23 @@ public class JWorld {
 		assertEquals(w.getHex(7, 5).getHexInfo(), "An empty hex.");
 		
 		assertEquals(w.getHex(7, 7).getHexInfo(), "A rock.");
+	}
+	
+	@Test
+	public void worldInfo() {
+		World w = new World(8, 7, "");
+		
+		w.setHex(2, 2, new Rock());
+		w.setHex(7, 6, new Food(7));
+		
+		System.out.println(w.getInfo());
+		
+		w = new World(8, 6, "");
+		
+		w.setHex(2, 2, new Rock());
+		w.setHex(7, 5, new Food(7));
+		
+		System.out.println(w.getInfo());
 	}
 
 }

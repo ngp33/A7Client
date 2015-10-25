@@ -1,7 +1,15 @@
 package console;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.Random;
 import java.util.Scanner;
 
+import ast.Program;
+import parse.Parser;
+import parse.ParserFactory;
 import world.*;
 
 /** The console user interface for Assignment 5. */
@@ -81,7 +89,18 @@ public class Console {
      * Starts new random world simulation.
      */
     private void newWorld() {
-        //TODO implement
+    	world = new World();
+    	
+    	int rows = world.getNumRows();
+    	int cols = world.getNumColumns();
+    	
+    	Random rand = new Random();
+    	
+    	for (int i = 0; i < cols; i++) {
+    		for (int j = 0; j < rows; j++) {
+    			world.setHex(j, i, rand.nextFloat() < .15 ? new Rock() : new Food(0)); //15% chance of Rock
+    		}
+    	}
     }
 
     /**
@@ -89,7 +108,136 @@ public class Console {
      * @param filename
      */
     private void loadWorld(String filename) {
-        //TODO implement
+    	BufferedReader reader;
+    	
+        try {
+			reader = new BufferedReader(new FileReader(filename));
+		} catch (FileNotFoundException e) {
+			System.out.println("File not found!");
+			return;
+		}
+        
+        try {
+	    	String line = reader.readLine();
+	    	String name = null;
+	    	int rows = 0;
+	    	int cols = 0;
+	    	
+	    	// Get the name
+	        while (line != null && name == null) {
+	        	if (line.equals("") || line.substring(0, 2).equals("//")) {
+	        		line = reader.readLine();
+	        		continue;
+	        	}
+	        	if (line.substring(0, 5).equals("name ")) {
+	        		name = line.substring(6);
+	        	} else {
+	        		System.out.println("Invaid world file.");
+        			return;
+	        	}
+	        	line = reader.readLine();
+	        }
+	        
+	        // Get the dimensions
+	        while (line != null && (rows == 0 && cols == 0)) {
+	        	if (line.equals("") || line.substring(0, 2).equals("//")) {
+	        		line = reader.readLine();
+	        		continue;
+	        	}
+	        	if (line.substring(0, 6).equals("world ")) {
+	        		line = line.substring(7);
+	        		int div = line.indexOf(' ');
+	        		
+	        		if (div == -1) {
+	        			System.out.println("Invaid world file.");
+	        			return;
+	        		}
+	        		
+	        		rows = Integer.parseInt(line.substring(0, div));
+	        		cols = Integer.parseInt(line.substring(div+1));
+	        	} else {
+	        		System.out.println("Invaid world file.");
+        			return;
+	        	}
+	        	line = reader.readLine();
+	        }
+	        
+	        // Check if necessary stuff is missing
+	        if (world == null || rows <= 0 || cols <= 0) {
+	        	System.out.println("Invalid world file.");
+	        	return;
+	        }
+	        
+	        world = new World(rows, cols, name);
+	        
+	        while (line != null) {
+	        	if (line.equals("") || line.substring(0, 2).equals("//")) {
+	        		line = reader.readLine();
+	        		continue;
+	        	}
+	        	if (line.substring(0, 5).equals("rock ")) {
+	        		line = line.substring(6);
+	        		int div = line.indexOf(' ');
+	        		
+	        		if (div == -1) {
+	        			System.out.println("Invaid world file.");
+	        			return;
+	        		}
+	        		
+	        		int r = Integer.parseInt(line.substring(0, div));
+	        		int c = Integer.parseInt(line.substring(div+1));
+	        		
+	        		world.setHex(r, c, new Rock());
+	        	} else if (line.substring(0, 5).equals("food ")) {
+	        		line = line.substring(6);
+	        		int div = line.indexOf(' ');
+	        		
+	        		if (div == -1) {
+	        			System.out.println("Invaid world file.");
+	        			return;
+	        		}
+	        		
+	        		String line2 = line.substring(div+1);
+	        		int div2 = line2.indexOf(' ');
+	        		
+	        		if (div2 == -1) {
+	        			System.out.println("Invalid world file.");
+	        			return;
+	        		}
+	        		
+	        		int r = Integer.parseInt(line.substring(0, div));
+	        		int c = Integer.parseInt(line2.substring(0, div2));
+	        		int amount = Integer.parseInt(line2.substring(div2+1));
+	        		
+	        		world.setHex(r, c, new Food(amount));
+	        	} else if (line.substring(0, 8).equals("critter ")) {
+	        		line = line.substring(9);
+	        		
+	        		String[] segments = line.split("\\s+"); // If there's time later, use split() in above cases.
+	        		
+	        		if (segments.length != 4) {
+	        			System.out.println("Invalid world file.");
+	        			return;
+	        		}
+	        		
+	        		ParserFactory pf = new ParserFactory();
+	        		Parser parser = pf.getParser();
+	        		
+	        		int r = Integer.parseInt(segments[1]);
+	        		int c = Integer.parseInt(segments[2]);
+	        		int dir = Integer.parseInt(segments[3]);
+	        		
+	        		BufferedReader critterReader = new BufferedReader(new FileReader(segments[0]));
+	        		
+	        		// Left off
+	        	}
+	        }
+	        
+        } catch (IOException e) {
+        	e.printStackTrace();
+        } catch (IndexOutOfBoundsException|NumberFormatException e) {
+        	System.out.println("Invaid world file.");
+        }
     }
 
     /**
@@ -115,7 +263,7 @@ public class Console {
      * map of the simulation.
      */
     private void worldInfo() {
-        //TODO implement
+    	System.out.println(world.getInfo());
     }
 
     /**
@@ -124,7 +272,7 @@ public class Console {
      * @param r row of hex
      */
     private void hexInfo(int c, int r) {
-    	System.out.println(world.getHex(c, r).getHexInfo());
+    	System.out.println(world.getHex(r, c).getHexInfo());
     }
 
     /**
