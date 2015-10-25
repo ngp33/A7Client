@@ -4,10 +4,12 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.Reader;
 import java.util.Random;
 import java.util.Scanner;
 
 import ast.Program;
+import ast.ProgramImpl;
 import parse.Parser;
 import parse.ParserFactory;
 import world.*;
@@ -220,8 +222,6 @@ public class Console {
 	        			return;
 	        		}
 	        		
-	        		ParserFactory pf = new ParserFactory();
-	        		Parser parser = pf.getParser();
 	        		
 	        		int r = Integer.parseInt(segments[1]);
 	        		int c = Integer.parseInt(segments[2]);
@@ -238,6 +238,92 @@ public class Console {
         } catch (IndexOutOfBoundsException|NumberFormatException e) {
         	System.out.println("Invaid world file.");
         }
+    }
+    
+    private Program parseCritterRules(Reader r) {
+		Parser parser = ParserFactory.getParser();
+		
+		return parser.parse(r);
+    }
+    
+    private Critter createCritter(String filename) throws IOException, NumberFormatException {
+    	Reader fr = new FileReader(filename);
+    	BufferedReader critterReader = new BufferedReader(fr);
+    	
+    	String species;
+    	int[] mem;
+    	
+    	String line;
+    	String[] arguments;
+    	
+    	line = critterReader.readLine();
+    	arguments = line.split(":\\s+");
+    	if (arguments.length != 2) {
+    		System.out.println("Invalid world file.");
+    		return null;
+    	}
+    	
+    	species = arguments[1];
+    	
+    	line = critterReader.readLine();
+    	arguments = line.split(":\\s+");
+    	if (arguments.length != 2) {
+    		System.out.println("Invalid world file.");
+    		return null;
+    	}
+    	
+    	int memSize = Integer.parseInt(arguments[1]);
+    	mem = new int[memSize];
+    	mem[0] = memSize;
+    	
+    	line = critterReader.readLine();
+    	arguments = line.split(":\\s+");
+    	if (arguments.length != 2) {
+    		System.out.println("Invalid world file.");
+    		return null;
+    	}
+    	
+    	mem[1] = Integer.parseInt(arguments[1]);
+    	
+    	line = critterReader.readLine();
+    	arguments = line.split(":\\s+");
+    	if (arguments.length != 2) {
+    		System.out.println("Invalid world file.");
+    		return null;
+    	}
+    	
+    	mem[2] = Integer.parseInt(arguments[1]);
+    	
+    	line = critterReader.readLine();
+    	arguments = line.split(":\\s+");
+    	if (arguments.length != 2) {
+    		System.out.println("Invalid world file.");
+    		return null;
+    	}
+    	
+    	mem[3] = Integer.parseInt(arguments[1]);
+    	
+    	line = critterReader.readLine();
+    	arguments = line.split(":\\s+");
+    	if (arguments.length != 2) {
+    		System.out.println("Invalid world file.");
+    		return null;
+    	}
+    	
+    	mem[4] = Integer.parseInt(arguments[1]);
+    	
+    	line = critterReader.readLine();
+    	arguments = line.split(":\\s+");
+    	if (arguments.length != 2) {
+    		System.out.println("Invalid world file.");
+    		return null;
+    	}
+    	
+    	mem[7] = Integer.parseInt(arguments[1]);
+    	
+    	Program rules = parseCritterRules(fr);
+    	
+    	return new Critter(species, mem, new Random(), (ProgramImpl) rules, world);
     }
 
     /**

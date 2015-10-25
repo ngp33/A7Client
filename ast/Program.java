@@ -1,6 +1,7 @@
 package ast;
 
 import mutation.Mutation;
+import world.Critter;
 
 /**
  * An abstraction of a critter program.
@@ -27,4 +28,6 @@ public interface Program extends Node {
     Node getRandomNode(Class<?> c);
     
     Node getRandomNode(Class<?> c, Node[] ignoreList);
+    
+    boolean eval(Critter c);
 }

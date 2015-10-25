@@ -23,7 +23,7 @@ public class Interpretactions {
 	public void init() {
 		parsing = new ParserImpl();
 		p = (ProgramImpl) parsing.parse(new StringReader ("1 = 1 --> wait;"));
-		w = new World (7,5);
+		w = new World (7,5, "yre");
 		w.emptyworld();
 		c = new Critter(new int [] {8,2,2,2,200,1,0,10}, new Random(), p, w);
 		w.replace(c, w.getHex(2, 2));

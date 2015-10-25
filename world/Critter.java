@@ -1,11 +1,12 @@
 package world;
 import java.util.Random;
-import ast.ProgramImpl;
+
+import ast.Program;
 import ast.Rule;
 
 public class Critter extends Hex {
 	
-	public ProgramImpl genes;
+	public Program genes;
 	public int direction;
 	public World w;
 	public int [] mem;
@@ -23,7 +24,7 @@ public class Critter extends Hex {
 	 * @param w
 	 */
 	//The purpose of r is so that we don't have to keep generating new random objects
-	public Critter(String species, int [] data, Random r, ProgramImpl rules, World w) { 
+	public Critter(String species, int [] data, Random r, Program rules, World w) { 
 		this(data,r,rules,w);
 		name = species;
 		int [] mem = new int [data[0]];
@@ -40,7 +41,7 @@ public class Critter extends Hex {
 		
 	}
 	
-	public Critter(int [] mem, Random r, ProgramImpl genetics, World wrld) { //TODO Give the new critter a name
+	public Critter(int [] mem, Random r, Program genetics, World wrld) { //TODO Give the new critter a name
 		genes = genetics;
 		direction = r.nextInt(6);
 		w = wrld;
