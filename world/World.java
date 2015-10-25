@@ -186,6 +186,31 @@ public class World {
 		return -1;
 	}
 	
+	public Hex[] getEmptyHexes() {
+		ArrayList<Hex> hexes = new ArrayList<Hex>();
+		boolean oddNumCols = grid.length % 2 == 1;
+		
+		for (int i = 0; i < grid.length; i++) {
+			if (oddNumCols && i % 2 == 1) {
+				for (int j = 0; j < grid[0].length - 1; j++) {
+					Hex candidate = grid[i][j];
+					if (candidate.getNumRep() == 0) {
+						hexes.add(grid[i][j]);
+					}
+				}
+			} else {
+				for (int j = 0; j < grid[0].length; j++) {
+					Hex candidate = grid[i][j];
+					if (candidate.getNumRep() == 0) {
+						hexes.add(grid[i][j]);
+					}
+				}
+			}
+		}
+		
+		return (Hex[]) hexes.toArray();
+	}
+	
 	/**Clears a hex of whatever was on it before and puts a certain amount of food on it
 	 * Note, putfood -1, rowcommacol returns a
 	 * 

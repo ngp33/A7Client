@@ -8,6 +8,7 @@ import java.io.Reader;
 import java.util.Random;
 import java.util.Scanner;
 
+import ast.Node;
 import ast.Program;
 import ast.ProgramImpl;
 import parse.Parser;
@@ -227,9 +228,10 @@ public class Console {
 	        		int c = Integer.parseInt(segments[2]);
 	        		int dir = Integer.parseInt(segments[3]);
 	        		
-	        		BufferedReader critterReader = new BufferedReader(new FileReader(segments[0]));
+	        		Critter critter = createCritter(segments[0]);
+	        		critter.direction = dir;
 	        		
-	        		// Left off
+	        		world.setHex(r, c, critter);
 	        	}
 	        }
 	        
@@ -333,7 +335,33 @@ public class Console {
      * @param n
      */
     private void loadCritters(String filename, int n) {
-        //TODO implement
+        Critter model;
+        Random rnd = new Random();
+        
+        try {
+        	model = createCritter(filename);
+		} catch (NumberFormatException | IOException e) {
+			System.out.println("Invalid critter file.");
+			return;
+		}
+        
+        Hex[] emptyHexes = world.getEmptyHexes();
+        
+        for (int i = emptyHexes.length - 1; i > 0; i--) {
+        	int index = rnd.nextInt(i + 1);
+        	Hex temp = emptyHexes[index];
+        	emptyHexes[index] = emptyHexes[i];
+        	emptyHexes[i] = temp;
+        }
+        
+        if (emptyHexes.length < n) {
+        	System.out.println("Not enough room for " + n + " critters.");
+        	return;
+        }
+        
+        for (int i = 0; i < n; i++) {
+        	world.swap(emptyHexes[i], model.copy());
+        }
     }
 
     /**
