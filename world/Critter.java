@@ -18,6 +18,9 @@ public class Critter extends Hex {
 	 * specified in 4.1 of the a5 spec.
 	 * @param species
 	 * @param data
+	 * @param r
+	 * @param rules
+	 * @param w
 	 */
 	//The purpose of r is so that we don't have to keep generating new random objects
 	public Critter(String species, int [] data, Random r, ProgramImpl rules, World w) { 
@@ -37,9 +40,9 @@ public class Critter extends Hex {
 		
 	}
 	
-	public Critter(int [] mem, Random r, ProgramImpl genetics, World wrld) { //Give the new critter a name
+	public Critter(int [] mem, Random r, ProgramImpl genetics, World wrld) { //TODO Give the new critter a name
 		genes = genetics;
-		direction = 0;
+		direction = r.nextInt(6);
 		w = wrld;
 		this.mem = mem;
 		matingdance = false;
@@ -62,7 +65,7 @@ public class Critter extends Hex {
 	 * @return
 	 */
 	public int getNumRep(Critter c) {
-		int compdir = ((c.direction - direction) + 6) % 6;
+		int compdir = ((direction - c.direction) + 6) % 6;
 		return mem[3] * 100000 + mem[6] * 1000 + mem[7] * 10 + compdir;
 	}
 	

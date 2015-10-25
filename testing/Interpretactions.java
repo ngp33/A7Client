@@ -4,6 +4,7 @@ import org.junit.*;
 import ast.ProgramImpl;
 import parse.ParserImpl;
 import world.Critter;
+import world.Crittermethods;
 import world.World;
 
 import static org.junit.Assert.*;
@@ -156,7 +157,99 @@ public class Interpretactions {
 		assertTrue(c.mem[4] == 980);
 		assertTrue(b.mem[4] == 130);
 	}
+	//TODO test tag and mate. Shouldn't be so bad since a fair amount of mate's code overlaps with bud.
 	
+	@Test
+	public void mate() { //TODO more tests here (eg failed mates (from lack of
+		//space and lack of energy), energy consumption in these cases)
+		ProgramImpl j = (ProgramImpl) parsing.parse(new StringReader ("nearby[3] = 0 and ENERGY > 2500 --> bud; \n random[3] = 1 --> left;"));
+		Critter g = new Critter(new int [] {9,1,5,2,1000,1,0,10,109}, c.r, j, w);
+		c.mem[4] = 1000;
+		g.w.replace(g, w.getHex(3, 2));
+		g.direction = 3;
+		g.mate();
+		c.mate();
+		assertTrue(c.mem[4] == 1000 - 5 * Crittermethods.complexitycalc(c));
+		assertTrue(g.mem[4] == 1000 - 5 * Crittermethods.complexitycalc(g));
+		Critter child = (w.getNumRep(new int [] {1,2}) > 0 ? (Critter) w.getHex(1,2) : (Critter) w.getHex(4, 2));
+		
+		assertTrue(child.mem[3] == 1);
+		assertTrue(child.mem[4] == 250);
+		assertTrue(child.mem[5] == 1);
+		assertTrue(child.mem[6] == 0);
+		assertTrue(child.mem[7] == 0);
+		if (child.mem[0] == 9) {
+			assertTrue(child.mem[8] == 0);
+		}
+		
+		
+		Critter e = new Critter(new int [] {9,1,5,2,1000,1,0,10,109}, c.r, j, w); //Tests energy works when baby cant
+		Critter f = new Critter(new int [] {9,1,5,2,1000,1,0,10,109}, c.r, j, w);//be placed
+		w.replace(e, w.getHex(2, 4)); //These were chosen because neither space has a hex behind it
+		w.replace(f, w.getHex(3, 5));
+		e.direction = 1;
+		f.direction = 4;
+		e.mate();
+		f.mate();
+		assertTrue(e.mem[4] == 998);
+		assertTrue(f.mem[4] == 998);
+		
+		w.swap(e, w.getHex(3, 2)); //Tests energy works when a critter doesn't have sufficient energy to mate
+		w.swap(f, w.getHex(4, 2));
+		e.direction = 0;
+		f.direction = 3;
+		e.mem[4] = 10;
+		e.mate();
+		f.mate();
+		assertTrue(e.mem[4] == 8);
+		assertTrue(f.mem[4] == 996);
+	}
 	
+	@Test
+	public void tag() {
+		Critter d = new Critter(new int [] {9,1,5,2,1000,1,0,10,109}, c.r, p, w);
+		w.replace(d, w.getHex(3, 2));
+		c.youreit(500); //Testing out of bounds tags
+		assertTrue(d.mem[6] == 0);
+		assertTrue(c.mem[4] == 198);
+		c.youreit(-9);
+		assertTrue(d.mem[6] == 0);
+		c.youreit(10);
+		assertTrue(d.mem[6] == 10);
+	}
+	
+	@Test
+	public void nearbyahead() {
+		Critter d = new Critter(new int [] {9,1,5,2,1000,1,5,11,109}, c.r, p, w);
+		d.direction = 1;
+		w.replace(d, w.getHex(3, 2));
+		Critter e = new Critter(new int [] {9,1,5,2,1000,1,0,10,109}, c.r, p, w);
+		w.replace(e, w.getHex(4, 4));
+		e.direction = 4; 
+		int a = c.nearby(6);
+		assertTrue( a == 205111);
+		w.swap(d, w.getHex(3, 3));
+		a = c.nearby(-1); //Tests the negative nearbys
+		assertTrue(a == 205110);
+		
+		c.direction = 1;
+		a = c.ahead(0);
+		assertTrue(a == 200100);
+		a = c.ahead(-5);
+		assertTrue(a == 200100);
+		a = c.ahead(2);
+		assertTrue(a == 200103);
+		
+		c.direction = 2;
+		a = c.ahead(1);
+		assertTrue(a == 0);
+		a = c.ahead(900);
+		assertTrue(a == w.ROCK_VALUE);
+	}
+	
+	@Test
+	public void random () {
+		assertTrue(c.random(-1) == 0);
+	}
 
 }

@@ -10,19 +10,21 @@ import world.Hex;
 public class ActionMate {
 	
 	
-	/** A critters attempt to mate TODO make sure this handles energy consumption for
-	 * unsuccessful mating correctly
+	/** A critters attempt to mate
 	 * Creates: a new critter assuming mating is successful and places that critter somewhere on the
 	 * 		world after mutating it
 	 * Effect: the energy of the critters involved decrease by the proper amount depending on whether or not
-	 * 		the mating was successful.*/
+	 * 		the mating was successful. An unsuccessful mating constitutes any mating where a child is not formed.
+	 * 		Thus, if a critter has enough energy to attempt a mate, but not to perform it, the critter doesn't die*/
 	public static void matewith(Critter c) {
-		c.mem[4] -= c.mem[3];
-		c.matingdance = true;
-		Hex there = c.w.getHex(Crittermethods.dircoords(c,true)[0], Crittermethods.dircoords(c,true)[1]);
-		if (there instanceof Critter) {
-			Critter specific = (Critter) there;
-			success(c,specific);
+		c.mem[4] -= c.mem[3];//put an if not death line here
+		if (!Crittermethods.death(c)) {
+			c.matingdance = true;
+			Hex there = c.w.getHex(Crittermethods.dircoords(c,true)[0], Crittermethods.dircoords(c,true)[1]);
+			if (there instanceof Critter) {
+				Critter specific = (Critter) there;
+				success(c,specific);
+			}
 		}
 	}
 	
@@ -35,31 +37,34 @@ public class ActionMate {
 	 */
 	private static void success(Critter c, Critter specific) {
 		if (specific.matingdance) {
-			c.mem[4] += c.mem[3] - c.w.MATE_COST * Crittermethods.complexitycalc(c);
-			specific.mem[4] += specific.mem[3] - specific.w.MATE_COST * Crittermethods.complexitycalc(specific);
-			if (!Crittermethods.death(c) && !Crittermethods.death(specific)) {
-				Critter baby = makenewcritter(c, specific);
-				mutate(baby);
-				place(baby,c, specific);
+			if (Crittermethods.checkempty(c, false) || Crittermethods.checkempty(specific, false)) {
+				int one = c.mem[4] + c.mem[3] - c.w.MATE_COST * Crittermethods.complexitycalc(c);
+				int two = specific.mem[4] + specific.mem[3] - specific.w.MATE_COST * Crittermethods.complexitycalc(specific);
+				if (one > 0 && two > 0) { //one & two are the hypothetical energy quantities of the critters
+					c.mem[4] = one;
+					specific.mem[4] = two;
+					Critter baby = makenewcritter(c, specific);
+					mutate(baby);
+					place(baby,c, specific);
+				}
 			}
 		}
 	}
 
 	/** finds an open hex to place the baby critter and places it there
 	 * Effect: places the baby critter in the world if there is space, does nothing otherwise
+	 * Returns: true if the baby is successfully placed.
+	 * Invariant: There exists an empty place behind one of the two parents to put the new critter
 	 */
-	private static boolean place(Critter baby, Critter c, Critter k) {
+	private static void place(Critter baby, Critter c, Critter k) {
 		Critter firstpar = c;
 		Critter secondpar = k;
 		if (c.r.nextBoolean()) {
 			firstpar = k;
 			secondpar = c;
 		}
-		if (babysit(baby, firstpar)) {
-			return true;
-		}
-		return (babysit(baby,secondpar));
-		
+		if (babysit(baby, firstpar)) {}
+		else {babysit(baby,secondpar);}
 	}
 	
 	/**Effect: places a baby if the space behind parent is empty. Does nothing otherwise
@@ -70,15 +75,15 @@ public class ActionMate {
 	 */
 	private static boolean babysit(Critter baby, Critter parent) {
 		if (Crittermethods.checkempty(parent, false)) {
-			baby.row = Crittermethods.dircoords(parent, false) [0];
-			baby.col = Crittermethods.dircoords(parent, false) [1];
+			int [] p = Crittermethods.dircoords(parent, false);
+			baby.w.replace(baby, baby.w.getHex(p[0], p[1]));
 			return true;
 		}
 		return false;
 	}
 
 	/** makes a baby critter. Right now I choose a parent and then copy attibutes 0-2 from it TODO 
-	 * make sure this is right--I doubt it is.
+	 * make sure this is right...maybe?
 	 * Effects: initiates the babycritter without mutations.*/
 	private static Critter makenewcritter(Critter c, Critter specific) {
 		Critter inqu = c.r.nextBoolean() ? c : specific;

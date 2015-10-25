@@ -28,14 +28,14 @@ public class Crittersenses {
 			c.row = newplace[0];
 			c.col = newplace[1];
 		}
-		int returned = nearby(c, c.direction);
+		int returned = nearby(c, 0); //changed to 0 from c.direction based on the change in nearby
 		c.row = coords[0]; c.col = coords[1];
 		return returned;
 		
 	}
 	
-	/**returns the information on the specified hex
-	 * 
+	/**returns the information on the specified hex. In accordance with the project spec
+	 * the direction given is the direction relative to the Critters current direction. (See section 6).
 	 * @param c
 	 * @param direction
 	 * @return
@@ -46,7 +46,7 @@ public class Crittersenses {
 		}
 		direction = direction % 6;
 		int remember = c.direction;
-		c.direction = direction;
+		c.direction = (c.direction + direction) % 6;
 		int [] place = Crittermethods.dircoords(c,true);
 		int then = c.w.getNumRep(place);
 		if (then > 0 ){
