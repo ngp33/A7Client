@@ -158,4 +158,17 @@ public class Critter extends Hex {
 		return (char) direction;
 	}
 	
+	/**Returns: A new critter with all instance variables the same as the old except matingdance is false,
+	 * mostrecentrule is null, and direction is randomly chosen.
+	 * @return
+	 */
+	public Critter copy() {
+		Critter after = new Critter(this.mem, this.r, this.genes, this.w);
+		after.direction = after.r.nextInt(6);
+		after.name = this.name;
+		after.matingdance = false;
+		after.mostrecentrule = null;
+		return after;
+	}
+	
 }
