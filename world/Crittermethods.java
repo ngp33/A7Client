@@ -1,69 +1,69 @@
 package world;
 
-import ast.Actionpacked;
-
+//TODO make sure this handles energy consumption correctly. Energy should probably be consumed
+//BEFORE the action occurs.
 public class Crittermethods {
 	
-	/** should handle both cases of eating
-	 * 	1. When there is more food than the critter can consume
-	 * 	2. When the critter can consume all the food on the hex.
-	 * After the critter has eaten, it loses the energy for the eating action.
+	/** Effect: Critter's energy increases by the amount of food in front of him in the following way
+	 * 	1. When there is more food than the critter can consume, critter leaves extra food on the hex
+	 * 	2. Critter consumes all the food on the hex when he can.
 	 * @param c
-	 * TODO this makes it so a critter cant really ever be full. Is that alright?
 	 */
 	public static void consume(Critter c) {
 		c.mem[4] -= c.mem[3];
-		if (c.mem[4] <= 0) {
-			c.dies();
-		}
-		int n = c.w.getNumRep(dircoords(c,true));
-		if (n < c.w.ROCK_VALUE) {
-			if (c.w.ENERGY_PER_SIZE * c.mem[3] < c.mem [4] + (c.w.ROCK_VALUE-n)) { //too much food on the hex to be fully consumed
-				c.w.putFood((c.w.ROCK_VALUE-n) - (c.w.ENERGY_PER_SIZE * c.mem[3] - c.mem[4]), dircoords(c,true));
-				c.mem[4] = c.w.ENERGY_PER_SIZE * c.mem[3];
-			}
-			else{
-				c.mem[4] += (c.w.ROCK_VALUE - n);
-				c.w.putEmpty(dircoords(c,true));
+		if (!death(c)) {
+			int n = c.w.getNumRep(dircoords(c,true));
+			if (n < c.w.ROCK_VALUE) {
+				if (c.w.ENERGY_PER_SIZE * c.mem[3] < c.mem [4] + (c.w.ROCK_VALUE-n)) { //too much food on the hex to be fully consumed
+					c.w.putFood((c.w.ROCK_VALUE-n) - (c.w.ENERGY_PER_SIZE * c.mem[3] - c.mem[4]), dircoords(c,true));
+					c.mem[4] = c.w.ENERGY_PER_SIZE * c.mem[3];
+				}
+				else{
+					c.mem[4] += (c.w.ROCK_VALUE - n);
+					c.w.putEmpty(dircoords(c,true));
+				}
 			}
 		}
 	}
 
 	/**Updates the energy of the attacked critter.
-	 * Invariant: there actually is a critter that is being attacked...
 	 * @param attacker
 	 * @param victim
 	 */
-	 //TODO make it truncate, not round
 	public static void attack(Critter attacker){
-		int [] c = dircoords(attacker, true);
-		Hex victim = attacker.w.getHex(c[0], c[1]);
-		if (victim instanceof Critter) {
-			Critter v = (Critter) victim;
-			double inside = attacker.w.DAMAGE_INC * (attacker.mem[3] * attacker.mem[2] - v.mem[3] * v.mem[1]);
-			int harm = Math.round((float) (attacker.w.BASE_DAMAGE * attacker.mem[3] * pfunct(inside)));
-			v.mem[4] -= harm;
-			if (v.mem[4] <= 0) {
-				dies(v);
+		attacker.mem[4] -= attacker.mem[3] * attacker.w.ATTACK_COST;
+		if (!death(attacker)) {
+			int [] c = dircoords(attacker, true);
+			Hex victim = attacker.w.getHex(c[0], c[1]);
+			if (victim instanceof Critter) {
+				Critter v = (Critter) victim;
+				double inside = attacker.w.DAMAGE_INC * (attacker.mem[3] * attacker.mem[2] - v.mem[3] * v.mem[1]);
+				float damage = (float) (attacker.w.BASE_DAMAGE * attacker.mem[3] * pfunct(inside));
+				int harm = Math.round(damage);
+				v.mem[4] -= harm;
+				if (v.mem[4] <= 0) {
+					dies(v);
+				}
 			}
 		}
-		attacker.mem[4] -= attacker.mem[3] * attacker.w.ATTACK_COST;
 	}
 	
 	/** used in calculating the attack damage*/
 	private static double pfunct(double val){
-		return 1/(1 + Math.exp(val));
+		return 1/(1 + Math.exp(-val));
 	}
 	
 	
-	/** moves the critter TODO check that the move is valid and update world hex grid.
+	/** moves the critter
 	 * Invariant: direction is between 0 and 5 inclusive*/
 	public static void movement(Critter c, boolean forward) {
-		int [] newplace = dircoords(c,forward);
-		if (checkempty(c, forward)) {
-			c.w.swap(c, c.w.getHex(newplace[0], newplace[1]));
+		c.mem[4] -= c.mem[3] * c.w.MOVE_COST;
+		if (!death(c)) {
+			int [] newplace = dircoords(c,forward);
+			if (checkempty(c, forward)) {
+				c.w.swap(c, c.w.getHex(newplace[0], newplace[1]));
+			}
 		}
-		c.mem[4] -= c.mem[3] * 3;
 	}
 	
 	
@@ -98,6 +98,7 @@ public class Crittermethods {
 		c.direction = left ? c.direction - 1 : c.direction + 1;
 		c.direction = c.direction % 6;
 		c.mem[4] -= c.mem[3];
+		death(c);
 	}
 	
 	/**returns the integer result of the complexity formula
@@ -126,33 +127,44 @@ public class Crittermethods {
 	 * @param ahead
 	 */
 	public static boolean checkempty(Critter c, boolean ahead){
-		return c.w.getNumRep(dircoords(c,ahead)) == 0 ? true : false;
+		if (c.w.isInGrid(dircoords(c,ahead)[0], dircoords(c,ahead)[1])) {
+			return c.w.getNumRep(dircoords(c,ahead)) == 0;
+		}
+		return false;
+	}
+	
+	private static boolean checkfood(Critter c, boolean ahead){
+		if (c.w.isInGrid(dircoords(c,ahead)[0], dircoords(c,ahead)[1])) {
+			return (c.w.getNumRep(dircoords(c,ahead)) < c.w.ROCK_VALUE || checkempty(c,ahead));
+		}
+		return false;
 	}
 	
 	
 	
 	
-	/**Generates a new food hex with the proper amount of food in the place where the 
-	 * critter was when it died. //TODO implement
+	/**Effect: Generates a new food hex with the proper amount of food in the place where the 
+	 * critter was when it died.
 	 * @param c
 	 */
 	public static void dies(Critter c){
 		c.w.replace(new Food(c.w.FOOD_PER_SIZE * c.mem[3]), c);
 	}
 	
-	/** Critter grows one unit bigger.*/
+	/** Critter grows one unit bigger. Critter can't get bigger than size 99*/
 	public static void grow(Critter c) {
 		c.mem[4] -= c.mem[3] * complexitycalc(c) * c.w.GROW_COST;
-		if (c.mem[3] < 99) {
-			c.mem[3] ++;
+		if (!death(c)) {
+			if (c.mem[3] < 99) {
+				c.mem[3] ++;
+			}
 		}
 	}
 	
 	
-	/** A critters attempt to mate TODO make sure this handles energy consumption for
+	/** A critters attempt to mate 
 	 * unsuccessful mating*/
 	public static void mate(Critter c) {
-		c.mem[4] -= c.mem[3];
 		ActionMate.matewith(c);
 	}
 	
@@ -162,21 +174,43 @@ public class Crittermethods {
 
 	/**handles serve. Note, Critter energy may go below 0 in this action */
 	public static void serve(Critter c, int quantity) {
-		if (checkempty(c, true)) {
-			int amount = c.mem[4] >= quantity ? quantity : c.mem[4];
-			c.w.putFood(amount, dircoords(c,true));
+		c.mem[4] -= c.mem[3];
+		if (!death(c)) { //I was tempted not to include this line, but I think a critter might be able to spawn a rock
+			if (checkfood(c, true)) { //without it
+				int amount = c.mem[4] >= quantity ? quantity : c.mem[4];
+				Food f = (Food) c.w.getHex(dircoords(c,true)[0], dircoords(c,true)[1]);
+				f.addFood(amount);
+				//c.w.putFood(amount, dircoords(c,true));
+			}
+			c.mem[4] -= quantity;
+			death(c);
 		}
-		c.mem[4] -= quantity;
+
 	}
 
+	/**Effect: tags a critter directly ahead*/
 	public static void tag(Critter c, int num) {
 		int [] place = dircoords(c, true);
-		if (c.w.getNumRep(place) > 0) {
-			Critter other = (Critter) c.w.getHex(place[0], place[1]);
-			other.mem[6] = num;
-		}
 		c.mem[4] -= c.mem[3];
-		
+		if (!death(c)) {
+			if (c.w.getNumRep(place) > 0 && num >= 0 && num <= 99) {
+				Critter other = (Critter) c.w.getHex(place[0], place[1]);
+				other.mem[6] = num;
+			}
+		}
+	}
+	
+	/**Effect: the critter dies if its energy is at or below 0.
+	 * Returns: True if the critter dies, false otherwise.
+	 * @param c
+	 * @return
+	 */
+	public static boolean death(Critter c) { 
+		if (c.mem[4] <= 0) {
+			c.dies();
+			return true;
+		}
+		return false;
 	}
 	
 	

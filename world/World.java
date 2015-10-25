@@ -82,7 +82,7 @@ public class World {
 			FileReader f = new FileReader("constants.txt");
 			
 			BASE_DAMAGE = getNumberFromLine(f);
-			DAMAGE_INC = getNumberFromLine(f);
+			DAMAGE_INC = getFloatFromLine(f);
 			ENERGY_PER_SIZE = getNumberFromLine(f);
 			FOOD_PER_SIZE = getNumberFromLine(f);
 			MAX_SMELL_DISTANCE = getNumberFromLine(f);
@@ -139,9 +139,9 @@ public class World {
 		String num = "";
 		char c = 0;
 		
-		while (c != '\n') {
+		while (c != '\n' && c != ".".charAt(0)) {
 			c = (char) f.read();
-			if (c > 47 && c < 58) {
+			if ((c > 47 && c < 58) || c == 45) { //this didnt handle negatives so I added an or for -
 				num = num + c;
 			}
 		}
@@ -149,9 +149,16 @@ public class World {
 		return Integer.parseInt(num);
 	}
 	
+	private float getFloatFromLine(FileReader f) throws IOException {
+		int one = getNumberFromLine(f);
+		int two = getNumberFromLine(f);
+		String num = one + "." + two;
+		return Float.parseFloat(num);
+	}
+	
 	public Hex getHex(int row, int col) {
 		if (isInGrid(row, col)) {
-			row -= row/2;
+			row -= (col + 1)/2; //I changed this. It was row -= row/2
 			
 			return grid[col][row];
 		} else {
@@ -161,7 +168,7 @@ public class World {
 	
 	public void setHex(int row, int col, Hex h) {
 		if (isInGrid(row, col)) {
-			row -= row/2;
+			row -= (col + 1)/2; //I changed this too. It was row -= row/2
 			
 			grid[col][row] = h;
 		}
@@ -173,7 +180,10 @@ public class World {
 	}
 	
 	public int getNumRep(int [] rowcommacol) {
-		return getHex(rowcommacol[0], rowcommacol[1]).getNumRep();
+		if (isInGrid(rowcommacol[0], rowcommacol[1])) {
+			return getHex(rowcommacol[0], rowcommacol[1]).getNumRep();
+		}
+		return -1;
 	}
 	
 	/**Clears a hex of whatever was on it before and puts a certain amount of food on it
@@ -186,7 +196,8 @@ public class World {
 		replace(new Food(amount), getHex(rowcommacol[0], rowcommacol[1]));
 	}
 	
-	/**Makes a new hex without any food on it */
+	/**Effect: Makes a new hex without any food on it. 
+	 * Invariant: There exists a hex at rowcommacol */
 	public void putEmpty(int [] rowcommacol) {
 		replace(new Food(-1), getHex(rowcommacol[0], rowcommacol[1]));
 	}
@@ -272,6 +283,20 @@ public class World {
 				i--;
 			}
 			even = !even;
+		}
+	}
+	
+	/**sets up an empty world (ie. all hexes are empty). This might be good as an overloaded constructor 
+	 * The algorithm doesn't hold for certain world structures (see piazza @441) but with slight modifications
+	 * it can*/
+	public void emptyworld() {
+		for (int place = 0; place < columns; place ++) {
+			for (int ptwo = 0; ptwo <rows - columns/2; ptwo ++) {
+				Hex here = new Food();
+				here.col = place;
+				here.row = ptwo + (place+1)/2; 
+				grid[place][ptwo] = here;
+			}
 		}
 	}
 

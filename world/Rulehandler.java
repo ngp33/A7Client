@@ -6,7 +6,7 @@ public class Rulehandler {
 	 * Invariant: c.mem[5] = 1*/ //TODO make sure it performs a wait after all other rule evaluations if no action selected
 	public static void altercritter(Critter c){
 		boolean finished = false;
-		while (c.mem[5] < c.w.MAX_RULES_PER_TURN && !(finished = evaluateprogram(c))){
+		while (c.mem[5] <= c.w.MAX_RULES_PER_TURN && !(finished = evaluateprogram(c))){
 			c.mem[5] ++;
 		}
 		if (!finished) {

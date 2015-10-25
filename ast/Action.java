@@ -46,12 +46,10 @@ public class Action extends Nokids implements Node, mutation.Removable, mutation
 
 	public void commit(Critter c) {
 		Actionpacked.themove(c,type);
-		if (c.mem[4] <= 0){
-			c.dies();
-		}
 		//assert that mem[4] went down?
 		assert c.mem[4] <= c.mem[3] * c.w.ENERGY_PER_SIZE;
-		assert c.mem[4] > 0;
+		assert c.mem[4] > 0 || (!c.w.getHex(c.row, c.col).equals(c));
+		assert c.w.isInGrid(c.row, c.col);
 		// TODO Auto-generated method stub
 	}
 

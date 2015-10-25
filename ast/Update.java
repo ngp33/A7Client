@@ -37,7 +37,7 @@ public class Update extends Twokids implements Node, mutation.Removable {
 	/** updates the mem field of a critter if that mem field is
 	 * available for updating.*/
 	public void updatemem(Critter c) {
-		if (((MemToUpdate) left).value(c) != 0){
+		if (((MemToUpdate) left).inrange(c)){ 
 			if (((MemToUpdate) left).only.value(c) >= 7){
 				c.mem[((MemToUpdate) left).only.value(c)] = ((Expr) right).value(c);
 			}

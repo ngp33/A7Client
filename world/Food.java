@@ -1,6 +1,6 @@
 package world;
 
-public class Food extends Hex {
+public class Food extends Hex { //Rock value is assumed to be -1 here. 
 	
 	int quantity;
 	
@@ -16,11 +16,11 @@ public class Food extends Hex {
 
 	@Override
 	int getNumRep() {
-		return -quantity-1;
+		return quantity == 0 ? 0 : -quantity-1;
 	}
 	
 	void addFood(int qty) {
-		quantity -= qty;
+		quantity += qty;
 	}
 
 	@Override

@@ -4,14 +4,13 @@ package world;
 public class Crittersenses {
 	/** returns the value of the hex ahead according to the spec
 	 * Not quite sure what to do if ahead isn't on the map. Will look it up TODO
-	 *TODO make sure it handles negative aheads too.
 	 * @param c
 	 * @param where
 	 * @return
 	 */
 	public static int spacesahead(Critter c, int where){
-		if (where == 0){
-			return c.getNumRep();
+		if (where <= 0){
+			return c.getNumRep(c);
 		}
 		else{
 			return pseudomove(c,where);
@@ -29,22 +28,30 @@ public class Crittersenses {
 			c.row = newplace[0];
 			c.col = newplace[1];
 		}
-		int returned = nearby(c, c.direction);
+		int returned = nearby(c, 0); //changed to 0 from c.direction based on the change in nearby
 		c.row = coords[0]; c.col = coords[1];
 		return returned;
 		
 	}
 	
-	/**returns the information on the specified hex
-	 * 
+	/**returns the information on the specified hex. In accordance with the project spec
+	 * the direction given is the direction relative to the Critters current direction. (See section 6).
 	 * @param c
 	 * @param direction
 	 * @return
 	 */
 	public static int nearby(Critter c, int direction) {
+		if (direction < 0) {
+			direction = - direction;
+		}
+		direction = direction % 6;
 		int remember = c.direction;
-		c.direction = direction;
-		int then = c.w.getNumRep(Crittermethods.dircoords(c,true));
+		c.direction = (c.direction + direction) % 6;
+		int [] place = Crittermethods.dircoords(c,true);
+		int then = c.w.getNumRep(place);
+		if (then > 0 ){
+			return ((Critter) c.w.getHex(place[0], place[1])).getNumRep(c);
+		}
 		c.direction = remember;
 		return then;
 	}
