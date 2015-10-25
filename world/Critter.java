@@ -9,7 +9,7 @@ public class Critter extends Hex {
 	public int direction;
 	public World w;
 	public int [] mem;
-	private String name;
+	public String name;
 	public boolean matingdance;
 	public Random r = new Random(); //this is useful to have for the random sense and I didn't want to keep generating random objects.
 	public Rule mostrecentrule;

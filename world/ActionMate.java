@@ -29,8 +29,7 @@ public class ActionMate {
 	}
 	
 	
-	/** describes what happens when there is another critter
-	 * for c to mate with. Maybe here is the place to handle energy consumption for mating TODO
+	/** describes what happens when there is another critter for c to mate with.
 	 * Effect: Creates a new critter and places it in the world after mutating it.
 	 * @param c
 	 * @param specific
@@ -46,6 +45,7 @@ public class ActionMate {
 					Critter baby = makenewcritter(c, specific);
 					mutate(baby);
 					place(baby,c, specific);
+					baby.name = "childof(" + c.name + ", " + specific.name + ")"; 
 				}
 			}
 		}
@@ -136,8 +136,7 @@ public class ActionMate {
 	}
 
 
-	/**Sets up the mem array for the child critter TODO make sure this does justice to the
-	 * randomness of mem... it probably doesn't*/
+	/**Sets up the mem array for the child critter*/
 	private static int[] makemem(Critter c) {
 		int [] th = new int [c.mem[0]];
 		th[0] = c.mem[0];
@@ -183,6 +182,7 @@ public class ActionMate {
 			mem[2] = c.mem[2];
 			finishsetup(mem, c);
 			Critter k = new Critter(mem, c.r, p, c.w);
+			k.name = "budof(" + c.name + ")";
 			mutate(k);
 			if (Crittermethods.checkempty(c, false)) {
 				int [] loc = Crittermethods.dircoords(c, false);
