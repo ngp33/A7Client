@@ -29,5 +29,4 @@ public interface Program extends Node {
     
     Node getRandomNode(Class<?> c, Node[] ignoreList);
     
-    boolean eval(Critter c);
 }
