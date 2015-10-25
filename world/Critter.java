@@ -1,8 +1,10 @@
 package world;
+import java.io.StringReader;
 import java.util.Random;
 
 import ast.ProgramImpl;
 import ast.Rule;
+import parse.ParserFactory;
 
 public class Critter extends Hex {
 	
@@ -163,7 +165,9 @@ public class Critter extends Hex {
 	 * @return
 	 */
 	public Critter copy() {
-		Critter after = new Critter(this.mem, this.r, this.genes, this.w);
+		int [] mem = this.mem.clone();
+		ProgramImpl genetics = (ProgramImpl) ParserFactory.getParser().parse(new StringReader(this.genes.toString()));
+		Critter after = new Critter(mem, this.r, genetics, this.w);
 		after.direction = after.r.nextInt(6);
 		after.name = this.name;
 		after.matingdance = false;
