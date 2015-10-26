@@ -124,8 +124,11 @@ public class World {
 		
 		for (int i = 0; i < grid.length; i++) {
 			for (int j = 0; j < grid[0].length; j++) {
-				grid[i][j] = new Food(0); // The hexes in the grid array that aren't part of the world will be
-										  // made rocks by getHex.
+				Hex empty = new Food(0);
+				empty.col = i;
+				empty.row = j + (i + 1)/2;
+				grid[i][j] = empty; // The hexes in the grid array that aren't part of the world will be
+									// made rocks by getHex.
 			}
 		}
 	}
@@ -188,6 +191,9 @@ public class World {
 			row -= (col + 1)/2; //I changed this too. It was row -= row/2
 			
 			grid[col][row] = h;
+			
+			h.col = col;
+			h.row = row;
 		}
 	}
 	
@@ -225,7 +231,7 @@ public class World {
 			}
 		}
 		
-		return (Hex[]) hexes.toArray();
+		return hexes.toArray(new Hex[hexes.size()]);
 	}
 	
 	/**Clears a hex of whatever was on it before and puts a certain amount of food on it

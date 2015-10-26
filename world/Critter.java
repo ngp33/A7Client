@@ -155,7 +155,7 @@ public class Critter extends Hex {
 	
 	@Override
 	char getASCIIRep() {
-		return (char) direction;
+		return (char) (direction+48);
 	}
 	
 	/**Returns: A new critter with all instance variables the same as the old except matingdance is false,

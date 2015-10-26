@@ -135,7 +135,7 @@ public class Console {
 	        	if (line.substring(0, 5).equals("name ")) {
 	        		name = line.substring(5);
 	        	} else {
-	        		System.out.println("Invaid world file: Name line malformed.");
+	        		System.out.println("Invalid world file: Name line malformed.");
         			return;
 	        	}
 	        	line = reader.readLine();
@@ -152,14 +152,14 @@ public class Console {
 	        		int div = line.indexOf(' ');
 	        		
 	        		if (div == -1) {
-	        			System.out.println("Invaid world file: Size line malformed.");
+	        			System.out.println("Invalid world file: Size line malformed.");
 	        			return;
 	        		}
 	        		
 	        		cols = Integer.parseInt(line.substring(0, div));
 	        		rows = Integer.parseInt(line.substring(div+1));
 	        	} else {
-	        		System.out.println("Invaid world file: Size line malformed.");
+	        		System.out.println("Invalid world file: Size line malformed.");
         			return;
 	        	}
 	        	line = reader.readLine();
@@ -168,13 +168,11 @@ public class Console {
 	        // Check if necessary stuff is missing
 	        if (name == null || rows <= 0 || cols <= 0) {
 	        	System.out.println("Invalid world file.");
-	        	System.out.println("Name" + name);
-	        	System.out.println(rows);
-	        	System.out.println(cols);
 	        	return;
 	        }
 	        
 	        world = new World(rows, cols, name);
+	        System.out.println("World created.");
 	        
 	        while (line != null) {
 	        	if (line.equals("") || line.substring(0, 2).equals("//")) {
@@ -182,24 +180,25 @@ public class Console {
 	        		continue;
 	        	}
 	        	if (line.substring(0, 5).equals("rock ")) {
-	        		line = line.substring(6);
+	        		line = line.substring(5);
 	        		int div = line.indexOf(' ');
 	        		
 	        		if (div == -1) {
-	        			System.out.println("Invaid world file: Rock line malformed.");
+	        			System.out.println("Invalid world file: Rock line malformed.");
 	        			return;
 	        		}
 	        		
-	        		int r = Integer.parseInt(line.substring(0, div));
-	        		int c = Integer.parseInt(line.substring(div+1));
+	        		int c = Integer.parseInt(line.substring(0, div));
+	        		int r = Integer.parseInt(line.substring(div+1));
 	        		
 	        		world.setHex(r, c, new Rock());
+	        		System.out.println("Rock added at (" + r + ", " + c + ")");
 	        	} else if (line.substring(0, 5).equals("food ")) {
-	        		line = line.substring(6);
+	        		line = line.substring(5);
 	        		int div = line.indexOf(' ');
 	        		
 	        		if (div == -1) {
-	        			System.out.println("Invaid world file: Food line malformed.");
+	        			System.out.println("Invalid world file: Food line malformed.");
 	        			return;
 	        		}
 	        		
@@ -211,13 +210,14 @@ public class Console {
 	        			return;
 	        		}
 	        		
-	        		int r = Integer.parseInt(line.substring(0, div));
-	        		int c = Integer.parseInt(line2.substring(0, div2));
+	        		int c = Integer.parseInt(line.substring(0, div));
+	        		int r = Integer.parseInt(line2.substring(0, div2));
 	        		int amount = Integer.parseInt(line2.substring(div2+1));
 	        		
 	        		world.setHex(r, c, new Food(amount));
+	        		System.out.println("Food added at (" + r + ", " + c + ")");
 	        	} else if (line.substring(0, 8).equals("critter ")) {
-	        		line = line.substring(9);
+	        		line = line.substring(8);
 	        		
 	        		String[] segments = line.split("\\s+"); // If there's time later, use split() in above cases.
 	        		
@@ -227,24 +227,27 @@ public class Console {
 	        		}
 	        		
 	        		
-	        		int r = Integer.parseInt(segments[1]);
-	        		int c = Integer.parseInt(segments[2]);
+	        		int c = Integer.parseInt(segments[1]);
+	        		int r = Integer.parseInt(segments[2]);
 	        		int dir = Integer.parseInt(segments[3]);
 	        		
 	        		Critter critter = createCritter(segments[0]);
 	        		critter.direction = dir;
 	        		
 	        		world.setHex(r, c, critter);
+	        		world.addCritter(critter);
+	        		System.out.println("Critter added at (" + r + ", " + c + ")");
 	        	} else {
 	        		System.out.println("Invalid world file.");
 	        		return;
 	        	}
+	        	line = reader.readLine();
 	        }
 	        
         } catch (IOException e) {
         	e.printStackTrace();
         } catch (IndexOutOfBoundsException|NumberFormatException e) {
-        	System.out.println("Invaid world file.");
+        	System.out.println("Invalid world file.");
         }
     }
     
@@ -353,6 +356,11 @@ public class Console {
         
         Hex[] emptyHexes = world.getEmptyHexes();
         
+        if (emptyHexes.length < n) {
+        	System.out.println("Not enough room for " + n + " critters.");
+        	return;
+        }
+        
         for (int i = emptyHexes.length - 1; i > 0; i--) {
         	int index = rnd.nextInt(i + 1);
         	Hex temp = emptyHexes[index];
@@ -360,13 +368,10 @@ public class Console {
         	emptyHexes[i] = temp;
         }
         
-        if (emptyHexes.length < n) {
-        	System.out.println("Not enough room for " + n + " critters.");
-        	return;
-        }
-        
         for (int i = 0; i < n; i++) {
-        	world.swap(emptyHexes[i], model.copy());
+        	Critter toAdd = model.copy();
+        	world.swap(emptyHexes[i], toAdd);
+        	world.addCritter(toAdd);
         }
     }
 
