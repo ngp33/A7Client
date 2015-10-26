@@ -3,6 +3,7 @@ package testing;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.StringReader;
+import java.util.Arrays;
 import java.util.Random;
 
 import org.junit.*;
@@ -39,6 +40,15 @@ public class Timesteptest {
 		c.timestep();
 		p = (ProgramImpl) parsing.parse(new StringReader("( mem[ 6 ] mod 1000 ) < 6 --> mem[ 5 ] := 1 \n eat ;"));
 		assertTrue(c.mostrecentrule.toString().equals(p.children[0].toString()));
+	}
+	
+	@Test
+	public void crittercopy() {
+		Critter k = c.copy();
+		assertTrue(k.genes.toString().equals(c.genes.toString()));
+		assertTrue(Arrays.equals(k.mem, c.mem));
+		assertTrue(k.w.equals(c.w));
+		
 	}
 
 }
