@@ -332,8 +332,9 @@ public class Console {
     	
     	mem[7] = Integer.parseInt(arguments[1]);
     	
-    	Program rules = parseCritterRules(fr);
-    	
+    	//System.out.println(fr.read());
+    	//System.out.println(critterReader.read());
+    	Program rules = parseCritterRules(critterReader);
     	return new Critter(species, mem, new Random(), (ProgramImpl) rules, world);
     }
 

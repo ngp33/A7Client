@@ -145,7 +145,7 @@ public class Tokenizer implements Iterator<Token> {
      *             if EOF is encountered and a token cannot be produced.
      */
     private void lexOneToken() throws IOException, EOFException {
-        setBufToFirstMeaningfulChar();
+        setBufToFirstMeaningfulChar(); //problem here
         char c = buf.charAt(0);
 
         switch (c) {
@@ -332,7 +332,7 @@ public class Tokenizer implements Iterator<Token> {
         		}
         		if (ch == 10) {
         			lineNo ++;
-        			peek();
+        			peek(); //Surround with try catch to handle extra lines at the end?
         		}
         		else{
         			encounteredEOF();
@@ -343,7 +343,7 @@ public class Tokenizer implements Iterator<Token> {
             unexpected();
         }
 
-        if (c != -1) buf.append((char) c);
+
     }
 
     /**

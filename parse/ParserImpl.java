@@ -253,7 +253,7 @@ public class ParserImpl implements Parser {
     		i = 4;
     		consume(t,TokenType.SMELL);
     	}
-    	consume(t,TokenType.LBRACKET);
+    	consume(t,TokenType.LBRACKET); //This is the error
     	Expr e = parseExpression(t);
     	consume(t,TokenType.RBRACKET);
     	return ((i < 4) ? new Sensespace(i,e) : new Senses(i));

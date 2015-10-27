@@ -7,11 +7,14 @@ import ast.ProgramImpl;
 import ast.Rule;
 import ast.Rulesll;
 import exceptions.SyntaxError;
+import parse.Parser;
 import parse.ParserImpl;
 import parse.Tokenizer;
 
 import static org.junit.Assert.*;
 
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.StringReader;
 
 public class Jparse {
@@ -127,5 +130,12 @@ public class Jparse {
 			System.out.println(r.nodeAt(them).prettyPrint(sb));
 			sb = new StringBuilder();
 		}
+	}
+	@Test
+	public void testtwo() throws FileNotFoundException {
+		Parser p = new ParserImpl();
+		FileReader f = new FileReader("log.txt");
+		ProgramImpl g = (ProgramImpl) p.parse(new FileReader("example_critter2.txt"));
+		System.out.println(g.toString());
 	}
 }
