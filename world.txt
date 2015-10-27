@@ -10,5 +10,5 @@ food 3 1 1000
 
 // example_critter.txt should be in the working directory
 critter example_critter2.txt 2 5 3
-//critter example_critter2.txt 4 3 1
-//critter example_critter2.txt 4 4 2
+critter example_critter2.txt 4 3 1
+critter example_critter2.txt 4 4 2

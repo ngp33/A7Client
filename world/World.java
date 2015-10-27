@@ -188,12 +188,12 @@ public class World {
 	
 	public void setHex(int row, int col, Hex h) {
 		if (isInGrid(row, col)) {
+			h.col = col;
+			h.row = row;
+			
 			row -= (col + 1)/2; //I changed this too. It was row -= row/2
 			
 			grid[col][row] = h;
-			
-			h.col = col;
-			h.row = row;
 		}
 	}
 	
