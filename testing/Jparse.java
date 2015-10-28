@@ -138,4 +138,11 @@ public class Jparse {
 		ProgramImpl g = (ProgramImpl) p.parse(new FileReader("example_critter2.txt"));
 		System.out.println(g.toString());
 	}
+	@Test
+	public void testthree() throws FileNotFoundException {
+		Parser p = new ParserImpl();
+		FileReader f = new FileReader("a5wp.txt");
+		ProgramImpl g = (ProgramImpl) p.parse(f);
+		System.out.println(g.toString());
+	}
 }
