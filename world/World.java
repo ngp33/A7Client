@@ -333,19 +333,5 @@ public class World {
 			even = !even;
 		}
 	}
-	
-	/**sets up an empty world (ie. all hexes are empty). This might be good as an overloaded constructor 
-	 * The algorithm doesn't hold for certain world structures (see piazza @441) but with slight modifications
-	 * it can*/
-	public void emptyworld() {
-		for (int place = 0; place < columns; place ++) {
-			for (int ptwo = 0; ptwo <rows - columns/2; ptwo ++) {
-				Hex here = new Food();
-				here.col = place;
-				here.row = ptwo + (place+1)/2; 
-				grid[place][ptwo] = here;
-			}
-		}
-	}
 
 }
