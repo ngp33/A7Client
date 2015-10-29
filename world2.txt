@@ -2,8 +2,8 @@ name Small world
 size 10 15
 
 
-food 4 4 500
+//food 4 4 500
 food 3 1 1000
 
 // example_critter.txt should be in the working directory
-critter a5wp.txt 2 5 0
+critter a5complete 4 5 0

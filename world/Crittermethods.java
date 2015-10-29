@@ -20,7 +20,8 @@ public class Crittermethods {
 				}
 				else{
 					c.mem[4] += (c.w.ROCK_VALUE - n);
-					c.w.putEmpty(dircoords(c,true));
+					int [] place = dircoords(c,true);
+					c.w.setHex(place[0], place[1], new Food());//(dircoords(c,true));
 				}
 			}
 		}
