@@ -12,16 +12,22 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.shape.Polygon;
+import javafx.scene.shape.Shape;
 import javafx.stage.Stage;
+import world.Rock;
 import world.World;
 
+//Problem: figure out how to order the inhabitant maker so that it makes inhabitants and updates them
+//After the hexes all have positions.
+
 public class Worldhanger extends Application {
-	private World w = new World(7,5,"ease");
+	private World w = new World(7,5, "hi");
 	private int xcoord = 400;//Only alter these (xcoord, ycoord) using scalechange
 	private int ycoord = 400;
 	private double xjust = 0.0;
 	private double yjust = 0.0;
-	private Hexagon [] hexes;
+	private Hexagon [] hexes; //ultimately an array of hex graphic objects which is ordered
+	//from 
 	Double rtthr = 1.732050808;
 	public static void main(String[] args) {
 		launch(args);
@@ -30,6 +36,7 @@ public class Worldhanger extends Application {
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
+		w.replace(new Rock(), w.getHex(4, 2));
 		Group g = new Group();
 		AnchorPane b = new AnchorPane();
 		AnchorPane a = new AnchorPane();
@@ -42,16 +49,15 @@ public class Worldhanger extends Application {
 		primaryStage.setWidth(xcoord);
 		primaryStage.setHeight(ycoord);
 		a.setPrefSize(xcoord, ycoord);
-		//draw the world based on initial size conditions
-		//drawhexes(a,0, new int [] {0});
 		hexWorldMap(10.,a);
+		updateInhabitants(a);
 		primaryStage.show();
 		a.setOnMouseClicked(new EventHandler <Event>() {
 
 			@Override //Anything that resizes also has to adjust xjust, yjust
 			public void handle(Event event) {
-				//scalechange(false, -20, a);
-				resize(a);
+				w.advance();
+				updateInhabitants(a);
 			}
 			
 		});
@@ -72,19 +78,19 @@ public class Worldhanger extends Application {
 	private void handleKey(KeyCode keyCode, AnchorPane a) {
 		switch (keyCode.getName()) {
 		case "A":
-			xjust -= 3;
-			reframe(a);
-			break;
-		case "S":
-			yjust += 3;
-			reframe(a);
-			break;
-		case "D":
 			xjust += 3;
 			reframe(a);
 			break;
-		case "W":
+		case "S":
 			yjust -= 3;
+			reframe(a);
+			break;
+		case "D":
+			xjust -= 3;
+			reframe(a);
+			break;
+		case "W":
+			yjust += 3;
 			reframe(a);
 			break;
 		case "Up":
@@ -101,22 +107,21 @@ public class Worldhanger extends Application {
 		}
 	}
 	
-	public void drawhexes(AnchorPane ahh, int hexcircles, int[] center) {
-		Polygon p = new Hexagon(20.0);
+	/*public void drawhexes(AnchorPane ahh, int hexcircles, int[] center) {
+		//Polygon p = new Hexagon(20.0);
 		AnchorPane.setLeftAnchor(p, -20.);
 		AnchorPane.setTopAnchor(p, 20.);
 		ahh.getChildren().addAll(p);
-	}
+	}*/
 	
-	//private void drawhexes(AnchorPane ahh, int hexcircles, int [] center) {
-		
-	//}
-	
+	/**Invariant: AnchorPane an has no children to start with*/
 	private void hexWorldMap(Double size, AnchorPane an) {
 		int [] a = w.worlddim();
 		for (int place = 0; place < a[0]; place++) {
 			for (int ptwo = 0; ptwo < a[1]; ptwo ++) {
-				an.getChildren().add(new Hexagon(size));
+				int col = ptwo;
+				int row = place + (col + 1)/2;
+				an.getChildren().add(new Hexagon(size, row, col, w, an));
 			}
 		}
 		hexes = new Hexagon[an.getChildren().size()];
@@ -130,6 +135,10 @@ public class Worldhanger extends Application {
 		reframe(an);
 	}
 	
+	/**Adjusts the size of everything in the anchorpane to accomodate the new
+	 * size of the anchorpane
+	 * @param anch
+	 */
 	private void resize(AnchorPane anch) {
 		int [] a = w.worlddim();
 		int place = 0;
@@ -138,7 +147,9 @@ public class Worldhanger extends Application {
 				double size = getsize();
 				double [] posit = getplace(row,col,size);
 				Hexagon temp = hexes[place];
+				temp.position = posit;
 				temp.resize(size);
+				temp.getInhabitant(w, anch);
 				place(temp, anch, posit);
 				place ++;
 			}
@@ -164,11 +175,12 @@ public class Worldhanger extends Application {
 		//but it doesnt...
 	}
 	
-	private void place(Polygon p, AnchorPane a, double [] posit) {
+	public void place(Shape p, AnchorPane a, double [] posit) {
 		AnchorPane.setLeftAnchor(p, posit[0]);
 		AnchorPane.setTopAnchor(p, posit[1]);
 	}
 	
+	/**Calculates the size of the hexagons based on the size of the anchorpane*/
 	private double getsize() {
 		int [] a = w.worlddim();
 		double ysize = (ycoord - 23) / (rtthr * (a[0] + .5)); //The 23 is pretty arbitrary here too
@@ -184,8 +196,6 @@ public class Worldhanger extends Application {
 		int [] a = w.worlddim();
 		double size = (getsize() * (1 + .5)) * a[1]; //getsize * 1.5 = xdist of a hex
 		size += .5 * getsize();
-		System.out.println(getsize());
-		System.out.println(size);
 		return size;
 	}
 	
@@ -197,13 +207,12 @@ public class Worldhanger extends Application {
 		return size;
 	}
 	
+	/**Changes the scale by both adjusting the anchorpane size and re-justifying the
+	 * anchorpane within the greater anchorpane.
+	 * @param amount
+	 * @param a
+	 */
 	private void scalechange (double amount, AnchorPane a) {
-		/*if (xcoord) {
-			this.xcoord += amount;
-		}
-		else {
-			this.ycoord += amount;
-		}*/
 		this.xcoord += amount;
 		this.ycoord += amount;
 		xjust -= amount / 2;
@@ -211,9 +220,16 @@ public class Worldhanger extends Application {
 		reframe(a);
 	}
 	
+	/**justifies the anchorpane within the greater anchorpane*/
 	private void reframe (AnchorPane a) {
 		AnchorPane.setLeftAnchor(a, xjust);
 		AnchorPane.setTopAnchor(a, yjust);
+	}
+	
+	private void updateInhabitants(AnchorPane a) {
+		for (Hexagon them : hexes) {
+			them.getInhabitant(w, a);
+		}
 	}
 
 }

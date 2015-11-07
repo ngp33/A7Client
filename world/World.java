@@ -213,6 +213,11 @@ public class World {
 		return (col >= 0 && col < columns && i >= 0 && i < 2*rows - columns);
 	}
 	
+	/**returns the number representing the object at row, col using the critter
+	 * (not grid) coordinate system.
+	 * @param rowcommacol
+	 * @return
+	 */
 	public int getNumRep(int [] rowcommacol) {
 		if (isInGrid(rowcommacol[0], rowcommacol[1])) {
 			return getHex(rowcommacol[0], rowcommacol[1]).getNumRep();
