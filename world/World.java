@@ -186,6 +186,17 @@ public class World {
 		}
 	}
 	
+	/**returns the dimensions of the world. TODO update it so it handles different
+	 * types of worlds correctly (if the columns are odd in number vs even)
+	 * @return
+	 */
+	public int [] worlddim() {
+		int [] rowcol = new int [2];
+		rowcol[0] = grid[0].length;
+		rowcol[1] = grid.length;
+		return rowcol;
+	}
+	
 	public void setHex(int row, int col, Hex h) {
 		if (isInGrid(row, col)) {
 			h.col = col;
