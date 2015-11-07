@@ -18,7 +18,7 @@ public class Hexagon extends Polygon {
 	}
 	
 	/**Row and col are given in the critter system)*/
-	public Hexagon(Double size, int row, int col, World w, AnchorPane a) {
+	public Hexagon(Double size, int row, int col, World w) {
 		super();
 		this.size = size;
 		this.row = row;
@@ -47,13 +47,13 @@ public class Hexagon extends Polygon {
 				size, size * rtthr / 2,
 				0.0,  size * rtthr / 2,
 				-size / 2, 0.);
-		if (i != null) {
-			i.sizeupdate(size, position);
-		}
+		//if (i != null) {
+			//i.sizeupdate(size, position); TODO put this back
+		//}
 	}
 
 	/**Invariant: size must already have a value, otherwise this might be weird*/
-	public void getInhabitant(World w, AnchorPane a) {
+	/*public void getInhabitant(World w, AnchorPane a) { //TODO put this back
 		int num = w.getNumRep(new int [] {row, col});
 		if (i == null || i.erased()) {
 			if (num != 0) {
@@ -73,5 +73,5 @@ public class Hexagon extends Polygon {
 		else {
 			i = new CritterGraphic(w, row, col, size, a, position);
 		}
-	}
+	}*/
 }

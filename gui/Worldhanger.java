@@ -29,6 +29,7 @@ public class Worldhanger extends Application {
 	private Hexagon [] hexes; //ultimately an array of hex graphic objects which is ordered
 	//from 
 	Double rtthr = 1.732050808;
+	private Hexgrid h;
 	public static void main(String[] args) {
 		launch(args);
 	}
@@ -36,23 +37,25 @@ public class Worldhanger extends Application {
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
-		w.replace(new Rock(), w.getHex(4, 2));
+		//w.replace(new Rock(), w.getHex(4, 2));
 		Group g = new Group();
-		AnchorPane b = new AnchorPane();
-		AnchorPane a = new AnchorPane();
-		g.getChildren().add(b);
-		b.getChildren().add(a);
-		AnchorPane.setLeftAnchor(a, xjust);
-		AnchorPane.setTopAnchor(a, yjust);
+		//AnchorPane b = new AnchorPane();
+		//AnchorPane a = new AnchorPane();
+		//g.getChildren().add(b);
+		//b.getChildren().add(a);
+		//AnchorPane.setLeftAnchor(a, xjust);
+		//AnchorPane.setTopAnchor(a, yjust);
 		Scene s = new Scene(g);
 		primaryStage.setScene(s);
 		primaryStage.setWidth(xcoord);
 		primaryStage.setHeight(ycoord);
-		a.setPrefSize(xcoord, ycoord);
-		hexWorldMap(10.,a);
-		updateInhabitants(a);
+		h = new Hexgrid(g, xcoord, ycoord, hexes);
+		//a.setPrefSize(xcoord, ycoord);
+		//hexWorldMap(10.,a);
+		//updateInhabitants(a);
+		hexWorldMap(h.getsize(w));
 		primaryStage.show();
-		a.setOnMouseClicked(new EventHandler <Event>() {
+		/*a.setOnMouseClicked(new EventHandler <Event>() {
 
 			@Override //Anything that resizes also has to adjust xjust, yjust
 			public void handle(Event event) {
@@ -60,13 +63,13 @@ public class Worldhanger extends Application {
 				updateInhabitants(a);
 			}
 			
-		});
+		});*/
 		
 		s.setOnKeyPressed(new EventHandler<KeyEvent>() {
 
 			@Override
 			public void handle(KeyEvent event) {
-				handleKey(event.getCode(), a);
+				handleKey(event.getCode());//, a);
 				
 			}
 			
@@ -75,31 +78,37 @@ public class Worldhanger extends Application {
 
 	}
 	
-	private void handleKey(KeyCode keyCode, AnchorPane a) {
+	private void handleKey(KeyCode keyCode) {//, AnchorPane a) {
 		switch (keyCode.getName()) {
 		case "A":
-			xjust += 3;
-			reframe(a);
+			//xjust += 3;
+			h.shiftTransverse(3, 0);
+			//reframe(a);
 			break;
 		case "S":
-			yjust -= 3;
-			reframe(a);
+			//yjust -= 3;
+			h.shiftTransverse(0, -3);
+			//reframe(a);
 			break;
 		case "D":
-			xjust -= 3;
-			reframe(a);
+			//xjust -= 3;
+			//reframe(a);
+			h.shiftTransverse(-3, 0);
 			break;
 		case "W":
-			yjust += 3;
-			reframe(a);
+			//yjust += 3;
+			//reframe(a);
+			h.shiftTransverse(0, 3);
 			break;
 		case "Up":
-			scalechange(3, a);
-			resize(a);
+			//scalechange(3, a);
+			//resize(a);
+			h.zoom(3,w);
 			break;
 		case "Down":
-			scalechange(-3, a);
-			resize(a);
+			//scalechange(-3, a);
+			//resize(a);
+			h.zoom(-3, w);
 			break;
 		default:
 			//System.out.println(keyCode.getName());
@@ -115,7 +124,7 @@ public class Worldhanger extends Application {
 	}*/
 	
 	/**Invariant: AnchorPane an has no children to start with*/
-	private void hexWorldMap(Double size, AnchorPane an) {
+	/*private void hexWorldMap(Double size, AnchorPane an) {
 		int [] a = w.worlddim();
 		for (int place = 0; place < a[0]; place++) {
 			for (int ptwo = 0; ptwo < a[1]; ptwo ++) {
@@ -133,6 +142,28 @@ public class Worldhanger extends Application {
 		xjust = (xcoord - xspace()) / 2;
 		yjust = (ycoord - yspace()) / 2;
 		reframe(an);
+	}*/
+	
+	
+	/**Invariant: AnchorPane an has no children to start with*/
+	private void hexWorldMap(Double size) {
+		int [] a = w.worlddim();
+		hexes = new Hexagon [a[0] * a[1]];
+		int there = 0;
+		for (int place = 0; place < a[0]; place++) {
+			for (int ptwo = 0; ptwo < a[1]; ptwo ++) {
+				int col = ptwo;
+				int row = place + (col + 1)/2;
+				hexes[there] = new Hexagon(size, row, col, w);
+				there ++;
+			}
+		}
+		h.setHexGrid(hexes);
+		h.resize(w);
+		//xjust = (xcoord - h.xspace(w)) / 2;
+		//yjust = (ycoord - h.yspace(w)) / 2;
+		//h.zoom(amount, w);
+		//reframe(an);
 	}
 	
 	/**Adjusts the size of everything in the anchorpane to accomodate the new
@@ -149,7 +180,7 @@ public class Worldhanger extends Application {
 				Hexagon temp = hexes[place];
 				temp.position = posit;
 				temp.resize(size);
-				temp.getInhabitant(w, anch);
+				//temp.getInhabitant(w, anch); TODO put the line back
 				place(temp, anch, posit);
 				place ++;
 			}
@@ -228,8 +259,8 @@ public class Worldhanger extends Application {
 	
 	private void updateInhabitants(AnchorPane a) {
 		for (Hexagon them : hexes) {
-			them.getInhabitant(w, a);
+			//them.getInhabitant(w, a); TODO, put the line back
 		}
-	}
+	} 
 
 }
