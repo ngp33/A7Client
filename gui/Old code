@@ -1,0 +1,95 @@
+A fair amount of old code that I didn't want to throw away, but which is probably useless now
+	
+	
+	/**Adjusts the size of everything in the anchorpane to accomodate the new
+	 * size of the anchorpane
+	 * @param anch
+	 */
+	private void resize(AnchorPane anch) {
+		int [] a = w.worlddim();
+		int place = 0;
+		for (int row = 0; row < a[0]; row++) {
+			for (int col = 0; col < a[1]; col ++) {
+				double size = getsize();
+				double [] posit = getplace(row,col,size);
+				Hexagon temp = hexes[place];
+				temp.position = posit;
+				temp.resize(size);
+				//temp.getInhabitant(w, anch); TODO put the line back
+				place(temp, anch, posit);
+				place ++;
+			}
+		}
+	}
+
+	/** returns the place of a hex given the size (side length) of the hexes,
+	 * the row its in, and the column. Size calculation should depend on xcoord 
+	 * @param row
+	 * @param col
+	 * @param size
+	 * @return
+	 */
+	private double [] getplace(int row, int col, double size) {
+		double xco = col * ( size + size / 2);
+		double yco = row * (size * rtthr);
+		yco += col % 2 == 1 ? size * rtthr / 2 : 0;
+		//yco represents the distance from the bottom, so to get the distance from the top
+		//we have to subtract it, and the distance from the bottom to the top of the hex
+		//(size * rtthr) from ycoord.
+		return new double [] {xco, ycoord - yco - size * rtthr - 23};
+		//TODO I have no idea why the above doesn't work without the arbitrary 20,
+		//but it doesnt...
+	}
+	
+	public void place(Shape p, AnchorPane a, double [] posit) {
+		AnchorPane.setLeftAnchor(p, posit[0]);
+		AnchorPane.setTopAnchor(p, posit[1]);
+	}
+	
+	/**Calculates the size of the hexagons based on the size of the anchorpane*/
+	private double getsize() {
+		int [] a = w.worlddim();
+		double ysize = (ycoord - 23) / (rtthr * (a[0] + .5)); //The 23 is pretty arbitrary here too
+		double xsize = (xcoord / (a[1] * 1.5 + .5));
+		return ysize < xsize ? ysize : xsize;
+	}
+	
+	/**returns the total number of pixel things that the entire hexagonal pattern
+	 * occupies.
+	 * @return
+	 */
+	private double xspace() {
+		int [] a = w.worlddim();
+		double size = (getsize() * (1 + .5)) * a[1]; //getsize * 1.5 = xdist of a hex
+		size += .5 * getsize();
+		return size;
+	}
+	
+	private double yspace() {
+		int [] a = w.worlddim();
+		double size = (getsize() * rtthr) * a[0] + 23; // getsize * rtthr * 2/2 is the yheight
+		size += getsize() * rtthr / 2;
+		System.out.println(size);
+		return size;
+	}
+	
+	/**Changes the scale by both adjusting the anchorpane size and re-justifying the
+	 * anchorpane within the greater anchorpane.
+	 * @param amount
+	 * @param a
+	 */
+	private void scalechange (double amount, AnchorPane a) {
+		this.xcoord += amount;
+		this.ycoord += amount;
+		xjust -= amount / 2;
+		yjust -= amount / 2;
+		reframe(a);
+	}
+	
+	/**justifies the anchorpane within the greater anchorpane*/
+	private void reframe (AnchorPane a) {
+		AnchorPane.setLeftAnchor(a, xjust);
+		AnchorPane.setTopAnchor(a, yjust);
+	}
+	
+	

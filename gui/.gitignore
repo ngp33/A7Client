@@ -6,3 +6,10 @@
 /Controller.class
 /Controller$playPauseHandler.class
 /Controller$TimerStepHandler.class
+/Inhabitant.class
+/CritterGraphic.class
+/RockGraphic.class
+/FoodGraphic.class
+/Layer.class
+/Hexgrid.class
+/ObjectLayer.class
