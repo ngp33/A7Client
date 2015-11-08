@@ -8,8 +8,8 @@ import world.World;
 public class Hexagon extends Polygon {
 	private double rtthr = 1.732050808;
 	private Inhabitant i;
-	int row;
-	int col;
+	int row; //Row in the critter world
+	int col; //col in the critter world
 	double size;
 	double [] position;
 	

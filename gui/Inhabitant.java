@@ -11,6 +11,7 @@ public abstract class Inhabitant {
 	private int numrep;
 	double [] posit;
 	AnchorPane a;
+	Hexagon h;
 	
 	public Inhabitant (World world, int row, int col, double size, double [] position) {
 		w = world;
@@ -20,6 +21,7 @@ public abstract class Inhabitant {
 		numrep = w.getNumRep(new int [] {row, col});
 	}
 	public Inhabitant (Hexagon h, World w, AnchorPane a) {
+		this.h = h;
 		this.w = w;
 		this.row = h.row;
 		this.col = h.col;
@@ -42,7 +44,7 @@ public abstract class Inhabitant {
 	 * Invariant: the inhabitant size instance variable should get size at the end.
 	 * @param size
 	 */
-	protected abstract void sizeupdate(double size, double [] position);
+	public abstract void sizeupdate(double size, double [] position);
 	
 	public int getNumRep() {
 		return numrep;

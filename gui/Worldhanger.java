@@ -39,15 +39,16 @@ public class Worldhanger extends Application implements Observer {
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
-		//w.replace(new Rock(), w.getHex(4, 2));
+		w.replace(new Rock(), w.getHex(4, 2));
 		Group g = new Group();
 		Scene s = new Scene(g);
 		primaryStage.setScene(s);
 		primaryStage.setWidth(xcoord);
 		primaryStage.setHeight(ycoord);
-		h = new Hexgrid(g, xcoord, ycoord, hexes);
+		h = new Hexgrid(g, xcoord, ycoord);
 		//updateInhabitants(a);
 		hexWorldMap(h.getsize(w));
+		h.objectUpdate(w);
 		primaryStage.show();
 		/*a.setOnMouseClicked(new EventHandler <Event>() {
 
@@ -115,14 +116,6 @@ public class Worldhanger extends Application implements Observer {
 		//reframe(an);
 	}
 	
-
-	
-	private void updateInhabitants(AnchorPane a) {
-		for (Hexagon them : hexes) {
-			//them.getInhabitant(w, a); TODO, put the line back
-		}
-	}
-
 
 	@Override
 	public void update(Observable o, Object arg) {

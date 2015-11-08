@@ -3,6 +3,7 @@ package gui;
 import javafx.scene.Group;
 import world.World;
 
+import java.util.Collection;
 import java.util.Hashtable;
 
 public class ObjectLayer extends Layer {
@@ -10,11 +11,20 @@ public class ObjectLayer extends Layer {
 
 	public ObjectLayer(Group g, double xcoord, double ycoord) {
 		super(g, xcoord, ycoord);
+		leftright.setPrefWidth(xcoord);
+		leftright.setPrefHeight(ycoord);
 	}
 
 	@Override
 	protected void resize(World w) {
-		// TODO Auto-generated method stub
+		Collection<Inhabitant> c = objects.values();
+		Inhabitant [] values = new Inhabitant [c.size()];
+		c.toArray(values);
+		double s = getsize(w);
+		for (Inhabitant o : values) {
+			o.sizeupdate(s, getplace(o.row - (o.col + 1 )/ 2, o.col, s)); //Get place works in grid
+			//o.sizeupdate(s);
+		} //coordinate system, so I have to switch row back here.
 		
 	}
 	
@@ -26,8 +36,8 @@ public class ObjectLayer extends Layer {
 	/**This is run whenever an update to the world is made to make sure that all the inhabitants
 	 * are Still valid. If an inhabitant is invalid, it is deleted?*/
 	public void checkInhabitant(Hexagon h, World w) {
-		int num = w.getNumRep(new int [] {h.row + (h.col + 1)/2, h.col}); //This is a dangerous game
-		Inhabitant i = objects.get(new int [] {h.row + (h.col + 1)/2, h.col});//dealing with mapped and unmapped positions
+		int num = w.getNumRep(new int [] {h.row, h.col}); //This is a dangerous game
+		Inhabitant i = objects.get(new int [] {h.row, h.col});//dealing with mapped and unmapped positions
 		//Be careful and clarify it.
 		Integer othernum = i == null ? null : i.getNumRep();
 		if (othernum == null || i.erased()) {
@@ -39,7 +49,7 @@ public class ObjectLayer extends Layer {
 	
 	
 	private Inhabitant makeRightInhabitant(Hexagon h,World w) {
-		int num = w.getNumRep(new int [] {h.row + (h.col + 1) / 2, h.col}); //Dangerous game again...
+		int num = w.getNumRep(new int [] {h.row, h.col}); //Dangerous game again...
 		if (num == w.ROCK_VALUE) {
 			return new RockGraphic(h,w, leftright);
 		}

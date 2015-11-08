@@ -28,11 +28,11 @@ public class RockGraphic extends Inhabitant {
 	public void sizeupdate(double size, double [] position) {
 		posit = position;
 		posit[0] += size / 4;
-		posit[1] += size * rtthr/ 2;
-		AnchorPane.setLeftAnchor(p, position[0]);
-		AnchorPane.setTopAnchor(p, position[1]);
-		p.setWidth(size * 3 / 4);
-		p.setHeight(size * rtthr / 4);
+		posit[1] += size * rtthr/ 4;
+		AnchorPane.setLeftAnchor(p, posit[0]);
+		AnchorPane.setTopAnchor(p, posit[1]);
+		p.setWidth(size * 3 / 2);
+		p.setHeight(size * rtthr / 2);
 		this.size = size;
 	}
 

@@ -74,10 +74,30 @@ public abstract class Layer {
 	public void zoom (double amount, World w) {
 		this.xcoord += amount;
 		this.ycoord += amount;
-		xjust -= amount / 2;
-		yjust -= amount / 2;
-		resize(w);
-		shiftTransverse(-amount / 2, - amount/ 2);
+		xjust -= amount / 2; //You'll notice that these lines could have been written as shifttransverse
+		yjust -= amount / 2; //They weren't because in Hex-grid's shifttransverse method, Ol's shifttransverse
+		AnchorPane.setLeftAnchor(leftright, xjust);// is called, so the dynamic dispatch is different from the 
+		AnchorPane.setTopAnchor(leftright, yjust);//code here, which it shouldn't be
+		resize(w);//I probably should change the implementation rather than the abstract class to fix this bug
+	} //But this is working for now. 
+	
+	/**Gets the place of the object using the grid coordinate system (not the critter coordinate
+	 * system)
+	 * @param row
+	 * @param col
+	 * @param size
+	 * @return
+	 */
+	public double [] getplace(int row, int col, double size) {
+		double xco = col * ( size + size / 2);
+		double yco = row * (size * rtthr);
+		yco += col % 2 == 1 ? size * rtthr / 2 : 0;
+		//yco represents the distance from the bottom, so to get the distance from the top
+		//we have to subtract it, and the distance from the bottom to the top of the hex
+		//(size * rtthr) from ycoord.
+		return new double [] {xco, ycoord - yco - size * rtthr - 23};
+		//TODO I have no idea why the above doesn't work without the arbitrary 20,
+		//but it doesnt...
 	}
 
 }
