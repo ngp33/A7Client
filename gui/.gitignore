@@ -3,3 +3,6 @@
 /Worldhanger$1.class
 /Hexagon.class
 /Worldhanger$2.class
+/Controller.class
+/Controller$playPauseHandler.class
+/Controller$TimerStepHandler.class

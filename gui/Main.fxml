@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import javafx.scene.shape.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
@@ -8,16 +9,16 @@
 
 <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <MenuBar>
+      <MenuBar fx:id="topbar">
         <menus>
-          <Menu mnemonicParsing="false" text="File">
+          <Menu fx:id="topfile" mnemonicParsing="false" text="File">
                <items>
                   <MenuItem mnemonicParsing="false" text="New world" />
                   <MenuItem mnemonicParsing="false" text="Load world" />
                   <MenuItem mnemonicParsing="false" text="Load critter" />
                </items>
           </Menu>
-          <Menu mnemonicParsing="false" text="Help">
+          <Menu fx:id="tophelp" mnemonicParsing="false" text="Help">
             <items>
               <MenuItem mnemonicParsing="false" text="About" />
             </items>
@@ -29,24 +30,25 @@
             </Menu>
         </menus>
       </MenuBar>
-      <AnchorPane prefHeight="326.0" prefWidth="600.0">
+      <AnchorPane fx:id="grid" prefHeight="326.0" prefWidth="600.0">
          <children>
-            <Button layoutX="561.0" layoutY="287.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" text="-" textAlignment="CENTER" />
-            <Button layoutX="561.0" layoutY="258.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" text="+" textAlignment="CENTER" />
+            <Button fx:id="zoomout" layoutX="561.0" layoutY="287.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" text="-" textAlignment="CENTER" />
+            <Button fx:id="zoomin" layoutX="561.0" layoutY="258.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" text="+" textAlignment="CENTER" />
          </children>
       </AnchorPane>
-      <Separator prefHeight="12.0" prefWidth="600.0" />
+      <Separator opacity="0.0" prefHeight="12.0" prefWidth="600.0" />
       <HBox prefHeight="7.0" prefWidth="600.0">
          <children>
-            <Separator orientation="VERTICAL" prefHeight="200.0" prefWidth="12.0" />
+            <Separator opacity="0.0" orientation="VERTICAL" prefHeight="200.0" prefWidth="16.0" />
             <Label prefHeight="25.0" prefWidth="70.0" text="Play speed:" />
-            <TextField prefHeight="25.0" prefWidth="35.0" text="0" />
+            <TextField fx:id="speed" prefHeight="25.0" prefWidth="35.0" text="0" />
             <Label alignment="CENTER_RIGHT" prefHeight="25.0" prefWidth="71.0" text="updates/sec" />
-            <Separator orientation="VERTICAL" prefHeight="25.0" prefWidth="350.0" />
-            <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" style="-fx-background-image: url(/Images/Play-01.png);" />
-            <Button layoutX="223.0" layoutY="10.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" style="-fx-background-image: url(/Images/Play-01.png);" />
+            <Separator opacity="0.0" orientation="VERTICAL" prefHeight="25.0" prefWidth="340.0" />
+            <Button fx:id="play" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" style="-fx-graphic: url(/Images/Play-01.png);" />
+            <Separator maxWidth="-Infinity" minWidth="-Infinity" opacity="0.0" orientation="VERTICAL" prefHeight="200.0" prefWidth="4.0" />
+            <Button fx:id="step" layoutX="223.0" layoutY="10.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" style="-fx-background-image: url(/Images/Play-01.png);" />
          </children>
       </HBox>
-      <Separator prefHeight="12.0" prefWidth="600.0" />
+      <Separator opacity="0.0" prefHeight="12.0" prefWidth="600.0" />
    </children>
 </VBox>
