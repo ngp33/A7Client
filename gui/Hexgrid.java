@@ -6,9 +6,11 @@ import world.World;
 public class Hexgrid extends Layer {
 	
 	private Hexagon [] hexes;
+	private ObjectLayer Ol;
 	
 	public Hexgrid(Group g, double xcoord, double ycoord, Hexagon [] h) {
 		super(g, xcoord, ycoord);
+		Ol = new ObjectLayer(g, xcoord, ycoord);
 		hexes = h;
 		// TODO Auto-generated constructor stub
 	}
@@ -50,6 +52,14 @@ public class Hexgrid extends Layer {
 		return new double [] {xco, ycoord - yco - size * rtthr - 23};
 		//TODO I have no idea why the above doesn't work without the arbitrary 20,
 		//but it doesnt...
+	}
+	
+	/**Run whenever the worldhanger is notified of a change. Should check that each hex
+	 * is properly represented and add to the object layer if its not.*/
+	public void objectUpdate(World w) {
+		for (Hexagon them : hexes) {
+			Ol.checkInhabitant(them, w);
+		}
 	}
 
 }

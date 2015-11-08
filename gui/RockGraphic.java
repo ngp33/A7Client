@@ -11,10 +11,17 @@ public class RockGraphic extends Inhabitant {
 	private double rtthr = 1.732050808;
 
 	public RockGraphic(World world, int row, int col, double size, AnchorPane a, double[] position) {
-		super(world, row, col, size, a, position);
+		super(world, row, col, size, position);
 		p = new Rectangle();
 		sizeupdate(size, position);
 		a.getChildren().add(p);
+	}
+
+	public RockGraphic(Hexagon h, World w, AnchorPane parent) {
+		super(h,w, parent);
+		p = new Rectangle();
+		parent.getChildren().add(p);
+		sizeupdate(size, h.position);
 	}
 
 	@Override

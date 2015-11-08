@@ -5,19 +5,27 @@ import world.World;
 
 public abstract class Inhabitant {
 	World w;
-	int row;
-	int col;
+	int row; //Row from the critter world
+	int col; //Col from the critter world
 	double size;
-	int numrep;
+	private int numrep;
 	double [] posit;
 	AnchorPane a;
 	
-	public Inhabitant (World world, int row, int col, double size, AnchorPane a, double [] position) {
+	public Inhabitant (World world, int row, int col, double size, double [] position) {
 		w = world;
 		this.row = row;
 		this.col = col;
 		this.size = size;
 		numrep = w.getNumRep(new int [] {row, col});
+	}
+	public Inhabitant (Hexagon h, World w, AnchorPane a) {
+		this.w = w;
+		this.row = h.row;
+		this.col = h.col;
+		this.size = h.size;
+		numrep = w.getNumRep(new int [] {row, col});
+		this.a = a;
 	}
 	
 	/**Decides whether an object should be deleted, and does so if it should be*/
@@ -36,6 +44,8 @@ public abstract class Inhabitant {
 	 */
 	protected abstract void sizeupdate(double size, double [] position);
 	
-	
+	public int getNumRep() {
+		return numrep;
+	}
 
 }
