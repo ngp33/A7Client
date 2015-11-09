@@ -1,9 +1,12 @@
 package gui;
 
+import java.io.FileReader;
 import java.util.Iterator;
 import java.util.Observable;
 import java.util.Observer;
+import java.util.Random;
 
+import ast.ProgramImpl;
 import javafx.application.Application;
 import javafx.event.Event;
 import javafx.event.EventHandler;
@@ -16,6 +19,9 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Shape;
 import javafx.stage.Stage;
+import parse.Parser;
+import parse.ParserImpl;
+import world.Critter;
 import world.Rock;
 import world.World;
 
@@ -40,6 +46,11 @@ public class Worldhanger extends Application implements Observer {
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		w.replace(new Rock(), w.getHex(4, 2));
+		int [] mem = new int [] {8,1,3,2,100,0,0,0};
+		Random r = new Random();
+		Parser p = new ParserImpl();
+		ProgramImpl pr = (ProgramImpl) p.parse(new FileReader("example-rules.txt"));
+		w.replace(new Critter(mem, r, pr, w), w.getHex(4, 3));
 		Group g = new Group();
 		Scene s = new Scene(g);
 		primaryStage.setScene(s);

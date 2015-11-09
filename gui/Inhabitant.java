@@ -43,6 +43,11 @@ public abstract class Inhabitant {
 	/**Updates the size of the inhabitant based on the new size of the hex it's in. <br>
 	 * Invariant: the inhabitant size instance variable should get size at the end.
 	 * @param size
+	 * 
+	 * @param position
+	 * 		The position of the hex (the idea is that with this information, it should be easy
+	 * to identify the position of the object. Note that this position corresponds to the distance
+	 * from the left part of the anchor, and the distance from the top.
 	 */
 	public abstract void sizeupdate(double size, double [] position);
 	
