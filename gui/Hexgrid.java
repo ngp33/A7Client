@@ -8,11 +8,9 @@ public class Hexgrid extends Layer {
 	private Hexagon [] hexes;
 	private ObjectLayer Ol;
 	
-	public Hexgrid(Group g, double xcoord, double ycoord, Hexagon [] h) {
+	public Hexgrid(Group g, double xcoord, double ycoord) {
 		super(g, xcoord, ycoord);
 		Ol = new ObjectLayer(g, xcoord, ycoord);
-		hexes = h;
-		// TODO Auto-generated constructor stub
 	}
 	
 	public void setHexGrid(Hexagon [] h) {
@@ -35,14 +33,13 @@ public class Hexgrid extends Layer {
 				Hexagon temp = hexes[place];
 				temp.position = posit;
 				temp.resize(size);
-				//temp.getInhabitant(w, anch); TODO put the line back
 				place(temp, posit);
 				place ++;
 			}
 		}
 	}
 	
-	private double [] getplace(int row, int col, double size) {
+	/*public double [] getplace(int row, int col, double size) {
 		double xco = col * ( size + size / 2);
 		double yco = row * (size * rtthr);
 		yco += col % 2 == 1 ? size * rtthr / 2 : 0;
@@ -52,7 +49,7 @@ public class Hexgrid extends Layer {
 		return new double [] {xco, ycoord - yco - size * rtthr - 23};
 		//TODO I have no idea why the above doesn't work without the arbitrary 20,
 		//but it doesnt...
-	}
+	}*/
 	
 	/**Run whenever the worldhanger is notified of a change. Should check that each hex
 	 * is properly represented and add to the object layer if its not.*/
@@ -60,6 +57,17 @@ public class Hexgrid extends Layer {
 		for (Hexagon them : hexes) {
 			Ol.checkInhabitant(them, w);
 		}
+	}
+	
+	@Override
+	public void zoom(double amount, World w) {
+		super.zoom(amount, w);
+		Ol.zoom(amount, w);
+	}
+	
+	public void shiftTransverse(double dx, double dy) {
+		super.shiftTransverse(dx, dy);
+		Ol.shiftTransverse(dx, dy);
 	}
 
 }
