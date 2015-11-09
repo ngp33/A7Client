@@ -1,6 +1,7 @@
 package gui;
 
 import javafx.scene.Group;
+import javafx.scene.layout.AnchorPane;
 import world.World;
 
 public class Hexgrid extends Layer {
@@ -61,13 +62,25 @@ public class Hexgrid extends Layer {
 	
 	@Override
 	public void zoom(double amount, World w) {
-		super.zoom(amount, w);
+		this.xcoord += amount; //Though this code looks like the code in shiftTransverse, dynamic dispatch
+		this.ycoord += amount;//means that calling shifttransverse here would call it on Ol meaning
+		xjust -= amount / 2;//Ol would be shifted twice which would be bad. Hence, I rewrote the code
+		yjust -= amount / 2; 
+		AnchorPane.setLeftAnchor(leftright, xjust);
+		AnchorPane.setTopAnchor(leftright, yjust);
+		resize(w);
 		Ol.zoom(amount, w);
 	}
 	
 	public void shiftTransverse(double dx, double dy) {
 		super.shiftTransverse(dx, dy);
 		Ol.shiftTransverse(dx, dy);
+	}
+	
+	public void center(World w) {
+		double dx = (xcoord - xspace(w)) / 2;
+		double dy = (ycoord - yspace(w)) / 2;
+		shiftTransverse(dx, dy);
 	}
 
 }

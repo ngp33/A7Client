@@ -12,14 +12,10 @@ public abstract class Inhabitant {
 	double [] posit;
 	AnchorPane a;
 	Hexagon h;
-	
-	public Inhabitant (World world, int row, int col, double size, double [] position) {
-		w = world;
-		this.row = row;
-		this.col = col;
-		this.size = size;
-		numrep = w.getNumRep(new int [] {row, col});
-	}
+	CircleImage ci;
+	double rttwo = 1.414213562;
+	double rtthr = 1.732050808;
+
 	public Inhabitant (Hexagon h, World w, AnchorPane a) {
 		this.h = h;
 		this.w = w;

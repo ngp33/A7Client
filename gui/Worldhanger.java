@@ -22,6 +22,7 @@ import javafx.stage.Stage;
 import parse.Parser;
 import parse.ParserImpl;
 import world.Critter;
+import world.Food;
 import world.Rock;
 import world.World;
 
@@ -32,8 +33,6 @@ public class Worldhanger extends Application implements Observer {
 	private World w = new World(7,5, "hi");
 	private int xcoord = 400;//Only alter these (xcoord, ycoord) using scalechange
 	private int ycoord = 400;
-	private double xjust = 0.0;
-	private double yjust = 0.0;
 	private Hexagon [] hexes; //ultimately an array of hex graphic objects which is ordered
 	//from 
 	Double rtthr = 1.732050808;
@@ -46,11 +45,14 @@ public class Worldhanger extends Application implements Observer {
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		w.replace(new Rock(), w.getHex(4, 2));
+		w.replace(new Food(23), w.getHex(2, 1));
 		int [] mem = new int [] {8,1,3,2,100,0,0,0};
 		Random r = new Random();
 		Parser p = new ParserImpl();
 		ProgramImpl pr = (ProgramImpl) p.parse(new FileReader("example-rules.txt"));
-		w.replace(new Critter(mem, r, pr, w), w.getHex(4, 3));
+		Critter c = new Critter(mem, r, pr, w);
+		//c.direction = 1;
+		w.replace(c, w.getHex(4, 3));
 		Group g = new Group();
 		Scene s = new Scene(g);
 		primaryStage.setScene(s);
@@ -121,6 +123,7 @@ public class Worldhanger extends Application implements Observer {
 		}
 		h.setHexGrid(hexes);
 		h.resize(w);
+		h.center(w);
 		//xjust = (xcoord - h.xspace(w)) / 2;
 		//yjust = (ycoord - h.yspace(w)) / 2;
 		//h.zoom(amount, w);

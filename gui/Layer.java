@@ -74,12 +74,9 @@ public abstract class Layer {
 	public void zoom (double amount, World w) {
 		this.xcoord += amount;
 		this.ycoord += amount;
-		xjust -= amount / 2; //You'll notice that these lines could have been written as shifttransverse
-		yjust -= amount / 2; //They weren't because in Hex-grid's shifttransverse method, Ol's shifttransverse
-		AnchorPane.setLeftAnchor(leftright, xjust);// is called, so the dynamic dispatch is different from the 
-		AnchorPane.setTopAnchor(leftright, yjust);//code here, which it shouldn't be
-		resize(w);//I probably should change the implementation rather than the abstract class to fix this bug
-	} //But this is working for now. 
+		shiftTransverse(-amount/2, -amount/2);
+		resize(w);
+	}
 	
 	/**Gets the place of the object using the grid coordinate system (not the critter coordinate
 	 * system)
