@@ -13,3 +13,7 @@
 /Layer.class
 /Hexgrid.class
 /ObjectLayer.class
+/Controller$LoadWorldHandler.class
+/Controller$NewWorldHandler.class
+/Controller$StepHandler.class
+/Controller$LoadCritterHandler.class

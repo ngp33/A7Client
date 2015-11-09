@@ -13,14 +13,14 @@
         <menus>
           <Menu fx:id="topfile" mnemonicParsing="false" text="File">
                <items>
-                  <MenuItem mnemonicParsing="false" text="New world" />
-                  <MenuItem mnemonicParsing="false" text="Load world" />
-                  <MenuItem mnemonicParsing="false" text="Load critter" />
+                  <MenuItem fx:id="newworld" mnemonicParsing="false" text="New world" />
+                  <MenuItem fx:id="loadworld" mnemonicParsing="false" text="Load world" />
+                  <MenuItem fx:id="loadcritter" mnemonicParsing="false" text="Load critter" />
                </items>
           </Menu>
           <Menu fx:id="tophelp" mnemonicParsing="false" text="Help">
             <items>
-              <MenuItem mnemonicParsing="false" text="About" />
+              <MenuItem fx:id="about" mnemonicParsing="false" text="About" />
             </items>
           </Menu>
             <Menu mnemonicParsing="false" text="Donate!">
