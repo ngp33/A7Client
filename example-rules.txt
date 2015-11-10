@@ -1,5 +1,4 @@
-nearby[0] = 0 --> serve[3];
-nearby[1] = 1 --> eat;
+mem[3] != 1 --> bud;
 mem[5]=1 --> mem[6] := mem[4]
              mem[5] := 2;
 

@@ -13,6 +13,7 @@ public class World extends Observable {
 	
 	Hex[][] grid;
 	ArrayList<Critter> critters;
+	ArrayList<Critter> firstgencrits;
 	
 	String name; // Not sure what this is for yet but it's included in the world file.
 	int time = 0;
@@ -43,6 +44,7 @@ public class World extends Observable {
 	public World() {
 		name = "Untitled";
 		critters = new ArrayList<Critter>();
+		firstgencrits = new ArrayList<Critter>();
 		
 		// This would look cleaner in its own method, but I need to do it inside the constructor.
 		try {
@@ -78,6 +80,7 @@ public class World extends Observable {
 	public World(int numRows, int numCols, String n) {
 		name = n;
 		critters = new ArrayList<Critter>();
+		firstgencrits = new ArrayList<Critter>();
 		
 		try {
 			FileReader f = new FileReader("constants.txt");
@@ -299,14 +302,28 @@ public class World extends Observable {
 		//f.addFood(amount);
 	}
 	
+	/**Adds a critter to the world's list of critters. Invariant, critter list is not being
+	 * iterated through (as is the case while a timestep is executed
+	 * @param c
+	 */
 	public void addCritter(Critter c) {
 		critters.add(c);
+	}
+	
+	/**Adds a critter mid-time step*/
+	public void addMidStep(Critter c) {
+		firstgencrits.add(c);
 	}
 	
 	public void advance() {
 		for (Critter c : critters) {
 			c.timestep(); // Executes critter's program?
 		}
+		for (Critter c : firstgencrits) {
+			c.timestep();
+			addCritter(c);
+		}
+		firstgencrits.clear();
 		time++;
 		setChanged();
 		notifyObservers();

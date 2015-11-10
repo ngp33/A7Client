@@ -9,9 +9,10 @@ public class MathOp extends TwokidsSameType implements Expr, mutation.Removable 
 	MathOperator op;
 	
 	public MathOp(Expr one, Expr two, MathOperator o){
+		link = o; //This is so that MathOp still has a link for copying purposes 
 		left = one;
 		right = two;
-		op = o;
+		op = (MathOperator) link;
 		symbol = makenice();
 	}
 	
@@ -86,6 +87,19 @@ public class MathOp extends TwokidsSameType implements Expr, mutation.Removable 
 	@Override
 	public Node getRandomReplacement(Program possibleKids) {
 		return possibleKids.getRandomNode(Expr.class);
+	}
+	
+	@Override
+	public Node copy() {
+		
+		MathOp clone = new MathOp();
+		
+		clone.left = left.copy();
+		clone.right = right.copy();
+		clone.link = link;
+		clone.symbol = symbol;
+		clone.op = op;
+		return clone;
 	}
 
 	@Override

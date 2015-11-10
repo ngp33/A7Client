@@ -46,7 +46,7 @@ public class ActionMate {
 					mutate(baby);
 					place(baby,c, specific);
 					baby.name = "childof(" + c.name + ", " + specific.name + ")"; 
-					c.w.addCritter(baby);
+					c.w.addMidStep(baby);
 				}
 			}
 		}
@@ -188,7 +188,7 @@ public class ActionMate {
 			if (Crittermethods.checkempty(c, false)) {
 				int [] loc = Crittermethods.dircoords(c, false);
 				c.w.replace(k, c.w.getHex(loc[0], loc[1]));
-				c.w.addCritter(k);
+				c.w.addMidStep(k);
 			}
 		}
 	}

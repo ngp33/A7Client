@@ -62,8 +62,8 @@ public class Worldhanger extends Application implements Observer {
 			@Override
 			public void handle(Event event) {
 				w.advance();
+				//System.out.println(w.getInfo());
 				h.objectUpdate(w);
-				System.out.println(w.getInfo());
 			}
 		});
 		
