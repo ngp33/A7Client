@@ -24,10 +24,10 @@ import world.World;
 
 
 public class Worldhanger extends Application implements Observer {
-	//private World w = new World(9,6, "hi");
-	private World w = new World();
+	private World w = new World(9,6, "hi");
+	//private World w = new World();
 	private int xcoord = 400;//Only alter these (xcoord, ycoord) using scalechange
-	private int ycoord = 700;
+	private int ycoord = 400;
 	private Hexagon [] hexes; //ultimately an array of hex graphic objects which is ordered
 	private Hexgrid h;
 	public static void main(String[] args) {
@@ -48,12 +48,16 @@ public class Worldhanger extends Application implements Observer {
 		c.direction = 0;
 		w.replace(c, w.getHex(4, 3));
 		w.addCritter(c);
+		HBox hb = new HBox();
 		Group g = new Group();
-		Scene s = new Scene(g);
+		//Scene s = new Scene(g);
+		Scene s = new Scene(hb);
+		//hb.getChildren().add(g);
 		primaryStage.setScene(s);
 		primaryStage.setWidth(xcoord);
 		primaryStage.setHeight(ycoord);
 		h = new Hexgrid(g, xcoord, ycoord);
+		hb.getChildren().add(h.sp);
 		hexWorldMap(h.getsize(w));
 		h.objectUpdate(w);
 		primaryStage.show();
@@ -76,16 +80,20 @@ public class Worldhanger extends Application implements Observer {
 	private void handleKey(KeyCode keyCode) {
 		switch (keyCode.getName()) {
 		case "A":
-			h.shiftTransverse(h.xcoord/15, 0);
+			h.shiftTransverse(-h.xcoord/10, 0);
+			//h.sp.setHvalue(h.sp.getHvalue() - .1);
 			break;
 		case "S":
-			h.shiftTransverse(0, -h.ycoord/15);
+			h.shiftTransverse(0, h.ycoord/10);
+			//h.sp.setVvalue(h.sp.getVvalue() + .1);
 			break;
 		case "D":
-			h.shiftTransverse(-h.xcoord/15, 0);
+			h.shiftTransverse(h.xcoord/10, 0);
+			//h.sp.setHvalue(h.sp.getHvalue() + .1);
 			break;
 		case "W":
-			h.shiftTransverse(0, h.ycoord/15);
+			h.shiftTransverse(0, -h.ycoord/10);
+			//h.sp.setVvalue(h.sp.getVvalue() - .1);
 			break;
 		case "Up":
 			h.zoom(3,w);

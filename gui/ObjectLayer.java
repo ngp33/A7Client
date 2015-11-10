@@ -1,6 +1,7 @@
 package gui;
 
 import javafx.scene.Group;
+import javafx.scene.layout.HBox;
 import world.World;
 
 import java.util.Collection;
@@ -14,6 +15,7 @@ public class ObjectLayer extends Layer {
 
 	public ObjectLayer(Group g, double xcoord, double ycoord) {
 		super(g, xcoord, ycoord);
+		//sp.setOpacity(0.0);
 		leftright.setPrefWidth(xcoord);
 		leftright.setPrefHeight(ycoord);
 	}

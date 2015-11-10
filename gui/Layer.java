@@ -1,13 +1,16 @@
 package gui;
 
 import javafx.scene.Group;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.shape.Shape;
 import world.World;
 
 public abstract class Layer {
 	protected AnchorPane leftright;
 	protected AnchorPane general;
+	protected ScrollPane sp;
 	protected double xcoord;
 	protected double ycoord;
 	protected double xjust;
@@ -15,22 +18,28 @@ public abstract class Layer {
 	Double rtthr = 1.732050808;
 
 	public Layer(Group g, double xcoord, double ycoord) {
-		general = new AnchorPane();
+		//general = new AnchorPane();
+		//sp = new ScrollPane();
 		leftright = new AnchorPane();
-		general.getChildren().add(leftright);
-		g.getChildren().add(general);
+		//general.getChildren().add(leftright);
+		//sp.setContent(leftright);
+		//g.getChildren().add(general);
+		//g.getChildren().add(sp);
+		g.getChildren().add(leftright);
 		this.xcoord = xcoord;
 		this.ycoord = ycoord;
 		this.xjust = 0;
 		this.yjust = 0;
 	}
 	
-	public void shiftTransverse (double deltaxjust, double deltayjust) {
+	/*public void shiftTransverse (double deltaxjust, double deltayjust) {
 		xjust += deltaxjust;
 		yjust += deltayjust;
 		AnchorPane.setLeftAnchor(leftright, xjust);
 		AnchorPane.setTopAnchor(leftright, yjust);
-	}
+		//general.setHvalue(xjust);
+		//general.setVvalue(yjust);
+	}*/
 	
 	protected abstract void resize(World w);
 	
@@ -76,7 +85,7 @@ public abstract class Layer {
 	public void zoom (double amount, World w) {
 		xcoord += amount;
 		ycoord += amount;
-		shiftTransverse(-amount/2, -amount/2);
+		//shiftTransverse(-amount/2, -amount/2);
 		resize(w);
 	}
 	

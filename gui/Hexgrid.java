@@ -1,17 +1,24 @@
 package gui;
 
 import javafx.scene.Group;
-import javafx.scene.layout.AnchorPane;
+import javafx.scene.control.ScrollPane;
 import world.World;
 
 public class Hexgrid extends Layer {
 	
 	private Hexagon [] hexes;
 	private ObjectLayer Ol;
+	ScrollPane sp;
+	double hcur;
+	double vcur;
 	
 	public Hexgrid(Group g, double xcoord, double ycoord) {
 		super(g, xcoord, ycoord);
 		Ol = new ObjectLayer(g, xcoord, ycoord);
+		sp = new ScrollPane();
+		sp.setContent(g);
+		hcur = .5;
+		vcur = .5;
 	}
 	
 	public void setHexGrid(Hexagon [] h) {
@@ -54,14 +61,28 @@ public class Hexgrid extends Layer {
 		xcoord += amount;
 		ycoord += amount;
 		//Ol would be shifted twice which would be bad. Hence, I rewrote the code
-		super.shiftTransverse(-amount/2, -amount/2); //super method called so dynamic dispatch doesn't call
+		//super.shiftTransverse(-amount/2, -amount/2); //super method called so dynamic dispatch doesn't call
+		//shiftTransverse(-amount/2, -amount/2);
 		resize(w); //shiftTransverse on Ol twice
 		Ol.zoom(amount, w);
+		sp.setHvalue(hcur);
+		sp.setVvalue(vcur);
+		
 	}
 	
 	public void shiftTransverse(double dx, double dy) {
-		super.shiftTransverse(dx, dy);
-		Ol.shiftTransverse(dx, dy);
+		double temph = hcur + dx/xcoord;
+		if (temph < 1 &&  temph > 0) {
+			hcur = temph;
+		}
+		double temv = vcur + dy/ycoord;
+		if (temv < 1 && temv > 0) {
+			vcur = temv;
+		}
+		sp.setHvalue(hcur);
+		sp.setVvalue(vcur);
+		//super.shiftTransverse(dx, dy);
+		//Ol.shiftTransverse(dx, dy);
 	}
 	
 	/**Centers the grids in the group with either the xspace or yspace as the limiting factor*/
@@ -75,5 +96,4 @@ public class Hexgrid extends Layer {
 		resize(w);
 		shiftTransverse(dx, dy);
 	}
-
 }
