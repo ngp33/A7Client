@@ -12,10 +12,10 @@ public class Hexgrid extends Layer {
 	double hcur;
 	double vcur;
 	
-	public Hexgrid(Group g, double xcoord, double ycoord) {
+	public Hexgrid(ScrollPane scr, Group g, double xcoord, double ycoord) {
 		super(g, xcoord, ycoord);
 		Ol = new ObjectLayer(g, xcoord, ycoord);
-		sp = new ScrollPane();
+		sp = scr;
 		sp.setContent(g);
 		hcur = .5;
 		vcur = .5;
