@@ -33,6 +33,7 @@
       </MenuBar>
       <AnchorPane fx:id="grid" prefHeight="326.0" prefWidth="600.0">
          <children>
+            <ScrollPane fx:id="arena" prefHeight="326.0" prefWidth="600.0" />
             <Button fx:id="zoomout" layoutX="561.0" layoutY="287.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" text="-" textAlignment="CENTER" />
             <Button fx:id="zoomin" layoutX="561.0" layoutY="258.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" text="+" textAlignment="CENTER" />
             <TitledPane fx:id="inspector" layoutX="474.0" prefHeight="244.0" prefWidth="126.0" text="Critter Inspector">
@@ -66,7 +67,6 @@
                      </content>
                   </ScrollPane>
                </content></TitledPane>
-            <Pane fx:id="arena" prefHeight="326.0" prefWidth="600.0" scaleZ="0.0" />
          </children>
       </AnchorPane>
       <Separator opacity="0.0" prefHeight="12.0" prefWidth="600.0" />

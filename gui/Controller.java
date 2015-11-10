@@ -10,7 +10,6 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Labeled;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
@@ -20,6 +19,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
@@ -32,6 +32,7 @@ public class Controller {
 	Stage view;
 	World model;
 	Timer timer;
+	WorldObject worldUpdater;
 	PlayPauseHandler continuousSimHandler;
 	StepHandler stepHandler;
 	
@@ -48,6 +49,8 @@ public class Controller {
 		
 		Button step = (Button) scene.lookup("#step");
 		step.setOnAction(stepHandler);
+		
+		worldUpdater = new WorldObject((Pane) scene.lookup("#arena"), model);
 		
 		
 		MenuBar topBar = (MenuBar) scene.lookup("#topbar");
