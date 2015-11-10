@@ -21,6 +21,8 @@ public abstract class Layer {
 		g.getChildren().add(general);
 		this.xcoord = xcoord;
 		this.ycoord = ycoord;
+		this.xjust = 0;
+		this.yjust = 0;
 	}
 	
 	public void shiftTransverse (double deltaxjust, double deltayjust) {
@@ -62,7 +64,7 @@ public abstract class Layer {
 		int [] a = w.worlddim();
 		double size = (getsize(w) * rtthr) * a[0] + 23; // getsize * rtthr * 2/2 is the yheight
 		size += getsize(w) * rtthr / 2;
-		System.out.println(size);
+
 		return size;
 	}
 	
@@ -72,8 +74,8 @@ public abstract class Layer {
 	 * @param a
 	 */
 	public void zoom (double amount, World w) {
-		this.xcoord += amount;
-		this.ycoord += amount;
+		xcoord += amount;
+		ycoord += amount;
 		shiftTransverse(-amount/2, -amount/2);
 		resize(w);
 	}

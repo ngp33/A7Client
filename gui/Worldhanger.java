@@ -24,12 +24,11 @@ import world.World;
 
 
 public class Worldhanger extends Application implements Observer {
-	private World w = new World(9,6, "hi");
+	//private World w = new World(9,6, "hi");
+	private World w = new World();
 	private int xcoord = 400;//Only alter these (xcoord, ycoord) using scalechange
-	private int ycoord = 400;
+	private int ycoord = 700;
 	private Hexagon [] hexes; //ultimately an array of hex graphic objects which is ordered
-	//from 
-	Double rtthr = 1.732050808;
 	private Hexgrid h;
 	public static void main(String[] args) {
 		launch(args);
@@ -62,8 +61,6 @@ public class Worldhanger extends Application implements Observer {
 			@Override
 			public void handle(Event event) {
 				w.advance();
-				//System.out.println(w.getInfo());
-				h.objectUpdate(w);
 			}
 		});
 		
@@ -96,8 +93,12 @@ public class Worldhanger extends Application implements Observer {
 		case "Down":
 			h.zoom(-3, w);
 			break;
+		case "Enter":
+			while (h.xcoord > h.getsize(w) * 10) {
+				h.zoom(10, w);
+			}
 		default:
-			break;
+			System.out.println(keyCode.getName());
 		}
 	}
 	
@@ -116,7 +117,6 @@ public class Worldhanger extends Application implements Observer {
 			}
 		}
 		h.setHexGrid(hexes);
-		h.resize(w);
 		h.center(w);
 	}
 	
