@@ -1,4 +1,5 @@
-1 = 1 --> forward;
+nearby[0] = 0 --> serve[3];
+nearby[1] = 1 --> eat;
 mem[5]=1 --> mem[6] := mem[4]
              mem[5] := 2;
 

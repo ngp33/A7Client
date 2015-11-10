@@ -73,5 +73,9 @@ public class CircleImage {
 		AnchorPane.clearConstraints(iv);
 	}
 	
+	public double getDegree() {
+		return iv.getRotate();
+	}
+	
 
 }

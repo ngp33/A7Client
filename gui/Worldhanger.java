@@ -1,7 +1,6 @@
 package gui;
 
 import java.io.FileReader;
-import java.util.Iterator;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.Random;
@@ -11,13 +10,10 @@ import javafx.application.Application;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.shape.Polygon;
-import javafx.scene.shape.Shape;
+import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import parse.Parser;
 import parse.ParserImpl;
@@ -26,8 +22,6 @@ import world.Food;
 import world.Rock;
 import world.World;
 
-//Problem: figure out how to order the inhabitant maker so that it makes inhabitants and updates them
-//After the hexes all have positions.
 
 public class Worldhanger extends Application implements Observer {
 	private World w = new World(9,6, "hi");
@@ -46,12 +40,13 @@ public class Worldhanger extends Application implements Observer {
 	public void start(Stage primaryStage) throws Exception {
 		w.replace(new Rock(), w.getHex(4, 2));
 		w.replace(new Food(23), w.getHex(2, 1));
-		int [] mem = new int [] {8,1,3,2,100,0,0,0};
+		w.addObserver(this);
+		int [] mem = new int [] {8,1,1,2,1000,0,0,0};
 		Random r = new Random();
 		Parser p = new ParserImpl();
 		ProgramImpl pr = (ProgramImpl) p.parse(new FileReader("example-rules.txt"));
 		Critter c = new Critter(mem, r, pr, w);
-		c.direction = 1;
+		c.direction = 0;
 		w.replace(c, w.getHex(4, 3));
 		w.addCritter(c);
 		Group g = new Group();
@@ -67,8 +62,8 @@ public class Worldhanger extends Application implements Observer {
 			@Override
 			public void handle(Event event) {
 				w.advance();
-				//System.out.println(w.getInfo());
 				h.objectUpdate(w);
+				System.out.println(w.getInfo());
 			}
 		});
 		
@@ -84,16 +79,16 @@ public class Worldhanger extends Application implements Observer {
 	private void handleKey(KeyCode keyCode) {
 		switch (keyCode.getName()) {
 		case "A":
-			h.shiftTransverse(3, 0);
+			h.shiftTransverse(h.xcoord/15, 0);
 			break;
 		case "S":
-			h.shiftTransverse(0, -3);
+			h.shiftTransverse(0, -h.ycoord/15);
 			break;
 		case "D":
-			h.shiftTransverse(-3, 0);
+			h.shiftTransverse(-h.xcoord/15, 0);
 			break;
 		case "W":
-			h.shiftTransverse(0, 3);
+			h.shiftTransverse(0, h.ycoord/15);
 			break;
 		case "Up":
 			h.zoom(3,w);

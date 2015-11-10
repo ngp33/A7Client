@@ -46,5 +46,11 @@ public class CritterGraphic extends Inhabitant {
 	public void update() {
 		sizeupdate(size, h.position); //Make sure the invariant keeps with size... it should...
 		colorUpdate();
+		directionUpdate();
+	}
+
+	private void directionUpdate() {
+		ci.rotate(c.direction * 60);
+		
 	}
 }

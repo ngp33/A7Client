@@ -16,7 +16,8 @@ public class Actionpacked {
 	public static void themove(Critter c, Hamlet type){
 		switch(type){
 		case attack:
-			c.attack();;
+			c.attack();
+			break;
 		case backward:
 			c.movement(false);
 			break;

@@ -4,11 +4,12 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Observable;
 
 import parse.Parser;
 import parse.ParserImpl;
 
-public class World {
+public class World extends Observable {
 	
 	Hex[][] grid;
 	ArrayList<Critter> critters;
@@ -307,6 +308,8 @@ public class World {
 			c.timestep(); // Executes critter's program?
 		}
 		time++;
+		setChanged();
+		notifyObservers();
 	}
 	
 	public void advanceTime(int amount) {
