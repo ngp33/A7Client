@@ -1,5 +1,6 @@
 package gui;
 
+import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
@@ -10,9 +11,11 @@ public class CircleImage {
 	double rttwo = 1.414213562;
 	ImageView iv;
 	double size;
+	ColorAdjust ca;
 	
 	public CircleImage(Image i) {
 		iv = new ImageView(i);
+		ca = new ColorAdjust();
 	}
 	
 	public void setSize(double size) {
@@ -57,6 +60,17 @@ public class CircleImage {
 		position(oldposition);
 		AnchorPane.setLeftAnchor(iv, oldposition[0]);
 		AnchorPane.setTopAnchor(iv, oldposition[1]);
+	}
+	
+	public void color(double proportionfull) {
+		
+		ca.setContrast(-1 + proportionfull * 2);
+		iv.setEffect(ca);
+	}
+	
+	public void remove(AnchorPane a) {
+		a.getChildren().remove(iv);
+		AnchorPane.clearConstraints(iv);
 	}
 	
 

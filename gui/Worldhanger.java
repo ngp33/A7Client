@@ -30,7 +30,7 @@ import world.World;
 //After the hexes all have positions.
 
 public class Worldhanger extends Application implements Observer {
-	private World w = new World(7,5, "hi");
+	private World w = new World(9,6, "hi");
 	private int xcoord = 400;//Only alter these (xcoord, ycoord) using scalechange
 	private int ycoord = 400;
 	private Hexagon [] hexes; //ultimately an array of hex graphic objects which is ordered
@@ -51,27 +51,26 @@ public class Worldhanger extends Application implements Observer {
 		Parser p = new ParserImpl();
 		ProgramImpl pr = (ProgramImpl) p.parse(new FileReader("example-rules.txt"));
 		Critter c = new Critter(mem, r, pr, w);
-		//c.direction = 1;
+		c.direction = 1;
 		w.replace(c, w.getHex(4, 3));
+		w.addCritter(c);
 		Group g = new Group();
 		Scene s = new Scene(g);
 		primaryStage.setScene(s);
 		primaryStage.setWidth(xcoord);
 		primaryStage.setHeight(ycoord);
 		h = new Hexgrid(g, xcoord, ycoord);
-		//updateInhabitants(a);
 		hexWorldMap(h.getsize(w));
 		h.objectUpdate(w);
 		primaryStage.show();
-		/*a.setOnMouseClicked(new EventHandler <Event>() {
-
-			@Override //Anything that resizes also has to adjust xjust, yjust
+		s.setOnMouseClicked(new EventHandler <Event>() {
+			@Override
 			public void handle(Event event) {
 				w.advance();
-				updateInhabitants(a);
+				//System.out.println(w.getInfo());
+				h.objectUpdate(w);
 			}
-			
-		});*/
+		});
 		
 		s.setOnKeyPressed(new EventHandler<KeyEvent>() {
 
@@ -82,7 +81,7 @@ public class Worldhanger extends Application implements Observer {
 		});
 	}
 	
-	private void handleKey(KeyCode keyCode) {//, AnchorPane a) {
+	private void handleKey(KeyCode keyCode) {
 		switch (keyCode.getName()) {
 		case "A":
 			h.shiftTransverse(3, 0);
@@ -124,10 +123,6 @@ public class Worldhanger extends Application implements Observer {
 		h.setHexGrid(hexes);
 		h.resize(w);
 		h.center(w);
-		//xjust = (xcoord - h.xspace(w)) / 2;
-		//yjust = (ycoord - h.yspace(w)) / 2;
-		//h.zoom(amount, w);
-		//reframe(an);
 	}
 	
 

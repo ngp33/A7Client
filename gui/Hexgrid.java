@@ -40,21 +40,10 @@ public class Hexgrid extends Layer {
 		}
 	}
 	
-	/*public double [] getplace(int row, int col, double size) {
-		double xco = col * ( size + size / 2);
-		double yco = row * (size * rtthr);
-		yco += col % 2 == 1 ? size * rtthr / 2 : 0;
-		//yco represents the distance from the bottom, so to get the distance from the top
-		//we have to subtract it, and the distance from the bottom to the top of the hex
-		//(size * rtthr) from ycoord.
-		return new double [] {xco, ycoord - yco - size * rtthr - 23};
-		//TODO I have no idea why the above doesn't work without the arbitrary 20,
-		//but it doesnt...
-	}*/
-	
 	/**Run whenever the worldhanger is notified of a change. Should check that each hex
 	 * is properly represented and add to the object layer if its not.*/
 	public void objectUpdate(World w) {
+		Ol.updateDelete(w);
 		for (Hexagon them : hexes) {
 			Ol.checkInhabitant(them, w);
 		}

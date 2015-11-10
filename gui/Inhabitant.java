@@ -7,9 +7,7 @@ public abstract class Inhabitant {
 	World w;
 	int row; //Row from the critter world
 	int col; //Col from the critter world
-	double size;
 	private int numrep;
-	double [] posit;
 	AnchorPane a;
 	Hexagon h;
 	CircleImage ci;
@@ -21,7 +19,6 @@ public abstract class Inhabitant {
 		this.w = w;
 		this.row = h.row;
 		this.col = h.col;
-		this.size = h.size;
 		numrep = w.getNumRep(new int [] {row, col});
 		this.a = a;
 	}
@@ -29,7 +26,7 @@ public abstract class Inhabitant {
 	/**Decides whether an object should be deleted, and does so if it should be*/
 	public boolean erased () {
 		if (w.getNumRep(new int [] {row, col}) != numrep) {
-			a.getChildren().remove(this);
+			ci.remove(a);
 			return true;
 		}
 		return false;
@@ -50,5 +47,7 @@ public abstract class Inhabitant {
 	public int getNumRep() {
 		return numrep;
 	}
+	
+	public abstract void update();
 
 }
