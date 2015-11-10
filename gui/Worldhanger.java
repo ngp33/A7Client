@@ -30,6 +30,7 @@ public class Worldhanger extends Application implements Observer {
 	private int ycoord = 400;
 	private Hexagon [] hexes; //ultimately an array of hex graphic objects which is ordered
 	private Hexgrid h;
+	private double time;
 	public static void main(String[] args) {
 		launch(args);
 	}
@@ -131,7 +132,10 @@ public class Worldhanger extends Application implements Observer {
 
 	@Override
 	public void update(Observable o, Object arg) {
-		h.objectUpdate(w);
-	} 
+		if (System.nanoTime() - time > 100000000/3) {
+			h.objectUpdate(w);
+		}
+		time = System.nanoTime();
+	}
 
 }
