@@ -66,6 +66,7 @@
                      </content>
                   </ScrollPane>
                </content></TitledPane>
+            <Pane fx:id="arena" prefHeight="326.0" prefWidth="600.0" scaleZ="0.0" />
          </children>
       </AnchorPane>
       <Separator opacity="0.0" prefHeight="12.0" prefWidth="600.0" />
