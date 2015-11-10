@@ -16,6 +16,7 @@ public class Hexgrid extends Layer {
 		super(g, xcoord, ycoord);
 		Ol = new ObjectLayer(g, xcoord, ycoord);
 		sp = scr;
+		
 		sp.setContent(g);
 		hcur = .5;
 		vcur = .5;

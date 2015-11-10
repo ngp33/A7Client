@@ -53,5 +53,13 @@ public class WorldObject implements Observer {
 		}
 		time = System.nanoTime();
 	}
+	
+	
+	public void zoom(int amount) {
+		h.zoom(amount, w);
+	}
+	public void move (double dx, double dy) {
+		h.shiftTransverse(dx, dy);
+	}
 
 }
