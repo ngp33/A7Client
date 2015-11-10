@@ -100,10 +100,5 @@
          </children>
       </HBox>
       <Separator opacity="0.0" prefHeight="12.0" prefWidth="600.0" />
-      <ToolBar prefHeight="40.0" prefWidth="200.0">
-        <items>
-          <Button mnemonicParsing="false" text="Button" />
-        </items>
-      </ToolBar>
    </children>
 </VBox>

@@ -10,11 +10,16 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Labeled;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextInputDialog;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
@@ -27,18 +32,22 @@ public class Controller {
 	Stage view;
 	World model;
 	Timer timer;
+	PlayPauseHandler continuousSimHandler;
+	StepHandler stepHandler;
 	
 	public Controller(Stage v, World m) {
 		view = v;
 		model = m;
+		continuousSimHandler = new PlayPauseHandler();
+		stepHandler = new StepHandler();
 		
 		Scene scene = v.getScene();
 		
 		Button playAndPause = (Button) scene.lookup("#play");
-		playAndPause.setOnAction(new playPauseHandler());
+		playAndPause.setOnAction(continuousSimHandler);
 		
 		Button step = (Button) scene.lookup("#step");
-		step.setOnAction(new StepHandler());
+		step.setOnAction(stepHandler);
 		
 		
 		MenuBar topBar = (MenuBar) scene.lookup("#topbar");
@@ -54,20 +63,31 @@ public class Controller {
 		MenuItem loadCritter = file.getItems().get(2);
 		loadCritter.setOnAction(new LoadCritterHandler());
 		
+		
+		scene.setOnKeyPressed(new KeyPressHandler());
+		
 	}
 
-	class playPauseHandler implements EventHandler<ActionEvent> {
+	class PlayPauseHandler implements EventHandler<ActionEvent> {
 		
 		boolean playing = false;
+		Button step = (Button) view.getScene().lookup("#step");
+		ImageView playPauseGraphic = (ImageView) ((Button) view.getScene().lookup("#play")).getGraphic();
 
 		@Override
 		public void handle(ActionEvent arg0) {
 			if (playing) {
 				playing = false;
 				
+				step.setDisable(false);
+				playPauseGraphic.setImage(new Image("gui/Images/Play-01.png"));
+				
 				timer.cancel();
 			} else {
 				playing = true;
+				
+				step.setDisable(true);
+				playPauseGraphic.setImage(new Image("gui/Images/Pause-01.png"));
 				
 				TextField speedInput = (TextField) view.getScene().lookup("#speed");
 				String speedStr = speedInput.getText();
@@ -170,6 +190,21 @@ public class Controller {
 			int numCritters = Integer.parseInt(inputStr);
 			
 			//Reluctant to copy and paste load code from Console until we get A5 back.
+		}
+		
+	}
+	
+	class KeyPressHandler implements EventHandler<KeyEvent> {
+
+		@Override
+		public void handle(KeyEvent event) {
+			KeyCode code = event.getCode();
+			
+			if (code.equals(KeyCode.P)) {
+				continuousSimHandler.handle(null);
+			} else if (code.equals(KeyCode.RIGHT)) {
+				stepHandler.handle(null);
+			}
 		}
 		
 	}

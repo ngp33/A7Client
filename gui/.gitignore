@@ -19,3 +19,5 @@
 /Controller$LoadCritterHandler.class
 /CircleImage.class
 /MemTableRow.class
+/Controller$KeyPressHandler.class
+/Controller$PlayPauseHandler.class
