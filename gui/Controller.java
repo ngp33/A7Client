@@ -13,6 +13,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.image.Image;
@@ -50,7 +51,7 @@ public class Controller {
 		Button step = (Button) scene.lookup("#step");
 		step.setOnAction(stepHandler);
 		
-		worldUpdater = new WorldObject((Pane) scene.lookup("#arena"), model);
+		worldUpdater = new WorldObject((ScrollPane) scene.lookup("#arena"), model);
 		
 		
 		MenuBar topBar = (MenuBar) scene.lookup("#topbar");
