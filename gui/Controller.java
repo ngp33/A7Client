@@ -1,7 +1,6 @@
 package gui;
 
 import java.io.File;
-import java.util.Date;
 import java.util.Optional;
 import java.util.Random;
 import java.util.Timer;

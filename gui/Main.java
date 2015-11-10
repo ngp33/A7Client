@@ -1,11 +1,19 @@
 package gui;
 
 import javafx.application.Application;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TitledPane;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import world.World;
 
@@ -17,6 +25,31 @@ public class Main extends Application {
 		
 		((Button) scene.lookup("#play")).setPadding(Insets.EMPTY);
 		((Button) scene.lookup("#step")).setPadding(Insets.EMPTY);
+		
+		TitledPane inspector = (TitledPane) scene.lookup("#inspector");
+		ScrollPane inspectorScroll = (ScrollPane) inspector.getContent();
+		VBox inspectorBox = (VBox) inspectorScroll.getContent();
+		TableView<MemTableRow> memTable = (TableView<MemTableRow>) inspectorBox.lookup("#memtable");
+		
+		ObservableList<TableColumn<MemTableRow, ?>> cols = memTable.getColumns();
+		TableColumn<MemTableRow, String> indexCol = (TableColumn<MemTableRow, String>) cols.get(0);
+		TableColumn<MemTableRow, String> valueCol = (TableColumn<MemTableRow, String>) cols.get(1);
+		
+		indexCol.setCellValueFactory(new PropertyValueFactory<MemTableRow, String>("index"));
+		valueCol.setCellValueFactory(new PropertyValueFactory<MemTableRow, String>("value"));
+		
+		ObservableList<MemTableRow> defaultMemData = FXCollections.observableArrayList(
+				new MemTableRow("0", ""),
+				new MemTableRow("1", ""),
+				new MemTableRow("2", ""),
+				new MemTableRow("3", ""),
+				new MemTableRow("4", ""),
+				new MemTableRow("5", ""),
+				new MemTableRow("6", ""),
+				new MemTableRow("7", "")
+		);
+		
+		memTable.setItems(defaultMemData);
 		
 		primaryStage.setScene(scene);
 		
