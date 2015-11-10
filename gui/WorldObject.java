@@ -5,6 +5,7 @@ import java.util.Observer;
 
 
 import javafx.scene.Group;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.Pane;
 import world.World;
 
@@ -19,11 +20,11 @@ public class WorldObject implements Observer {
 	private Hexgrid h;
 	private double time;
 
-	public WorldObject(Pane p, World w) {
+	public WorldObject(ScrollPane p, World w) {
 		w.addObserver(this);
 		Group g = new Group();
-		h = new Hexgrid(g, xcoord, ycoord);
-		p.getChildren().add(h.sp);
+		h = new Hexgrid(p, g, xcoord, ycoord);
+		//p.getChildren().add(h.sp);
 		hexWorldMap(h.getsize(w));
 		h.objectUpdate(w);
 	}
