@@ -68,9 +68,9 @@ public class CritterGraphic extends Inhabitant {
 	@Override
 	public void update(Observable o, Object arg) {
 		super.update(o, arg);
-		Critter c = (Critter) w.getHex(row, col);
 		ol.unique = c;
 		ci.chosen();
+		contr.onHexClicked(row, col);
 	}
 
 }

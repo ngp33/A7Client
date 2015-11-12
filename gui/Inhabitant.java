@@ -17,7 +17,7 @@ public abstract class Inhabitant implements Observer {
 	double rttwo = 1.414213562;
 	double rtthr = 1.732050808;
 	protected double [] posit;
-	private Controller c;
+	protected Controller contr;
 	protected boolean selected;
 	protected ObjectLayer ol;
 
@@ -29,7 +29,7 @@ public abstract class Inhabitant implements Observer {
 		numrep = w.getNumRep(new int [] {row, col});
 		this.a = a;
 		posit = new double [2];
-		this.c = c;
+		this.contr = c;
 		this.ol = ol;
 	}
 	

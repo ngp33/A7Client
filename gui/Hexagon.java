@@ -40,7 +40,7 @@ public class Hexagon extends Polygon {
 					ol.deselect();//Make sure this doesn't throw a null pointer exception.
 				}
 				Critter k = w.getNumRep(new int [] {row,col}) > 0 ? (Critter) w.getHex(row, col) : null;
-				c.selectCritter(k);
+				c.onHexClicked(row, col);
 			}
 			
 		});

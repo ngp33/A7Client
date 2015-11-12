@@ -1,5 +1,7 @@
 package gui;
 
+import java.util.Observable;
+
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import world.World;
@@ -29,6 +31,12 @@ public class RockGraphic extends Inhabitant {
 
 	@Override
 	public void update() {
+	}
+	
+	@Override
+	public void update(Observable o, Object arg) {
+		super.update(o, arg);
+		contr.onHexClicked(row, col);
 	}
 
 

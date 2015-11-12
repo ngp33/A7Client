@@ -32,6 +32,11 @@ public class FoodGraphic extends Inhabitant {
 	public void update() { //Code could be modified so that update actually alters the food quantity
 		//rather than creating new food for each update.
 	}
+	@Override
+	public void update(Observable o, Object arg) {
+		super.update(o, arg);
+		contr.onHexClicked(row, col);
+	}
 
 
 }
