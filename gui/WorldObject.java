@@ -24,6 +24,7 @@ public class WorldObject implements Observer {
 		Group g = new Group();
 		h = new Hexgrid(p, g, xcoord, ycoord, w);
 		//p.getChildren().add(h.sp);
+		this.w = w;
 		hexWorldMap(h.getsize());
 		h.objectUpdate();
 	}

@@ -25,8 +25,8 @@ import world.World;
 
 
 public class Worldhanger extends Application implements Observer {
-	private World w = new World(7,5, "hi");
-	//private World w = new World();
+	//private World w = new World(7,5, "hi");
+	private World w = new World();
 	private int xcoord = 400;//Only alter these (xcoord, ycoord) using scalechange
 	private int ycoord = 400;
 	private Hexagon [] hexes; //ultimately an array of hex graphic objects which is ordered
@@ -98,10 +98,10 @@ public class Worldhanger extends Application implements Observer {
 			//h.sp.setVvalue(h.sp.getVvalue() - .1);
 			break;
 		case "Up":
-			h.zoom(3,w);
+			h.zoom(10,w);
 			break;
 		case "Down":
-			h.zoom(-3, w);
+			h.zoom(-10, w);
 			break;
 		case "Enter":
 			while (h.xcoord > h.getsize() * 10) {

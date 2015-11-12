@@ -68,8 +68,6 @@ public class Hexgrid extends Layer {
 		//resize(w);
 		
 		super.zoom(amount, w);
-		sp.setHvalue(hcur);
-		sp.setVvalue(vcur);
 		Ol.zoom(amount, w);
 		sp.setHvalue(hcur);
 		sp.setVvalue(vcur);
