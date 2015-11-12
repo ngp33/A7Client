@@ -18,6 +18,7 @@ public class CritterGraphic extends Inhabitant {
 		c = (Critter) w.getHex(h.row, h.col);
 		ci = new CircleImage(new Image("critter.png"));
 		ci.add(a);
+		ci.addObserver(this);
 		ci.rotate(60 * c.direction);
 		sizeupdate(h.size, h.position);
 		colorUpdate();
@@ -27,10 +28,10 @@ public class CritterGraphic extends Inhabitant {
 	public void sizeupdate(double size, double [] position) {
 		this.size = size;
 		scale = size * (2 + Math.log10(c.mem[3]))/3;//some modifier for the size based on the critters size.
-		position[0] += size - scale / rttwo;
-		position[1] += size * rtthr / 2 - scale / rttwo;
+		posit[0] = position[0] + size - scale / rttwo;
+		posit[1] = position[1] + size * rtthr / 2 - scale /rttwo;
 		ci.setSize(scale);
-		ci.setAnchors(position);
+		ci.setAnchors(posit);
 		
 	}
 	
@@ -44,7 +45,7 @@ public class CritterGraphic extends Inhabitant {
 
 	@Override
 	public void update() {
-		sizeupdate(size, h.position); //Make sure the invariant keeps with size... it should...
+		sizeupdate(size, h.position); 
 		colorUpdate();
 		directionUpdate();
 	}

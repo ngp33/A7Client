@@ -1,5 +1,10 @@
 package gui;
 
+import java.util.LinkedList;
+import java.util.Observable;
+
+import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -7,7 +12,7 @@ import javafx.scene.layout.AnchorPane;
 
 /**Really just an image that can be thought of as existing in the center of a circle within
  * which the square image resides*/
-public class CircleImage {
+public class CircleImage extends Observable {
 	double rttwo = 1.414213562;
 	ImageView iv;
 	double size;
@@ -16,6 +21,18 @@ public class CircleImage {
 	public CircleImage(Image i) {
 		iv = new ImageView(i);
 		ca = new ColorAdjust();
+		
+		iv.setOnMouseClicked(new EventHandler <Event>() {
+
+			@Override
+			public void handle(Event event) {
+				setChanged();
+				notifyObservers();
+				
+			}
+			
+		});
+
 	}
 	
 	public void setSize(double size) {
@@ -58,6 +75,7 @@ public class CircleImage {
 	
 	public void setAnchors(double [] oldposition) {
 		position(oldposition);
+		AnchorPane.clearConstraints(iv);
 		AnchorPane.setLeftAnchor(iv, oldposition[0]);
 		AnchorPane.setTopAnchor(iv, oldposition[1]);
 	}
@@ -76,6 +94,8 @@ public class CircleImage {
 	public double getDegree() {
 		return iv.getRotate();
 	}
+
+
 	
 
 }

@@ -12,11 +12,12 @@ public class Hexgrid extends Layer {
 	double hcur;
 	double vcur;
 	
-	public Hexgrid(ScrollPane scr, Group g, double xcoord, double ycoord) {
-		super(g, xcoord, ycoord);
-		Ol = new ObjectLayer(g, xcoord, ycoord);
+	public Hexgrid(ScrollPane scr, Group g, double xcoord, double ycoord, World w) {
+		super(g, xcoord, ycoord, w);
+		Ol = new ObjectLayer(g, xcoord, ycoord, w);
 		sp = scr;
-		
+		g.prefWidth(xcoord);
+		g.prefHeight(ycoord);
 		sp.setContent(g);
 		hcur = .5;
 		vcur = .5;
@@ -32,12 +33,12 @@ public class Hexgrid extends Layer {
 
 
 	@Override
-	protected void resize(World w) {
+	protected void resize() {
 		int [] a = w.worlddim();
 		int place = 0;
 		for (int row = 0; row < a[0]; row++) {
 			for (int col = 0; col < a[1]; col ++) {
-				double size = getsize(w);
+				double size = getsize();
 				double [] posit = getplace(row,col,size);
 				Hexagon temp = hexes[place];
 				temp.position = posit;
@@ -50,21 +51,25 @@ public class Hexgrid extends Layer {
 	
 	/**Run whenever the worldhanger is notified of a change. Should check that each hex
 	 * is properly represented and add to the object layer if its not.*/
-	public void objectUpdate(World w) {
+	public void objectUpdate() {
 		Ol.updateDelete(w);
 		for (Hexagon them : hexes) {
 			Ol.checkInhabitant(them, w);
 		}
+		sp.setHvalue(hcur); //For some reason the scroll bars adjust when something new is added (maybe because
+		sp.setVvalue(vcur);//the anchorpane bounds change?) so I put this here to bring the scroll bar
+		//back to its original position
 	}
 	
 	@Override
 	public void zoom(double amount, World w) {
-		xcoord += amount;
-		ycoord += amount;
-		//Ol would be shifted twice which would be bad. Hence, I rewrote the code
-		//super.shiftTransverse(-amount/2, -amount/2); //super method called so dynamic dispatch doesn't call
-		//shiftTransverse(-amount/2, -amount/2);
-		resize(w); //shiftTransverse on Ol twice
+		//xcoord += amount;
+		//ycoord += amount;
+		//resize(w);
+		
+		super.zoom(amount, w);
+		sp.setHvalue(hcur);
+		sp.setVvalue(vcur);
 		Ol.zoom(amount, w);
 		sp.setHvalue(hcur);
 		sp.setVvalue(vcur);
@@ -88,13 +93,15 @@ public class Hexgrid extends Layer {
 	
 	/**Centers the grids in the group with either the xspace or yspace as the limiting factor*/
 	public void center(World w) {
-		double dx = (xcoord - xspace(w)) / 2;
-		double dy = (ycoord - yspace(w)) / 2;
-		xcoord = xspace(w);
-		ycoord = yspace(w);//Ycoord is important for the getplace method (xcoord probably needn't have been
-		Ol.xcoord = xspace(w);//updated here) so we have to adjust the ycoord so that it's the appropriate size
-		Ol.ycoord = yspace(w);
-		resize(w);
+		double dx = (xcoord - xspace()) / 2;
+		double dy = (ycoord - yspace()) / 2;
+		xcoord = xspace();
+		ycoord = yspace();//Ycoord is important for the getplace method (xcoord probably needn't have been
+		Ol.xcoord = xspace();//updated here) so we have to adjust the ycoord so that it's the appropriate size
+		Ol.ycoord = yspace();
+		resize();
 		shiftTransverse(dx, dy);
 	}
+
+
 }

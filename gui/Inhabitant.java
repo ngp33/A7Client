@@ -1,9 +1,12 @@
 package gui;
 
+import java.util.Observable;
+import java.util.Observer;
+
 import javafx.scene.layout.AnchorPane;
 import world.World;
 
-public abstract class Inhabitant {
+public abstract class Inhabitant implements Observer {
 	World w;
 	int row; //Row from the critter world
 	int col; //Col from the critter world
@@ -13,6 +16,7 @@ public abstract class Inhabitant {
 	CircleImage ci;
 	double rttwo = 1.414213562;
 	double rtthr = 1.732050808;
+	protected double [] posit;
 
 	public Inhabitant (Hexagon h, World w, AnchorPane a) {
 		this.h = h;
@@ -21,6 +25,7 @@ public abstract class Inhabitant {
 		this.col = h.col;
 		numrep = w.getNumRep(new int [] {row, col});
 		this.a = a;
+		posit = new double [2];
 	}
 	
 	/**Decides whether an object should be deleted, and does so if it should be*/
@@ -49,5 +54,11 @@ public abstract class Inhabitant {
 	}
 	
 	public abstract void update();
+	
+	@Override
+	public void update(Observable o, Object arg) {
+		ClickedHexControl.HandleHex(row,col);
+	}
+
 
 }

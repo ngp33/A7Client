@@ -9,15 +9,16 @@ import world.World;
 
 public abstract class Layer {
 	protected AnchorPane leftright;
-	protected AnchorPane general;
+	//protected AnchorPane general;
 	protected ScrollPane sp;
 	protected double xcoord;
 	protected double ycoord;
 	protected double xjust;
 	protected double yjust;
 	Double rtthr = 1.732050808;
+	protected World w;
 
-	public Layer(Group g, double xcoord, double ycoord) {
+	public Layer(Group g, double xcoord, double ycoord, World w) {
 		//general = new AnchorPane();
 		//sp = new ScrollPane();
 		leftright = new AnchorPane();
@@ -25,11 +26,14 @@ public abstract class Layer {
 		//sp.setContent(leftright);
 		//g.getChildren().add(general);
 		//g.getChildren().add(sp);
+		leftright.setPrefWidth(xcoord);
+		leftright.setPrefHeight(ycoord);
 		g.getChildren().add(leftright);
 		this.xcoord = xcoord;
 		this.ycoord = ycoord;
 		this.xjust = 0;
 		this.yjust = 0;
+		this.w = w;
 	}
 	
 	/*public void shiftTransverse (double deltaxjust, double deltayjust) {
@@ -41,7 +45,7 @@ public abstract class Layer {
 		//general.setVvalue(yjust);
 	}*/
 	
-	protected abstract void resize(World w);
+	protected abstract void resize();
 	
 
 	
@@ -51,7 +55,7 @@ public abstract class Layer {
 	}
 	
 	/**Calculates the size of the hexagons based on the size of the anchorpane*/
-	protected double getsize(World w) {
+	protected double getsize() {
 		int [] a = w.worlddim();
 		double ysize = (ycoord - 23) / (rtthr * (a[0] + .5)); //The 23 is pretty arbitrary here too
 		double xsize = (xcoord / (a[1] * 1.5 + .5));
@@ -62,17 +66,17 @@ public abstract class Layer {
 	 * occupies.
 	 * @return
 	 */
-	public double xspace(World w) {
+	public double xspace() {
 		int [] a = w.worlddim();
-		double size = (getsize(w) * (1 + .5)) * a[1]; //getsize * 1.5 = xdist of a hex
-		size += .5 * getsize(w);
+		double size = (getsize() * (1 + .5)) * a[1]; //getsize * 1.5 = xdist of a hex
+		size += .5 * getsize();
 		return size;
 	}
 	
-	public double yspace(World w) {
+	public double yspace() {
 		int [] a = w.worlddim();
-		double size = (getsize(w) * rtthr) * a[0] + 23; // getsize * rtthr * 2/2 is the yheight
-		size += getsize(w) * rtthr / 2;
+		double size = (getsize() * rtthr) * a[0] + 23; // getsize * rtthr * 2/2 is the yheight
+		size += getsize() * rtthr / 2;
 
 		return size;
 	}
@@ -86,7 +90,7 @@ public abstract class Layer {
 		xcoord += amount;
 		ycoord += amount;
 		//shiftTransverse(-amount/2, -amount/2);
-		resize(w);
+		resize();
 	}
 	
 	/**Gets the place of the object using the grid coordinate system (not the critter coordinate
@@ -106,6 +110,13 @@ public abstract class Layer {
 		return new double [] {xco, ycoord - yco - size * rtthr - 23};
 		//TODO I have no idea why the above doesn't work without the arbitrary 20,
 		//but it doesnt...
+	}
+	
+	public int [] reverseGetPlace(double x, double y, double size) {
+		int col = (int) (x/(size + size / 2));
+		int row = (int) ((ycoord - 23 - y - (col % 2 == 1 ? size*rtthr/2 : 0)  )/(size * rtthr));
+		row += (col + 1)/2;
+		return new int [] {row,col};
 	}
 
 }

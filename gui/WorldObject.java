@@ -12,8 +12,7 @@ import world.World;
 public class WorldObject implements Observer {
 	private World w = new World(9, 6, "hi");
 	// private World w = new World();
-	private int xcoord = 400;// Only alter these (xcoord, ycoord) using
-								// scalechange
+	private int xcoord = 400;// Only alter these (xcoord, ycoord) using scalechange
 	private int ycoord = 400;
 	private Hexagon[] hexes; // ultimately an array of hex graphic objects which
 								// is ordered
@@ -23,10 +22,10 @@ public class WorldObject implements Observer {
 	public WorldObject(ScrollPane p, World w) {
 		w.addObserver(this);
 		Group g = new Group();
-		h = new Hexgrid(p, g, xcoord, ycoord);
+		h = new Hexgrid(p, g, xcoord, ycoord, w);
 		//p.getChildren().add(h.sp);
-		hexWorldMap(h.getsize(w));
-		h.objectUpdate(w);
+		hexWorldMap(h.getsize());
+		h.objectUpdate();
 	}
 
 	/** Invariant: AnchorPane an has no children to start with */
@@ -49,7 +48,7 @@ public class WorldObject implements Observer {
 	@Override
 	public void update(Observable o, Object arg) {
 		if (System.nanoTime() - time > 100000000 / 3) {
-			h.objectUpdate(w);
+			h.objectUpdate();
 		}
 		time = System.nanoTime();
 	}
@@ -59,7 +58,8 @@ public class WorldObject implements Observer {
 		h.zoom(amount, w);
 	}
 	public void move (double dx, double dy) {
-		h.shiftTransverse(dx, dy);
+		h.shiftTransverse(dx * h.xcoord, dy * h.ycoord);
 	}
+	
 
 }

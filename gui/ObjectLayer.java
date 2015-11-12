@@ -1,34 +1,48 @@
 package gui;
 
+import javafx.event.EventHandler;
 import javafx.scene.Group;
-import javafx.scene.layout.HBox;
+import javafx.scene.input.MouseEvent;
 import world.World;
 
 import java.util.Collection;
 import java.util.Hashtable;
 
 public class ObjectLayer extends Layer {
+	double size;
 	Hashtable< String, Inhabitant> objects = new Hashtable< String, Inhabitant> (); //A hashtable (as usual
 	//seemed the best choice here because of all the searching. Strings are used (where the string is row.tostring
 	//col.tostring) because arrays are tricky with equality, but I know strings work with it. Row,col is safe because
 	//no two hexes could possibly have the same row,col
 
-	public ObjectLayer(Group g, double xcoord, double ycoord) {
-		super(g, xcoord, ycoord);
-		//sp.setOpacity(0.0);
-		leftright.setPrefWidth(xcoord);
-		leftright.setPrefHeight(ycoord);
+	public ObjectLayer(Group g, double xcoord, double ycoord, World w) {
+		super(g, xcoord, ycoord, w);
+		size = getsize();
+		leftright.setPickOnBounds(false);
+		
+		/*leftright.setOnMouseClicked(new EventHandler <MouseEvent> () {
+
+			@Override
+			public void handle(MouseEvent event) {
+				int [] rc = reverseGetPlace(event.getX(),event.getY(),size);
+				ClickedHexControl.HandleHex(rc[0], rc[1]);
+				
+			}
+
+			
+		});*/
+
 	}
 
 	@Override
-	protected void resize(World w) {
+	protected void resize() {
 		Collection<Inhabitant> c = objects.values();
 		Inhabitant [] values = new Inhabitant [c.size()];
 		c.toArray(values);
-		double s = getsize(w);
+		double s = getsize();
+		size = s;
 		for (Inhabitant o : values) {
 			o.sizeupdate(s, getplace(o.row - (o.col + 1 )/ 2, o.col, s)); //Get place works in grid
-			//o.sizeupdate(s);
 		} //coordinate system, so I have to switch row back here.
 		
 	}
@@ -49,9 +63,6 @@ public class ObjectLayer extends Layer {
 				addInhabitant(makeRightInhabitant(h,w));
 			}
 		}
-		resize(w); //This line shouldn't be necessary, but it at least seems to erase
-		//the symptoms of a bug. Come back to this if you have time. The problem seems to be that the
-		//hex position for the food-graphic's constructor is broken. Not sure how/why.
 	}
 	
 	

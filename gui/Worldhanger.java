@@ -25,7 +25,7 @@ import world.World;
 
 
 public class Worldhanger extends Application implements Observer {
-	private World w = new World(9,6, "hi");
+	private World w = new World(7,5, "hi");
 	//private World w = new World();
 	private int xcoord = 400;//Only alter these (xcoord, ycoord) using scalechange
 	private int ycoord = 400;
@@ -39,8 +39,8 @@ public class Worldhanger extends Application implements Observer {
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
-		w.replace(new Rock(), w.getHex(4, 2));
-		w.replace(new Food(23), w.getHex(2, 1));
+		//w.replace(new Rock(), w.getHex(4, 2));
+		//w.replace(new Food(23), w.getHex(2, 1));
 		w.addObserver(this);
 		int [] mem = new int [] {8,1,1,2,1000,0,0,0};
 		Random r = new Random();
@@ -48,28 +48,27 @@ public class Worldhanger extends Application implements Observer {
 		ProgramImpl pr = (ProgramImpl) p.parse(new FileReader("example-rules.txt"));
 		Critter c = new Critter(mem, r, pr, w);
 		c.direction = 0;
-		w.replace(c, w.getHex(4, 3));
+		w.replace(c, w.getHex(2, 1));
 		w.addCritter(c);
 		HBox hb = new HBox();
 		Group g = new Group();
-		//Scene s = new Scene(g);
 		Scene s = new Scene(hb);
-		//hb.getChildren().add(g);
 		primaryStage.setScene(s);
 		primaryStage.setWidth(xcoord);
 		primaryStage.setHeight(ycoord);
 		ScrollPane str = new ScrollPane();
-		h = new Hexgrid(str, g, xcoord, ycoord);
+		h = new Hexgrid(str, g, xcoord, ycoord, w);
 		hb.getChildren().add(str);
-		hexWorldMap(h.getsize(w));
-		h.objectUpdate(w);
+		hexWorldMap(h.getsize());
+		h.objectUpdate();
 		primaryStage.show();
-		s.setOnMouseClicked(new EventHandler <Event>() {
+		
+		/*s.setOnMouseClicked(new EventHandler <Event>() {
 			@Override
 			public void handle(Event event) {
 				w.advance();
 			}
-		});
+		});*/
 		
 		s.setOnKeyPressed(new EventHandler<KeyEvent>() {
 
@@ -105,7 +104,7 @@ public class Worldhanger extends Application implements Observer {
 			h.zoom(-3, w);
 			break;
 		case "Enter":
-			while (h.xcoord > h.getsize(w) * 10) {
+			while (h.xcoord > h.getsize() * 10) {
 				h.zoom(10, w);
 			}
 		default:
@@ -135,7 +134,7 @@ public class Worldhanger extends Application implements Observer {
 	@Override
 	public void update(Observable o, Object arg) {
 		if (System.nanoTime() - time > 100000000/3) {
-			h.objectUpdate(w);
+			h.objectUpdate();
 		}
 		time = System.nanoTime();
 	}

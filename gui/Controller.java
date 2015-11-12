@@ -209,6 +209,28 @@ public class Controller {
 			} else if (code.equals(KeyCode.RIGHT)) {
 				stepHandler.handle(null);
 			}
+			else if (code.equals(KeyCode.UP)) {
+				worldUpdater.zoom(10);
+			}
+			else if (code.equals(KeyCode.DOWN)) {
+				worldUpdater.zoom(-10);
+			}
+			else {
+				switch (code.getName()) {
+				case "A":
+					worldUpdater.move(-.1, 0);
+					break;
+				case "S":
+					worldUpdater.move(0, .1);
+					break;
+				case "D":
+					worldUpdater.move(.1, 0);
+					break;
+				case "W":
+					worldUpdater.move(0, -.1);
+					break;
+				}
+			}
 		}
 		
 	}

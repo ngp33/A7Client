@@ -15,15 +15,16 @@ public class RockGraphic extends Inhabitant {
 		super(h,w, parent);
 		ci = new CircleImage(new Image("Rock.png"));
 		ci.add(a);
+		ci.addObserver(this);
 		sizeupdate(h.size, h.position);
 	}
 
 	@Override
 	public void sizeupdate(double size, double [] position) {
-		position[0] += size - size / rttwo;
-		position[1] += size * rtthr / 2 - size / rttwo;
+		posit[0] = position[0] + size - size / rttwo;
+		posit[1] = position[1] + size * rtthr / 2 - size /rttwo;
 		ci.setSize(size);
-		ci.setAnchors(position);
+		ci.setAnchors(posit);
 	}
 
 	@Override
