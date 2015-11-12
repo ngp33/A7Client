@@ -2,6 +2,7 @@ package gui;
 
 import javafx.scene.Group;
 import javafx.scene.control.ScrollPane;
+import world.Critter;
 import world.World;
 
 public class Hexgrid extends Layer {
@@ -11,10 +12,11 @@ public class Hexgrid extends Layer {
 	ScrollPane sp;
 	double hcur;
 	double vcur;
+
 	
-	public Hexgrid(ScrollPane scr, Group g, double xcoord, double ycoord, World w) {
-		super(g, xcoord, ycoord, w);
-		Ol = new ObjectLayer(g, xcoord, ycoord, w);
+	public Hexgrid(ScrollPane scr, Group g, double xcoord, double ycoord, World w, Controller c) {
+		super(g, xcoord, ycoord, w, c);
+		Ol = new ObjectLayer(g, xcoord, ycoord, w, c);
 		sp = scr;
 		g.prefWidth(xcoord);
 		g.prefHeight(ycoord);
@@ -27,6 +29,7 @@ public class Hexgrid extends Layer {
 		hexes = h;
 		for (Hexagon them : hexes) {
 			leftright.getChildren().add(them);
+			them.ol = Ol;
 		}
 	}
 

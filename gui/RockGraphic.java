@@ -11,8 +11,8 @@ public class RockGraphic extends Inhabitant {
 	private double rtthr = 1.732050808;
 	private double rttwo = 1.414213562;
 
-	public RockGraphic(Hexagon h, World w, AnchorPane parent) {
-		super(h,w, parent);
+	public RockGraphic(Hexagon h, World w, AnchorPane parent, Controller c, ObjectLayer objectLayer) {
+		super(h,w, parent, c, objectLayer);
 		ci = new CircleImage(new Image("Rock.png"));
 		ci.add(a);
 		ci.addObserver(this);

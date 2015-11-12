@@ -10,8 +10,8 @@ import world.World;
 public class FoodGraphic extends Inhabitant {
 	Food f;
 
-	public FoodGraphic(Hexagon h, World w, AnchorPane a) {
-		super(h,w, a);
+	public FoodGraphic(Hexagon h, World w, AnchorPane a, Controller c, ObjectLayer ol) {
+		super(h,w, a, c, ol);
 		f = (Food) w.getHex(h.row, h.col);
 		ci = new CircleImage(new Image("Nuclear_critter_gunk.png"));
 		ci.add(a);
