@@ -190,7 +190,7 @@ public class World extends Observable {
 		}
 	}
 	
-	/**returns the dimensions of the world. TODO update it so it handles different
+	/**returns the dimensions of the grid array. TODO update it so it handles different
 	 * types of worlds correctly (if the columns are odd in number vs even)
 	 * @return
 	 */
