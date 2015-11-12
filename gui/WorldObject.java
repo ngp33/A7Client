@@ -22,6 +22,7 @@ public class WorldObject implements Observer {
 
 	public WorldObject(ScrollPane p, World w, Controller c) {
 		w.addObserver(this);
+		this.w = w;
 		this.c = c;
 		Group g = new Group();
 		h = new Hexgrid(p, g, xcoord, ycoord, w, c);
