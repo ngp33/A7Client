@@ -1,22 +1,27 @@
 package gui;
 
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
+import world.Critter;
 
 public class MemTableRow {
-	private final SimpleStringProperty index;
-	private final SimpleStringProperty value;
+	private Critter critter;
+	private final SimpleIntegerProperty index;
 	
-	public MemTableRow(String i, String v) {
-		index = new SimpleStringProperty(i);
-		value = new SimpleStringProperty(v);
+	public MemTableRow(int i, Critter c) {
+		critter = c;
+		index = new SimpleIntegerProperty(i);
 	}
 	
-	public SimpleStringProperty indexProperty() {
+	public SimpleIntegerProperty indexProperty() {
 		return index;
 	}
 	
-	public SimpleStringProperty valueProperty() {
-		return value;
+	public SimpleIntegerProperty valueProperty() {
+		if (critter == null) {
+			return new SimpleIntegerProperty();
+		}
+		return new SimpleIntegerProperty(critter.mem[index.get()]);
 	}
 	
 }

@@ -39,15 +39,15 @@ public class Main extends Application {
 		valueCol.setCellValueFactory(new PropertyValueFactory<MemTableRow, String>("value"));
 		
 		ObservableList<MemTableRow> defaultMemData = FXCollections.observableArrayList(
-				new MemTableRow("0", ""),
-				new MemTableRow("1", ""),
-				new MemTableRow("2", ""),
-				new MemTableRow("3", ""),
-				new MemTableRow("4", ""),
-				new MemTableRow("5", ""),
-				new MemTableRow("6", ""),
-				new MemTableRow("7", "")
-		);
+				new MemTableRow(0, null),
+				new MemTableRow(1, null),
+				new MemTableRow(2, null),
+				new MemTableRow(3, null),
+				new MemTableRow(4, null),
+				new MemTableRow(5, null),
+				new MemTableRow(6, null),
+				new MemTableRow(7, null)
+		); 
 		
 		memTable.setItems(defaultMemData);
 		
