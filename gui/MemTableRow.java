@@ -24,4 +24,8 @@ public class MemTableRow {
 		return new SimpleIntegerProperty(critter.mem[index.get()]);
 	}
 	
+	public void setCritter(Critter c) {
+		critter = c;
+	}
+	
 }

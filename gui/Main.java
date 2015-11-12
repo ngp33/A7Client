@@ -26,31 +26,6 @@ public class Main extends Application {
 		((Button) scene.lookup("#play")).setPadding(Insets.EMPTY);
 		((Button) scene.lookup("#step")).setPadding(Insets.EMPTY);
 		
-		TitledPane inspector = (TitledPane) scene.lookup("#inspector");
-		ScrollPane inspectorScroll = (ScrollPane) inspector.getContent();
-		VBox inspectorBox = (VBox) inspectorScroll.getContent();
-		TableView<MemTableRow> memTable = (TableView<MemTableRow>) inspectorBox.lookup("#memtable");
-		
-		ObservableList<TableColumn<MemTableRow, ?>> cols = memTable.getColumns();
-		TableColumn<MemTableRow, String> indexCol = (TableColumn<MemTableRow, String>) cols.get(0);
-		TableColumn<MemTableRow, String> valueCol = (TableColumn<MemTableRow, String>) cols.get(1);
-		
-		indexCol.setCellValueFactory(new PropertyValueFactory<MemTableRow, String>("index"));
-		valueCol.setCellValueFactory(new PropertyValueFactory<MemTableRow, String>("value"));
-		
-		ObservableList<MemTableRow> defaultMemData = FXCollections.observableArrayList(
-				new MemTableRow(0, null),
-				new MemTableRow(1, null),
-				new MemTableRow(2, null),
-				new MemTableRow(3, null),
-				new MemTableRow(4, null),
-				new MemTableRow(5, null),
-				new MemTableRow(6, null),
-				new MemTableRow(7, null)
-		); 
-		
-		memTable.setItems(defaultMemData);
-		
 		primaryStage.setScene(scene);
 		
 		Controller c = new Controller(primaryStage, new World());
