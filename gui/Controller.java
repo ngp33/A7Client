@@ -12,6 +12,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceDialog;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
@@ -116,7 +117,10 @@ public class Controller {
 		Hex h = model.getHex(row, col);
 		
 		if (settingUp) {
-			
+			synchronized(this) {
+				settingUp = false;
+				notifyAll();
+			}
 			return;
 		}
 		
@@ -235,20 +239,70 @@ public class Controller {
 				return;
 			}
 			
+			ChoiceDialog<String> placeTypeDialog = new ChoiceDialog<String>(
+					"Choose one...",
+					"Randomly place a certain number of critters.",
+					"Pick a hex to place the critter.");
+			placeTypeDialog.initOwner(view);
+			placeTypeDialog.setContentText("How do you want to load this critter?");
+			placeTypeDialog.setHeaderText(null);
+			placeTypeDialog.setGraphic(null);
+			placeTypeDialog.setTitle("Load critter");
+			Optional<String> methodInput = placeTypeDialog.showAndWait();
+			
+			if (!methodInput.isPresent()) {
+				return;
+			}
+			
+			String methodInputStr = methodInput.get();
+			switch (methodInputStr.charAt(0)) {
+			case 'C':
+				return;
+			case 'R':
+				TextInputDialog numCrittersDialog = new TextInputDialog();
+				numCrittersDialog.initOwner(view);
+				numCrittersDialog.setContentText("How many critters?");
+				numCrittersDialog.setHeaderText(null);
+				numCrittersDialog.setGraphic(null);
+				numCrittersDialog.setTitle("Load critter");
+				Optional<String> numInput = numCrittersDialog.showAndWait();
+				
+				if (!numInput.isPresent()) {
+					return;
+				}
+				
+				String numInputStr = numInput.get();
+				int numCritters = Integer.parseInt(numInputStr);
+			case 'P':
+				synchronized(this) {
+					settingUp = true;
+					while (settingUp) {
+						System.out.println("CHECKING");
+						try {
+							System.out.println("WAITING");
+							wait();
+						} catch (InterruptedException e) {}
+					}
+				}
+				
+				System.out.println("OKOKOK");
+			}
+			
+			
 			TextInputDialog numCrittersDialog = new TextInputDialog();
 			numCrittersDialog.initOwner(view);
 			numCrittersDialog.setContentText("How many critters?");
 			numCrittersDialog.setHeaderText(null);
 			numCrittersDialog.setGraphic(null);
 			numCrittersDialog.setTitle("Load critter");
-			Optional<String> input = numCrittersDialog.showAndWait();
+			Optional<String> numInput = numCrittersDialog.showAndWait();
 			
-			if (!input.isPresent()) {
+			if (!numInput.isPresent()) {
 				return;
 			}
 			
-			String inputStr = input.get();
-			int numCritters = Integer.parseInt(inputStr);
+			String numInputStr = numInput.get();
+			int numCritters = Integer.parseInt(numInputStr);
 			
 			//Reluctant to copy and paste load code from Console until we get A5 back.
 		}
