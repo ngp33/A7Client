@@ -13,11 +13,13 @@ public class Hexagon extends Polygon {
 	int col; //col in the critter world
 	double size;
 	double [] position;
+	private Controller c;
+	public ObjectLayer ol;
 	
 
 	
 	/**Row and col are given in the critter system)*/
-	public Hexagon(Double size, int row, int col, World w) {
+	public Hexagon(Double size, int row, int col, World w, Controller c) {
 		super();
 		this.size = size;
 		this.row = row;
@@ -25,12 +27,13 @@ public class Hexagon extends Polygon {
 		resize(size);
 		this.setFill(Color.FORESTGREEN);
 		this.setStroke(Color.BLACK);
+		this.c = c;
 		
 		setOnMouseClicked(new EventHandler <Event> () {
 
 			@Override
 			public void handle(Event event) {
-				ClickedHexControl.HandleHex(row, col);
+				ol.deselect();//Make sure this doesn't throw a null pointer exception.
 			}
 			
 		});

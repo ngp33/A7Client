@@ -18,13 +18,14 @@ public class WorldObject implements Observer {
 								// is ordered
 	private Hexgrid h;
 	private double time;
+	private Controller c;
 
-	public WorldObject(ScrollPane p, World w) {
+	public WorldObject(ScrollPane p, World w, Controller c) {
 		w.addObserver(this);
+		this.c = c;
 		Group g = new Group();
-		h = new Hexgrid(p, g, xcoord, ycoord, w);
+		h = new Hexgrid(p, g, xcoord, ycoord, w, c);
 		//p.getChildren().add(h.sp);
-		this.w = w;
 		hexWorldMap(h.getsize());
 		h.objectUpdate();
 	}
@@ -38,7 +39,7 @@ public class WorldObject implements Observer {
 			for (int ptwo = 0; ptwo < a[1]; ptwo++) {
 				int col = ptwo;
 				int row = place + (col + 1) / 2;
-				hexes[there] = new Hexagon(size, row, col, w);
+				hexes[there] = new Hexagon(size, row, col, w, c);
 				there++;
 			}
 		}

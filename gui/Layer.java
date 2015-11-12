@@ -17,8 +17,9 @@ public abstract class Layer {
 	protected double yjust;
 	Double rtthr = 1.732050808;
 	protected World w;
+	protected Controller c;
 
-	public Layer(Group g, double xcoord, double ycoord, World w) {
+	public Layer(Group g, double xcoord, double ycoord, World w, Controller c) {
 		//general = new AnchorPane();
 		//sp = new ScrollPane();
 		leftright = new AnchorPane();
@@ -34,6 +35,7 @@ public abstract class Layer {
 		this.xjust = 0;
 		this.yjust = 0;
 		this.w = w;
+		this.c = c;
 	}
 	
 	/*public void shiftTransverse (double deltaxjust, double deltayjust) {

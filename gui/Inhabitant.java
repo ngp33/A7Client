@@ -17,8 +17,11 @@ public abstract class Inhabitant implements Observer {
 	double rttwo = 1.414213562;
 	double rtthr = 1.732050808;
 	protected double [] posit;
+	private Controller c;
+	protected boolean selected;
+	private ObjectLayer ol;
 
-	public Inhabitant (Hexagon h, World w, AnchorPane a) {
+	public Inhabitant (Hexagon h, World w, AnchorPane a, Controller c, ObjectLayer ol) {
 		this.h = h;
 		this.w = w;
 		this.row = h.row;
@@ -26,6 +29,8 @@ public abstract class Inhabitant implements Observer {
 		numrep = w.getNumRep(new int [] {row, col});
 		this.a = a;
 		posit = new double [2];
+		this.c = c;
+		this.ol = ol;
 	}
 	
 	/**Decides whether an object should be deleted, and does so if it should be*/
@@ -57,7 +62,9 @@ public abstract class Inhabitant implements Observer {
 	
 	@Override
 	public void update(Observable o, Object arg) {
-		ClickedHexControl.HandleHex(row,col);
+		ol.deselect();
+
+		
 	}
 
 

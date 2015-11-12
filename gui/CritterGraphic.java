@@ -1,5 +1,7 @@
 package gui;
 
+import java.util.Observable;
+
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import world.Critter;
@@ -12,8 +14,8 @@ public class CritterGraphic extends Inhabitant {
 	World w;
 	double size;
 
-	public CritterGraphic(Hexagon h, World w, AnchorPane a) {
-		super (h,w,a);
+	public CritterGraphic(Hexagon h, World w, AnchorPane a, Controller k, ObjectLayer ol) {
+		super (h,w,a, k, ol);
 		this.w = w;
 		c = (Critter) w.getHex(h.row, h.col);
 		ci = new CircleImage(new Image("critter.png"));
@@ -52,6 +54,17 @@ public class CritterGraphic extends Inhabitant {
 
 	private void directionUpdate() {
 		ci.rotate(c.direction * 60);
-		
 	}
+	
+	public void normal() {
+		ci.normal();
+	}
+	
+	@Override
+	public void update(Observable o, Object arg) {
+		super.update(o, arg);
+		selected = true;
+		ci.chosen();
+	}
+
 }

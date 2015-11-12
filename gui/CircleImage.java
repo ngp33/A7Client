@@ -14,13 +14,15 @@ import javafx.scene.layout.AnchorPane;
  * which the square image resides*/
 public class CircleImage extends Observable {
 	double rttwo = 1.414213562;
-	ImageView iv;
+	private ImageView iv;
 	double size;
-	ColorAdjust ca;
+	private ColorAdjust ca;
+	private ColorAdjust special;
 	
 	public CircleImage(Image i) {
 		iv = new ImageView(i);
 		ca = new ColorAdjust();
+		special = new ColorAdjust();
 		
 		iv.setOnMouseClicked(new EventHandler <Event>() {
 
@@ -93,6 +95,16 @@ public class CircleImage extends Observable {
 	
 	public double getDegree() {
 		return iv.getRotate();
+	}
+	
+	public void chosen() {
+		special.setContrast(1);
+		iv.setEffect(ca);
+	}
+	
+	public void normal() {
+		special.setContrast(0.0);
+		iv.setEffect(ca);
 	}
 
 

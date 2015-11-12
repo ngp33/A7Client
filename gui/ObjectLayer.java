@@ -14,9 +14,10 @@ public class ObjectLayer extends Layer {
 	//seemed the best choice here because of all the searching. Strings are used (where the string is row.tostring
 	//col.tostring) because arrays are tricky with equality, but I know strings work with it. Row,col is safe because
 	//no two hexes could possibly have the same row,col
+	private CritterGraphic unique;
 
-	public ObjectLayer(Group g, double xcoord, double ycoord, World w) {
-		super(g, xcoord, ycoord, w);
+	public ObjectLayer(Group g, double xcoord, double ycoord, World w, Controller c) {
+		super(g, xcoord, ycoord, w, c);
 		size = getsize();
 		leftright.setPickOnBounds(false);
 		
@@ -69,13 +70,13 @@ public class ObjectLayer extends Layer {
 	private Inhabitant makeRightInhabitant(Hexagon h,World w) {
 		int num = w.getNumRep(new int [] {h.row, h.col});
 		if (num == w.ROCK_VALUE) {
-			return new RockGraphic(h,w, leftright);
+			return new RockGraphic(h,w, leftright, c, this);
 		}
 		else if (num < w.ROCK_VALUE) {
-			return new FoodGraphic(h, w, leftright);
+			return new FoodGraphic(h, w, leftright, c, this);
 		}
 		else if (num > 0){
-			return new CritterGraphic(h,w, leftright);
+			return new CritterGraphic(h,w, leftright, c, this);
 		}
 		else {
 			return null;
@@ -94,6 +95,17 @@ public class ObjectLayer extends Layer {
 				o.update();
 			}
 		}
+	}
+
+	public void deselect() {
+		if (unique != null) {
+			unique.normal();
+			unique.selected = false;
+		}
+	}
+	
+	public void marked(CritterGraphic cg) {
+		unique = cg;
 	}
 
 }
