@@ -77,7 +77,15 @@ public class ObjectLayer extends Layer {
 			return new FoodGraphic(h, w, leftright, c, this);
 		}
 		else if (num > 0){
-			return new CritterGraphic(h,w, leftright, c, this);
+			CritterGraphic cg = new CritterGraphic(h,w, leftright, c, this);
+			if (unique != null) {
+				if (unique == w.getHex(unique.row, unique.col)) {
+					if (cg.row == unique.row && cg.col == unique.col) {
+						cg.chosen();
+					}
+				}
+			}
+			return cg;
 		}
 		else {
 			return null;
@@ -94,24 +102,17 @@ public class ObjectLayer extends Layer {
 			}
 			else {
 				o.update();
-				if (unique != null) {
-					if (unique == w.getHex(unique.row, unique.col)) {
-						if (o.row == unique.row && o.col == unique.col) {
-							CritterGraphic cg = (CritterGraphic) o;
-							cg.chosen();
-						}
-					}
-				}
 			}
 		}
 	}
 
 	public void deselect() {
 		if (unique != null) {
-			CritterGraphic cg = (CritterGraphic) objects.get(Integer.toString(unique.row) + Integer.toString(unique.col));
-			System.out.println(cg);
-			if (cg != null) {
-				cg.normal();
+			if (unique == w.getHex(unique.row, unique.col)) {
+				CritterGraphic cg = (CritterGraphic) objects.get(Integer.toString(unique.row) + Integer.toString(unique.col));
+				if (cg != null) {
+					cg.normal();
+				}
 			}
 		}
 	}

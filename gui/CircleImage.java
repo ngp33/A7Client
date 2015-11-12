@@ -98,12 +98,12 @@ public class CircleImage extends Observable {
 	}
 	
 	public void chosen() {
-		special.setContrast(1);
-		iv.setEffect(ca);
+		special.setSaturation(1);
+		iv.setEffect(special);
 	}
 	
 	public void normal() {
-		special.setContrast(0.0);
+		special.setSaturation(0.0);
 		iv.setEffect(ca);
 	}
 
