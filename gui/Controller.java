@@ -65,7 +65,7 @@ public class Controller {
 		Button step = (Button) scene.lookup("#step");
 		step.setOnAction(stepHandler);
 		
-		//worldUpdater = new WorldObject((ScrollPane) scene.lookup("#arena"), model, this);
+		worldUpdater = new WorldObject((ScrollPane) scene.lookup("#arena"), model, this);
 		
 		
 		MenuBar topBar = (MenuBar) scene.lookup("#topbar");

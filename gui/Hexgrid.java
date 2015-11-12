@@ -55,7 +55,7 @@ public class Hexgrid extends Layer {
 	/**Run whenever the worldhanger is notified of a change. Should check that each hex
 	 * is properly represented and add to the object layer if its not.*/
 	public void objectUpdate() {
-		Ol.updateDelete(w);
+		Ol.updateDelete();
 		for (Hexagon them : hexes) {
 			Ol.checkInhabitant(them, w);
 		}

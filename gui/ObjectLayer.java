@@ -84,7 +84,7 @@ public class ObjectLayer extends Layer {
 		}
 	}
 	
-	public void updateDelete(World w) {
+	public void updateDelete() {
 		Collection<Inhabitant> c = objects.values();
 		Inhabitant [] values = new Inhabitant [c.size()];
 		c.toArray(values);
@@ -94,18 +94,25 @@ public class ObjectLayer extends Layer {
 			}
 			else {
 				o.update();
-				if (o.row == unique.row && o.col == unique.col) {
-					CritterGraphic cg = (CritterGraphic) o;
-					cg.chosen();
+				if (unique != null) {
+					if (unique == w.getHex(unique.row, unique.col)) {
+						if (o.row == unique.row && o.col == unique.col) {
+							CritterGraphic cg = (CritterGraphic) o;
+							cg.chosen();
+						}
+					}
 				}
 			}
 		}
 	}
 
 	public void deselect() {
-		CritterGraphic cg = (CritterGraphic) objects.get(Integer.toString(unique.row) + Integer.toString(unique.col));
-		if (cg != null) {
-			cg.normal();
+		if (unique != null) {
+			CritterGraphic cg = (CritterGraphic) objects.get(Integer.toString(unique.row) + Integer.toString(unique.col));
+			System.out.println(cg);
+			if (cg != null) {
+				cg.normal();
+			}
 		}
 	}
 	
