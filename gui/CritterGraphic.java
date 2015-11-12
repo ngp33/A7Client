@@ -24,6 +24,7 @@ public class CritterGraphic extends Inhabitant {
 		ci.rotate(60 * c.direction);
 		sizeupdate(h.size, h.position);
 		colorUpdate();
+		
 	}
 
 	@Override
@@ -60,10 +61,15 @@ public class CritterGraphic extends Inhabitant {
 		ci.normal();
 	}
 	
+	public void chosen() {
+		ci.chosen();
+	}
+	
 	@Override
 	public void update(Observable o, Object arg) {
 		super.update(o, arg);
-		selected = true;
+		Critter c = (Critter) w.getHex(row, col);
+		ol.unique = c;
 		ci.chosen();
 	}
 

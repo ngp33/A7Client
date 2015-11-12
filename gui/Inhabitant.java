@@ -19,7 +19,7 @@ public abstract class Inhabitant implements Observer {
 	protected double [] posit;
 	private Controller c;
 	protected boolean selected;
-	private ObjectLayer ol;
+	protected ObjectLayer ol;
 
 	public Inhabitant (Hexagon h, World w, AnchorPane a, Controller c, ObjectLayer ol) {
 		this.h = h;
@@ -63,8 +63,6 @@ public abstract class Inhabitant implements Observer {
 	@Override
 	public void update(Observable o, Object arg) {
 		ol.deselect();
-
-		
 	}
 
 

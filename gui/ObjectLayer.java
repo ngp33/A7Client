@@ -3,6 +3,7 @@ package gui;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.input.MouseEvent;
+import world.Critter;
 import world.World;
 
 import java.util.Collection;
@@ -14,7 +15,7 @@ public class ObjectLayer extends Layer {
 	//seemed the best choice here because of all the searching. Strings are used (where the string is row.tostring
 	//col.tostring) because arrays are tricky with equality, but I know strings work with it. Row,col is safe because
 	//no two hexes could possibly have the same row,col
-	private CritterGraphic unique;
+	public Critter unique; //selected critter
 
 	public ObjectLayer(Group g, double xcoord, double ycoord, World w, Controller c) {
 		super(g, xcoord, ycoord, w, c);
@@ -93,19 +94,23 @@ public class ObjectLayer extends Layer {
 			}
 			else {
 				o.update();
+				if (o.row == unique.row && o.col == unique.col) {
+					CritterGraphic cg = (CritterGraphic) o;
+					cg.chosen();
+				}
 			}
 		}
 	}
 
 	public void deselect() {
-		if (unique != null) {
-			unique.normal();
-			unique.selected = false;
+		CritterGraphic cg = (CritterGraphic) objects.get(Integer.toString(unique.row) + Integer.toString(unique.col));
+		if (cg != null) {
+			cg.normal();
 		}
 	}
 	
-	public void marked(CritterGraphic cg) {
-		unique = cg;
+	public boolean CritterEqual(int row, int col) {
+		return unique == null ? false : unique.row == row && unique.col == col;
 	}
 
 }

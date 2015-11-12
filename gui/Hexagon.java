@@ -5,6 +5,7 @@ import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
+import world.Critter;
 import world.World;
 
 public class Hexagon extends Polygon {
@@ -15,6 +16,7 @@ public class Hexagon extends Polygon {
 	double [] position;
 	private Controller c;
 	public ObjectLayer ol;
+	private World w;
 	
 
 	
@@ -28,12 +30,17 @@ public class Hexagon extends Polygon {
 		this.setFill(Color.FORESTGREEN);
 		this.setStroke(Color.BLACK);
 		this.c = c;
+		this.w = w;
 		
 		setOnMouseClicked(new EventHandler <Event> () {
 
 			@Override
 			public void handle(Event event) {
-				ol.deselect();//Make sure this doesn't throw a null pointer exception.
+				if (!ol.CritterEqual(row, col)) {
+					ol.deselect();//Make sure this doesn't throw a null pointer exception.
+				}
+				Critter k = w.getNumRep(new int [] {row,col}) > 0 ? (Critter) w.getHex(row, col) : null;
+				c.selectCritter(k);
 			}
 			
 		});
