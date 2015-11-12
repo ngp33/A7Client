@@ -33,6 +33,7 @@ import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
 import world.Critter;
 import world.Food;
+import world.Hex;
 import world.Rock;
 import world.World;
 
@@ -46,6 +47,9 @@ public class Controller {
 	StepHandler stepHandler;
 	ObservableList<MemTableRow> critterMemData;
 	Critter selectedCritter;
+	
+	boolean settingUp;
+	
 	
 	public Controller(Stage v, World m) {
 		view = v;
@@ -61,7 +65,7 @@ public class Controller {
 		Button step = (Button) scene.lookup("#step");
 		step.setOnAction(stepHandler);
 		
-		worldUpdater = new WorldObject((ScrollPane) scene.lookup("#arena"), model, this);
+		//worldUpdater = new WorldObject((ScrollPane) scene.lookup("#arena"), model, this);
 		
 		
 		MenuBar topBar = (MenuBar) scene.lookup("#topbar");
@@ -108,8 +112,21 @@ public class Controller {
 		
 	}
 	
-	public void selectCritter(Critter c) {
-		selectedCritter = c;
+	public void onHexClicked(int row, int col) {
+		Hex h = model.getHex(row, col);
+		
+		if (settingUp) {
+			
+			return;
+		}
+		
+		if (h instanceof Critter) {
+			selectedCritter = (Critter) h;
+			return;
+		}
+		
+		selectedCritter = null;
+		return;
 	}
 
 	class PlayPauseHandler implements EventHandler<ActionEvent> {
