@@ -31,7 +31,6 @@ public class ObjectLayer extends Layer {
 		Inhabitant [] values = new Inhabitant [c.size()];
 		c.toArray(values);
 		double s = getsize();
-		size = s;
 		for (Inhabitant o : values) {
 			o.sizeupdate(s, getplace(o.row - (o.col + 1 )/ 2, o.col, s)); //Get place works in grid
 		} //coordinate system, so I have to switch row back here.

@@ -9,7 +9,6 @@ import world.World;
 
 public abstract class Layer {
 	protected AnchorPane leftright;
-	//protected AnchorPane general;
 	protected ScrollPane sp;
 	protected double xcoord;
 	protected double ycoord;
@@ -20,13 +19,7 @@ public abstract class Layer {
 	protected Controller c;
 
 	public Layer(Group g, double xcoord, double ycoord, World w, Controller c) {
-		//general = new AnchorPane();
-		//sp = new ScrollPane();
 		leftright = new AnchorPane();
-		//general.getChildren().add(leftright);
-		//sp.setContent(leftright);
-		//g.getChildren().add(general);
-		//g.getChildren().add(sp);
 		leftright.setPrefWidth(xcoord);
 		leftright.setPrefHeight(ycoord);
 		g.getChildren().add(leftright);
@@ -38,15 +31,7 @@ public abstract class Layer {
 		this.c = c;
 	}
 	
-	/*public void shiftTransverse (double deltaxjust, double deltayjust) {
-		xjust += deltaxjust;
-		yjust += deltayjust;
-		AnchorPane.setLeftAnchor(leftright, xjust);
-		AnchorPane.setTopAnchor(leftright, yjust);
-		//general.setHvalue(xjust);
-		//general.setVvalue(yjust);
-	}*/
-	
+
 	protected abstract void resize();
 	
 
@@ -91,7 +76,6 @@ public abstract class Layer {
 	public void zoom (double amount, World w) {
 		xcoord += amount;
 		ycoord += amount;
-		//shiftTransverse(-amount/2, -amount/2);
 		resize();
 	}
 	

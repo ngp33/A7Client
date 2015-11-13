@@ -50,6 +50,8 @@ public class Hexgrid extends Layer {
 				place ++;
 			}
 		}
+		sp.setHvalue(hcur);
+		sp.setVvalue(vcur);
 	}
 	
 	/**Run whenever the worldhanger is notified of a change. Should check that each hex
@@ -59,6 +61,7 @@ public class Hexgrid extends Layer {
 		for (Hexagon them : hexes) {
 			Ol.checkInhabitant(them, w);
 		}
+		Ol.resize(); //this shouldn't be necessary, but its de-symptomizing a bug. Horrible form.
 		sp.setHvalue(hcur); //For some reason the scroll bars adjust when something new is added (maybe because
 		sp.setVvalue(vcur);//the anchorpane bounds change?) so I put this here to bring the scroll bar
 		//back to its original position
@@ -66,14 +69,10 @@ public class Hexgrid extends Layer {
 	
 	@Override
 	public void zoom(double amount, World w) {
-		//xcoord += amount;
-		//ycoord += amount;
-		//resize(w);
-		
 		super.zoom(amount, w);
 		Ol.zoom(amount, w);
-		//sp.setHvalue(hcur);
-		//sp.setVvalue(vcur);
+		sp.setHvalue(hcur);
+		sp.setVvalue(vcur);
 		
 	}
 	
@@ -82,14 +81,24 @@ public class Hexgrid extends Layer {
 		if (temph < 1 &&  temph > 0) {
 			hcur = temph;
 		}
+		else if (temph >= 1) {
+			hcur = 1;
+		}
+		else {
+			hcur = 0;
+		}
 		double temv = vcur + dy/ycoord;
 		if (temv < 1 && temv > 0) {
 			vcur = temv;
 		}
+		else if (temv >= 1) {
+			vcur = 1;
+		}
+		else {
+			vcur = 0;
+		}
 		sp.setHvalue(hcur);
 		sp.setVvalue(vcur);
-		//super.shiftTransverse(dx, dy);
-		//Ol.shiftTransverse(dx, dy);
 	}
 	
 	/**Centers the grids in the group with either the xspace or yspace as the limiting factor*/
