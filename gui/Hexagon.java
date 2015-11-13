@@ -39,7 +39,12 @@ public class Hexagon extends Polygon {
 				if (!ol.CritterEqual(row, col)) {
 					ol.deselect();//Make sure this doesn't throw a null pointer exception.
 				}
-				Critter k = w.getNumRep(new int [] {row,col}) > 0 ? (Critter) w.getHex(row, col) : null;
+				
+				if (w.getNumRep(new int [] {row, col}) > 0) {
+					Critter crit = (Critter) w.getHex(row, col);
+					ol.unique = crit;
+					ol.updateDelete();
+				}
 				c.onHexClicked(row, col);
 			}
 			

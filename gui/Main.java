@@ -35,7 +35,8 @@ public class Main extends Application {
 		
 		primaryStage.setScene(scene);
 		
-		World w = new World(7,5, "hi");
+		//World w = new World(7,5, "hi");
+		World w = new World();
 		int [] mem = new int [] {8,1,1,2,1000,0,0,0};
 		Random r = new Random();
 		Parser p = new ParserImpl();

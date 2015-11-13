@@ -58,7 +58,12 @@ public class WorldObject implements Observer {
 	
 	
 	public void zoom(int amount) {
-		h.zoom(amount, w);
+		//h.zoom(amount, w);
+		zoom(amount > 0);
+	}
+	
+	public void zoom(boolean positive) {
+		h.zoom((positive ? h.xcoord : - h.xcoord/2), w);
 	}
 	public void move (double dx, double dy) {
 		h.shiftTransverse(dx * h.xcoord, dy * h.ycoord);
