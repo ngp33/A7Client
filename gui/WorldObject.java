@@ -3,7 +3,7 @@ package gui;
 import java.util.Observable;
 import java.util.Observer;
 
-
+import javafx.application.Platform;
 import javafx.scene.Group;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.Pane;
@@ -50,12 +50,18 @@ public class WorldObject implements Observer {
 
 	@Override
 	public void update(Observable o, Object arg) {
-		synchronized (w) {
-			if (System.nanoTime() - time > 100000000 / 3) {
-				h.objectUpdate();
-			}
-			time = System.nanoTime();
-		}
+		Platform.runLater(new Runnable() {
+            public void run() {
+            	
+				synchronized (w) {
+					if (System.nanoTime() - time > 100000000 / 3) {
+						h.objectUpdate();
+					}
+					time = System.nanoTime();
+				}
+		
+            }
+		});
 	}
 	
 	
