@@ -14,6 +14,7 @@ public class World extends Observable {
 	Hex[][] grid;
 	ArrayList<Critter> critters;
 	ArrayList<Critter> firstgencrits;
+	ArrayList<Critter> crittersToRemove = new ArrayList<Critter>();
 	
 	String name; // Not sure what this is for yet but it's included in the world file.
 	int time = 0;
@@ -135,6 +136,14 @@ public class World extends Observable {
 									// made rocks by getHex.
 			}
 		}
+	}
+	
+	public int getTime() {
+		return time;
+	}
+	
+	public int getNumCritters() {
+		return critters.size();
 	}
 	
 	public int getNumColumns() {
@@ -325,6 +334,10 @@ public class World extends Observable {
 		}
 		firstgencrits.clear();
 		time++;
+		for (Critter c : crittersToRemove) {
+			critters.remove(c);
+		}
+		crittersToRemove.clear();
 		setChanged();
 		notifyObservers();
 	}

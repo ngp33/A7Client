@@ -76,7 +76,11 @@
             <Label prefHeight="25.0" prefWidth="70.0" text="Play speed:" />
             <TextField fx:id="speed" prefHeight="25.0" prefWidth="35.0" text="0" />
             <Label alignment="CENTER_RIGHT" prefHeight="25.0" prefWidth="71.0" text="updates/sec" />
-            <Separator opacity="0.0" orientation="VERTICAL" prefHeight="25.0" prefWidth="340.0" />
+            <Separator opacity="0.0" orientation="VERTICAL" prefHeight="25.0" prefWidth="40.0" />
+            <Label fx:id="time" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="140.0" text="Time elapsed: 10000" />
+            <Separator layoutX="202.0" layoutY="10.0" opacity="0.0" orientation="VERTICAL" prefHeight="25.0" prefWidth="20.0" />
+            <Label fx:id="alive" layoutX="402.0" layoutY="10.0" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="120.0" text="Critters alive: 10000" />
+            <Separator layoutX="382.0" layoutY="10.0" opacity="0.0" orientation="VERTICAL" prefHeight="25.0" prefWidth="20.0" />
             <Button fx:id="play" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0">
                <graphic>
                   <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">

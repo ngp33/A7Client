@@ -48,6 +48,7 @@ public class Main extends Application {
 		Controller c = new Controller(primaryStage, w);
 		
 		primaryStage.setResizable(false);
+		primaryStage.sizeToScene();
 		primaryStage.show();
 	}
 	

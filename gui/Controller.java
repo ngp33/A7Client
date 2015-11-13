@@ -1,6 +1,7 @@
 package gui;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.Optional;
 import java.util.Random;
 import java.util.Timer;
@@ -58,8 +59,11 @@ public class Controller {
 	TableView<MemTableRow> memTable;
 	Label latestRule;
 	Button sourceButton;
+	Label timeLabel;
+	Label crittersLabel;
 	
-	boolean settingUp;
+	//boolean settingUp;
+	File critterFileToLoad;
 	
 	
 	public Controller(Stage v, World m) {
@@ -76,12 +80,20 @@ public class Controller {
 		Button step = (Button) scene.lookup("#step");
 		step.setOnAction(stepHandler);
 		
+		timeLabel = (Label) scene.lookup("#time");
+		crittersLabel = (Label) scene.lookup("#alive");
+		
 		worldUpdater = new WorldObject((ScrollPane) scene.lookup("#arena"), model, this);
 		
 		
 		MenuBar topBar = (MenuBar) scene.lookup("#topbar");
 		Menu file = topBar.getMenus().get(0);
 		Menu help = topBar.getMenus().get(1);
+		
+		/*help.getItems().get(0).setOnAction(new EventHandler<ActionEvent>() {
+			Alert dialog = new Alert<AlertType.NONE>();
+			dialog.
+		});*/
 		
 		MenuItem newWorld = file.getItems().get(0);
 		newWorld.setOnAction(new NewWorldHandler());
@@ -91,6 +103,24 @@ public class Controller {
 		
 		MenuItem loadCritter = file.getItems().get(2);
 		loadCritter.setOnAction(new LoadCritterHandler());
+		
+		Button zoomIn = (Button) scene.lookup("#zoomin");
+		zoomIn.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent arg0) {
+				worldUpdater.zoom(true);
+			}
+		});
+		
+		Button zoomOut = (Button) scene.lookup("#zoomout");
+		zoomOut.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent arg0) {
+				worldUpdater.zoom(false);
+			}
+		});
 		
 		
 		TitledPane inspector = (TitledPane) scene.lookup("#inspector");
@@ -135,10 +165,22 @@ public class Controller {
 		
 		Hex h = model.getHex(row, col);
 		
-		if (settingUp) {
+		if (critterFileToLoad != null) {
 			synchronized (this) {
 				System.out.println("WAKE UP");
-				settingUp = false;
+				
+				try {
+					Critter c = WorldCritterLoader.createCritter(critterFileToLoad.getPath(), model);
+					model.replace(c, h);
+					model.addCritter(c);
+					worldUpdater.update(null, null);
+					updateBottomLabels();
+				} catch (NumberFormatException | IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+				critterFileToLoad = null;
 				notifyAll();
 			}
 			return;
@@ -194,6 +236,17 @@ public class Controller {
             }
       	});
 	}
+	
+	private void updateBottomLabels() {
+		Platform.runLater(new Runnable() {
+            public void run() {
+		
+		timeLabel.setText("Time elapsed: " + model.getTime());
+		crittersLabel.setText("Critters alive: " + model.getNumCritters());
+		
+            }
+      	});
+	}
 
 	class PlayPauseHandler implements EventHandler<ActionEvent> {
 		
@@ -235,6 +288,7 @@ public class Controller {
 			synchronized(model) {
 				model.advance();
 				updateInspector();
+				updateBottomLabels();
 			}
 		}
 		
@@ -247,6 +301,7 @@ public class Controller {
 			synchronized(model) {
 				model.advance();
 				updateInspector();
+				updateBottomLabels();
 			}
 		}
 		
@@ -270,6 +325,7 @@ public class Controller {
 	    	}
 	    	
 	    	worldUpdater = new WorldObject((ScrollPane) view.getScene().lookup("#arena"), model, Controller.this);
+	    	updateBottomLabels();
 		}
 		
 	}
@@ -289,6 +345,7 @@ public class Controller {
 			
 			model = WorldCritterLoader.loadWorld(selectedFile.getPath());
 	    	worldUpdater = new WorldObject((ScrollPane) view.getScene().lookup("#arena"), model, Controller.this);
+	    	updateBottomLabels();
 			
 		}
 		
@@ -322,8 +379,6 @@ public class Controller {
 				return;
 			}
 			
-			(new Thread() {
-				public void run() {
 			
 			String methodInputStr = methodInput.get();
 			switch (methodInputStr.charAt(0)) {
@@ -344,42 +399,33 @@ public class Controller {
 				
 				String numInputStr = numInput.get();
 				int numCritters = Integer.parseInt(numInputStr);
+				
+				WorldCritterLoader.loadCrittersOntoWorld(selectedFile.getPath(), numCritters, model);
+				worldUpdater.update(null, null);
+				updateBottomLabels();
+				
+				return;
 			case 'P':
-				synchronized (this) {
-					settingUp = true;
-					while (settingUp) {
+				(new Thread() {
+					public void run() {
+				
+				synchronized (Controller.this) {
+					critterFileToLoad = selectedFile;
+					while (critterFileToLoad != null) {
 						System.out.println("CHECKING");
 						try {
 							System.out.println("WAITING");
-							wait();
-							System.out.println("OK");
+							Controller.this.wait();
 						} catch (InterruptedException e) {}
 					}
 				}
-			
-				System.out.println("OKOKOK");
-			}
-			
-			
-			TextInputDialog numCrittersDialog = new TextInputDialog();
-			numCrittersDialog.initOwner(view);
-			numCrittersDialog.setContentText("How many critters?");
-			numCrittersDialog.setHeaderText(null);
-			numCrittersDialog.setGraphic(null);
-			numCrittersDialog.setTitle("Load critter");
-			Optional<String> numInput = numCrittersDialog.showAndWait();
-			
-			if (!numInput.isPresent()) {
+				
+					}
+				}).start();
+				
 				return;
 			}
-			
-			String numInputStr = numInput.get();
-			int numCritters = Integer.parseInt(numInputStr);
-			
-			WorldCritterLoader.loadCrittersOntoWorld(selectedFile.getPath(), numCritters, model);
-			
-				}
-			}).start();
+
 		}
 		
 	}

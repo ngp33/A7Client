@@ -150,6 +150,7 @@ public class Crittermethods {
 	 */
 	public static void dies(Critter c){
 		c.w.replace(new Food(c.w.FOOD_PER_SIZE * c.mem[3]), c);
+		c.w.crittersToRemove.add(c);
 	}
 	
 	/** Critter grows one unit bigger. Critter can't get bigger than size 99*/
