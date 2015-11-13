@@ -59,7 +59,7 @@ public abstract class Layer {
 	/**Calculates the size of the hexagons based on the size of the anchorpane*/
 	protected double getsize() {
 		int [] a = w.worlddim();
-		double ysize = (ycoord - 23) / (rtthr * (a[0] + .5)); //The 23 is pretty arbitrary here too
+		double ysize = (ycoord - 23) / (rtthr * (a[0] + .5)); //The 23 is pretty arbitrary here too got rid of it after ycoord
 		double xsize = (xcoord / (a[1] * 1.5 + .5));
 		return ysize < xsize ? ysize : xsize;
 	}
@@ -109,14 +109,14 @@ public abstract class Layer {
 		//yco represents the distance from the bottom, so to get the distance from the top
 		//we have to subtract it, and the distance from the bottom to the top of the hex
 		//(size * rtthr) from ycoord.
-		return new double [] {xco, ycoord - yco - size * rtthr - 23};
+		return new double [] {xco, ycoord - yco - size * rtthr - 23}; //got rid of -23 after rtthr
 		//TODO I have no idea why the above doesn't work without the arbitrary 20,
 		//but it doesnt...
 	}
 	
 	public int [] reverseGetPlace(double x, double y, double size) {
 		int col = (int) (x/(size + size / 2));
-		int row = (int) ((ycoord - 23 - y - (col % 2 == 1 ? size*rtthr/2 : 0)  )/(size * rtthr));
+		int row = (int) ((ycoord - y - 23 - (col % 2 == 1 ? size*rtthr/2 : 0)  )/(size * rtthr)); //got rid of -23 after ycoord
 		row += (col + 1)/2;
 		return new int [] {row,col};
 	}

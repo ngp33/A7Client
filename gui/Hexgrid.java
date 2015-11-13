@@ -39,9 +39,9 @@ public class Hexgrid extends Layer {
 	protected void resize() {
 		int [] a = w.worlddim();
 		int place = 0;
+		double size = getsize();
 		for (int row = 0; row < a[0]; row++) {
 			for (int col = 0; col < a[1]; col ++) {
-				double size = getsize();
 				double [] posit = getplace(row,col,size);
 				Hexagon temp = hexes[place];
 				temp.position = posit;
@@ -72,8 +72,8 @@ public class Hexgrid extends Layer {
 		
 		super.zoom(amount, w);
 		Ol.zoom(amount, w);
-		sp.setHvalue(hcur);
-		sp.setVvalue(vcur);
+		//sp.setHvalue(hcur);
+		//sp.setVvalue(vcur);
 		
 	}
 	
