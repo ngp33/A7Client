@@ -6,6 +6,7 @@ import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -163,6 +164,9 @@ public class Controller {
 	}
 	
 	private void updateInspector() {
+		Platform.runLater(new Runnable() {
+            public void run() {
+		
 		memTable.refresh();
 		
 		if (selectedCritter == null) {
@@ -172,11 +176,23 @@ public class Controller {
 		}
 		sourceButton.setDisable(false);
 		
+		if (selectedCritter != model.getHex(selectedCritter.row, selectedCritter.col)) {
+			selectedCritter = null;
+			for (MemTableRow r : critterMemData) {
+				r.setCritter(selectedCritter);
+			}
+			updateInspector();
+			return;
+		}
+		
 		if (selectedCritter.mostrecentrule == null) {
 			latestRule.setText("This critter hasn't acted yet.");
 			return;
 		}
 		latestRule.setText(selectedCritter.mostrecentrule.toString());
+		
+            }
+      	});
 	}
 
 	class PlayPauseHandler implements EventHandler<ActionEvent> {
@@ -271,7 +287,9 @@ public class Controller {
 				return;
 			}
 			
-			//Reluctant to copy and paste load code from Console until we get A5 back.
+			model = WorldCritterLoader.loadWorld(selectedFile.getPath());
+	    	worldUpdater = new WorldObject((ScrollPane) view.getScene().lookup("#arena"), model, Controller.this);
+			
 		}
 		
 	}
@@ -358,7 +376,7 @@ public class Controller {
 			String numInputStr = numInput.get();
 			int numCritters = Integer.parseInt(numInputStr);
 			
-			//Reluctant to copy and paste load code from Console until we get A5 back.
+			WorldCritterLoader.loadCrittersOntoWorld(selectedFile.getPath(), numCritters, model);
 			
 				}
 			}).start();
@@ -400,13 +418,12 @@ public class Controller {
 			} else if (code.equals(KeyCode.RIGHT)) {
 				stepHandler.handle(null);
 			}
-			else if (code.equals(KeyCode.UP)) {
+			else if (code.equals(KeyCode.I)) {
 				worldUpdater.zoom(true);
 			}
-			else if (code.equals(KeyCode.DOWN)) {
+			else if (code.equals(KeyCode.O)) {
 				worldUpdater.zoom(false);
-			}
-			else {
+			} else {
 				switch (code.getName()) {
 				case "A":
 					worldUpdater.move(-.1, 0);
