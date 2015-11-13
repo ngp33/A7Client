@@ -48,16 +48,16 @@
                                   <TableColumn editable="false" prefWidth="68.0" sortable="false" text="Value" />
                                 </columns>
                               </TableView>
-                              <TitledPane collapsible="false" text="Program">
+                              <TitledPane fx:id="programinfo" collapsible="false" text="Program">
                                  <content>
                                     <VBox>
                                        <children>
-                                          <Label text="Label">
+                                          <Label fx:id="latestrule" text="Nothing selected." wrapText="true">
                                              <VBox.margin>
                                                 <Insets bottom="6.0" />
                                              </VBox.margin>
                                           </Label>
-                                          <Button mnemonicParsing="false" text="View Source" />
+                                          <Button fx:id="viewsource" disable="true" mnemonicParsing="false" text="View Source" />
                                        </children>
                                     </VBox>
                                  </content>

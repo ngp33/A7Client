@@ -11,8 +11,14 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ChoiceDialog;
+import javafx.scene.control.Dialog;
+import javafx.scene.control.DialogPane;
+import javafx.scene.control.Label;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
@@ -48,6 +54,9 @@ public class Controller {
 	StepHandler stepHandler;
 	ObservableList<MemTableRow> critterMemData;
 	Critter selectedCritter;
+	TableView<MemTableRow> memTable;
+	Label latestRule;
+	Button sourceButton;
 	
 	boolean settingUp;
 	
@@ -86,7 +95,7 @@ public class Controller {
 		TitledPane inspector = (TitledPane) scene.lookup("#inspector");
 		ScrollPane inspectorScroll = (ScrollPane) inspector.getContent();
 		VBox inspectorBox = (VBox) inspectorScroll.getContent();
-		TableView<MemTableRow> memTable = (TableView<MemTableRow>) inspectorBox.lookup("#memtable");
+		memTable = (TableView<MemTableRow>) inspectorBox.lookup("#memtable");
 		
 		ObservableList<TableColumn<MemTableRow, ?>> cols = memTable.getColumns();
 		TableColumn<MemTableRow, String> indexCol = (TableColumn<MemTableRow, String>) cols.get(0);
@@ -95,7 +104,7 @@ public class Controller {
 		indexCol.setCellValueFactory(new PropertyValueFactory<MemTableRow, String>("index"));
 		valueCol.setCellValueFactory(new PropertyValueFactory<MemTableRow, String>("value"));
 		
-		ObservableList<MemTableRow> critterMemData = FXCollections.observableArrayList(
+		critterMemData = FXCollections.observableArrayList(
 				new MemTableRow(0, null),
 				new MemTableRow(1, null),
 				new MemTableRow(2, null),
@@ -107,6 +116,13 @@ public class Controller {
 		); 
 		
 		memTable.setItems(critterMemData);
+		
+		
+		VBox programInfo = (VBox) ((TitledPane) inspectorBox.lookup("#programinfo")).getContent();
+		latestRule = (Label) programInfo.lookup("#latestrule");
+		sourceButton = (Button) programInfo.lookup("#viewsource");
+		
+		sourceButton.setOnAction(new SourceButtonHandler());
 		
 		
 		scene.setOnKeyPressed(new KeyPressHandler());
@@ -132,12 +148,35 @@ public class Controller {
 			for (MemTableRow r : critterMemData) {
 				r.setCritter(selectedCritter);
 			}
+			updateInspector();
 			
 			return;
 		}
 		
 		selectedCritter = null;
+		for (MemTableRow r : critterMemData) {
+			r.setCritter(selectedCritter);
+		}
+		updateInspector();
+		
 		return;
+	}
+	
+	private void updateInspector() {
+		memTable.refresh();
+		
+		if (selectedCritter == null) {
+			latestRule.setText("Nothing selected.");
+			sourceButton.setDisable(true);
+			return;
+		}
+		sourceButton.setDisable(false);
+		
+		if (selectedCritter.mostrecentrule == null) {
+			latestRule.setText("This critter hasn't acted yet.");
+			return;
+		}
+		latestRule.setText(selectedCritter.mostrecentrule.toString());
 	}
 
 	class PlayPauseHandler implements EventHandler<ActionEvent> {
@@ -178,6 +217,7 @@ public class Controller {
 		@Override
 		public void run() {
 			model.advance();
+			updateInspector();
 			
 			//Update view from here or call a method in World?
 		}
@@ -189,6 +229,7 @@ public class Controller {
 		@Override
 		public void handle(ActionEvent arg0) {
 			model.advance();
+			updateInspector();
 			
 			//Update view from here or call a method in World? I think World would be better to avoid repeated code.
 		}
@@ -321,6 +362,28 @@ public class Controller {
 			
 				}
 			}).start();
+		}
+		
+	}
+	
+	class SourceButtonHandler implements EventHandler<ActionEvent> {
+
+		@Override
+		public void handle(ActionEvent event) {
+			Dialog dialog = new Dialog<ButtonType>();
+			dialog.initOwner(view);
+			Label text = new Label(selectedCritter.genes.toString());
+			ScrollPane textBox = new ScrollPane(text);
+			DialogPane pane = new DialogPane();
+			pane.setMaxHeight(500d);
+			pane.setContent(textBox);
+			pane.getButtonTypes().add(ButtonType.OK);
+			dialog.setDialogPane(pane);
+			dialog.setX(100d);
+			dialog.setY(100d);
+			dialog.setHeaderText("Critter Program");
+			dialog.setTitle("Critter Program Viewer");
+			dialog.showAndWait();
 		}
 		
 	}
