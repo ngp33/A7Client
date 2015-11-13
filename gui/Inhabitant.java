@@ -6,6 +6,8 @@ import java.util.Observer;
 import javafx.scene.layout.AnchorPane;
 import world.World;
 
+
+/**The inhabitant of a hex*/
 public abstract class Inhabitant implements Observer {
 	World w;
 	int row; //Row from the critter world
@@ -58,6 +60,7 @@ public abstract class Inhabitant implements Observer {
 		return numrep;
 	}
 	
+	/**updates the values of an object that has not moved*/
 	public abstract void update();
 	
 	@Override

@@ -23,7 +23,7 @@ import world.Food;
 import world.Rock;
 import world.World;
 
-
+/*
 public class Worldhanger extends Application implements Observer {
 	//private World w = new World(7,5, "hi");
 	private World w = new World();
@@ -68,7 +68,7 @@ public class Worldhanger extends Application implements Observer {
 			public void handle(Event event) {
 				w.advance();
 			}
-		});*/
+		});
 		
 		s.setOnKeyPressed(new EventHandler<KeyEvent>() {
 
@@ -113,7 +113,7 @@ public class Worldhanger extends Application implements Observer {
 	}
 	
 	
-	/**Invariant: AnchorPane an has no children to start with*/
+	Invariant: AnchorPane an has no children to start with
 	private void hexWorldMap(Double size) {
 		int [] a = w.worlddim();
 		hexes = new Hexagon [a[0] * a[1]];
@@ -139,4 +139,4 @@ public class Worldhanger extends Application implements Observer {
 		time = System.nanoTime();
 	}
 
-}
+}*/

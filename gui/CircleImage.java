@@ -30,7 +30,6 @@ public class CircleImage extends Observable {
 			public void handle(Event event) {
 				setChanged();
 				notifyObservers();
-				
 			}
 			
 		});
