@@ -50,23 +50,30 @@ public class WorldObject implements Observer {
 
 	@Override
 	public void update(Observable o, Object arg) {
-		if (System.nanoTime() - time > 100000000 / 3) {
-			h.objectUpdate();
+		synchronized (w) {
+			if (System.nanoTime() - time > 100000000 / 3) {
+				h.objectUpdate();
+			}
+			time = System.nanoTime();
 		}
-		time = System.nanoTime();
 	}
 	
 	
 	public void zoom(int amount) {
-		//h.zoom(amount, w);
-		zoom(amount > 0);
+		synchronized(w) {
+			h.zoom(amount, w);
+		}
 	}
 	
 	public void zoom(boolean positive) {
-		h.zoom((positive ? h.xcoord : - h.xcoord/2), w);
+		synchronized(w) {
+			h.zoom((positive ? h.xcoord : - h.xcoord/2), w);
+		}
 	}
 	public void move (double dx, double dy) {
-		h.shiftTransverse(dx * h.xcoord, dy * h.ycoord);
+		synchronized(w) {
+			h.shiftTransverse(dx * h.xcoord, dy * h.ycoord);
+		}
 	}
 	
 

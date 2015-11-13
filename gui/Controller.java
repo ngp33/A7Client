@@ -216,10 +216,10 @@ public class Controller {
 
 		@Override
 		public void run() {
-			model.advance();
-			updateInspector();
-			
-			//Update view from here or call a method in World?
+			synchronized(model) {
+				model.advance();
+				updateInspector();
+			}
 		}
 		
 	}
@@ -228,10 +228,10 @@ public class Controller {
 
 		@Override
 		public void handle(ActionEvent arg0) {
-			model.advance();
-			updateInspector();
-			
-			//Update view from here or call a method in World? I think World would be better to avoid repeated code.
+			synchronized(model) {
+				model.advance();
+				updateInspector();
+			}
 		}
 		
 	}
@@ -392,6 +392,7 @@ public class Controller {
 
 		@Override
 		public void handle(KeyEvent event) {
+
 			KeyCode code = event.getCode();
 			
 			if (code.equals(KeyCode.P)) {
@@ -400,10 +401,10 @@ public class Controller {
 				stepHandler.handle(null);
 			}
 			else if (code.equals(KeyCode.UP)) {
-				worldUpdater.zoom(10);
+				worldUpdater.zoom(true);
 			}
 			else if (code.equals(KeyCode.DOWN)) {
-				worldUpdater.zoom(-10);
+				worldUpdater.zoom(false);
 			}
 			else {
 				switch (code.getName()) {
