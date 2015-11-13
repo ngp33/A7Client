@@ -21,18 +21,7 @@ public class ObjectLayer extends Layer {
 		super(g, xcoord, ycoord, w, c);
 		size = getsize();
 		leftright.setPickOnBounds(false);
-		
-		/*leftright.setOnMouseClicked(new EventHandler <MouseEvent> () {
 
-			@Override
-			public void handle(MouseEvent event) {
-				int [] rc = reverseGetPlace(event.getX(),event.getY(),size);
-				ClickedHexControl.HandleHex(rc[0], rc[1]);
-				
-			}
-
-			
-		});*/
 
 	}
 
@@ -78,13 +67,7 @@ public class ObjectLayer extends Layer {
 		}
 		else if (num > 0){
 			CritterGraphic cg = new CritterGraphic(h,w, leftright, c, this);
-			if (unique != null) {
-				if (unique == w.getHex(unique.row, unique.col)) {
-					if (cg.row == unique.row && cg.col == unique.col) {
-						cg.chosen();
-					}
-				}
-			}
+			hueCheck(cg);
 			return cg;
 		}
 		else {
@@ -102,6 +85,9 @@ public class ObjectLayer extends Layer {
 			}
 			else {
 				o.update();
+				if (o.getNumRep() > 0) {
+					hueCheck((CritterGraphic) o);
+				}
 			}
 		}
 	}
@@ -112,9 +98,21 @@ public class ObjectLayer extends Layer {
 				CritterGraphic cg = (CritterGraphic) objects.get(Integer.toString(unique.row) + Integer.toString(unique.col));
 				if (cg != null) {
 					cg.normal();
+					unique = null;
 				}
 			}
 		}
+	}
+	
+	public void hueCheck(CritterGraphic cg) {
+		if (unique != null) {
+			if (unique == w.getHex(unique.row, unique.col)) {
+				if (cg.row == unique.row && cg.col == unique.col) {
+					cg.chosen();
+				}
+			}
+		}
+		
 	}
 	
 	public boolean CritterEqual(int row, int col) {
