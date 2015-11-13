@@ -114,10 +114,13 @@ public class Controller {
 	}
 	
 	public void onHexClicked(int row, int col) {
+		//System.out.println(settingUp);
+		
 		Hex h = model.getHex(row, col);
 		
 		if (settingUp) {
-			synchronized(this) {
+			synchronized (this) {
+				System.out.println("WAKE UP");
 				settingUp = false;
 				notifyAll();
 			}
@@ -126,6 +129,10 @@ public class Controller {
 		
 		if (h instanceof Critter) {
 			selectedCritter = (Critter) h;
+			for (MemTableRow r : critterMemData) {
+				r.setCritter(selectedCritter);
+			}
+			
 			return;
 		}
 		
@@ -204,6 +211,8 @@ public class Controller {
 	    			model.setHex(j, i, rand.nextFloat() < .15 ? new Rock() : new Food(0)); //15% chance of Rock
 	    		}
 	    	}
+	    	
+	    	worldUpdater = new WorldObject((ScrollPane) view.getScene().lookup("#arena"), model, Controller.this);
 		}
 		
 	}
@@ -254,6 +263,9 @@ public class Controller {
 				return;
 			}
 			
+			(new Thread() {
+				public void run() {
+			
 			String methodInputStr = methodInput.get();
 			switch (methodInputStr.charAt(0)) {
 			case 'C':
@@ -274,17 +286,18 @@ public class Controller {
 				String numInputStr = numInput.get();
 				int numCritters = Integer.parseInt(numInputStr);
 			case 'P':
-				synchronized(this) {
+				synchronized (this) {
 					settingUp = true;
 					while (settingUp) {
 						System.out.println("CHECKING");
 						try {
 							System.out.println("WAITING");
 							wait();
+							System.out.println("OK");
 						} catch (InterruptedException e) {}
 					}
 				}
-				
+			
 				System.out.println("OKOKOK");
 			}
 			
@@ -305,6 +318,9 @@ public class Controller {
 			int numCritters = Integer.parseInt(numInputStr);
 			
 			//Reluctant to copy and paste load code from Console until we get A5 back.
+			
+				}
+			}).start();
 		}
 		
 	}
