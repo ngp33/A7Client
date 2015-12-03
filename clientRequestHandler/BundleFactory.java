@@ -14,16 +14,30 @@ public class BundleFactory {
 		
 	}
 	
-	public class critListBundle {
-		//Linkedlist to hold the critters? //Nah it should be good
-		critBundle [] cb; //this is probably incompatible with the info given in the API //Nah it should be good
+	//Used in getting the critterList I assume
+	public class CritListBundle {
+		Inhabitant [] cb;
 	}
 	
-	public class critBundle extends inhabitants {
-		
-	}
+	//probably not necessary. An inhabitant constructor could probably do the same
+	/*
+	private class CritBundle extends Inhabitant {
+		public CritBundle(int critID) {
+			//TODO form the bundle based on the critter ID.
+			Critter c= w.critters.get(critID);
+			id = critID;
+			row = c.row;
+			col = c.col;
+			species_id = c.name;
+			direction = c.direction;
+			mem = c.mem;
+			String [] str = c.genes.toString().split("\n");
+			recently_executed_rule = c.mostrecentruleplace;
+		}
+	}*/
 	
-	public class worldBundle {
+	/**Will be used in getting the world I assume...*/
+	private class worldBundle {
 		int current_timestep;
 		int current_version_number;
 		//int update_since not really sure what to do about this.
@@ -33,16 +47,13 @@ public class BundleFactory {
 		int rows;
 		int cols;
 		int [] dead_critters;
-		inhabitants [] state;
-		public worldBundle(int rone, int rtwo, int cone, int ctwo, int timeinterval) {
-			//TODO get world dif over this time
-		}
+		Inhabitant [] state;
 	}
 	
 	/**A general class for the inhabitants. It has all the fields
 	 * that any inhabitant would need, so all inhabitants can be
-	 * unpacked using this class*/
-	public class inhabitants {
+	 * unpacked using this class. Used so far in create_entity among other things*/
+	public class Inhabitant {
 		int row;
 		int col;
 		String type;
@@ -53,36 +64,37 @@ public class BundleFactory {
 		int value;
 		int recently_executed_rule;
 		String program; //should this be a string?
+		int amount;
 	}
 	
-	public class critPlacementBundle {
+	/**A bundle of critters which is used in the Post method*/
+	public class CritPlacementBundle {
 		String species_id;
 		String program;
 		int [] mem;
-		placement [] positions;
+		Placement [] positions;
 		int num;
-		private critPlacementBundle(Critter c) {
+		private CritPlacementBundle(Critter c) {
 			species_id = c.name;
 			program = c.genes.toString();
 			mem = c.mem;
 		}
 		/**Makes a placementbundle where location of placement is specified for each critter*/
-		public critPlacementBundle(Critter c, placement [] pos) {
+		public CritPlacementBundle(Critter c, Placement [] pos) {
 			this(c);
 			positions = pos;
 		}
 		/**Makes a placementbundle where there is a specified number of randomly placed crits*/
-		public critPlacementBundle(Critter c, int number) {
+		public CritPlacementBundle(Critter c, int number) {
 			this(c);
 			num = number;
 		}
 		
 	}
 	
-	public class placement {
+	public class Placement {
 		int row;
 		int col;
 	}
 	
-
 }

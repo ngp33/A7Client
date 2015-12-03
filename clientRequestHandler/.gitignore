@@ -11,3 +11,7 @@
 /BundleFactory$worldBundle.class
 /BundleFactory.class
 /ClientRequestHandler.class
+/BundleFactory$CritListBundle.class
+/BundleFactory$CritPlacementBundle.class
+/BundleFactory$Inhabitant.class
+/BundleFactory$Placement.class

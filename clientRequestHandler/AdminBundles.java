@@ -1,6 +1,7 @@
 package clientRequestHandler;
 
 public class AdminBundles {
+	
 	public static class login {
 		String level;
 		String password;

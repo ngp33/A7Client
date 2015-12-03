@@ -10,6 +10,7 @@ import java.net.URL;
 
 import com.google.gson.Gson;
 
+import clientRequestHandler.BundleFactory.CritPlacementBundle;
 import gui.Controller;
 
 public class ClientRequestHandler {
@@ -40,7 +41,7 @@ public class ClientRequestHandler {
 	
 	//GETs
 	
-	public BundleFactory.critBundle getCritter(int id) {
+	public BundleFactory.CritListBundle getCritter(int id) {
 		//TODO
 		return null;
 	}
