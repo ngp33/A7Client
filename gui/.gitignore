@@ -41,3 +41,15 @@
 /Controller$2.class
 /Controller$3.class
 /Controller$4.class
+/AdminBundles$SessID.class
+/AdminBundles$login.class
+/AdminBundles$numSteps.class
+/AdminBundles$runRate.class
+/AdminBundles.class
+/BundleFactory$critBundle.class
+/BundleFactory$critListBundle.class
+/BundleFactory$critPlacementBundle.class
+/BundleFactory$inhabitants.class
+/BundleFactory$placement.class
+/BundleFactory$worldBundle.class
+/BundleFactory.class

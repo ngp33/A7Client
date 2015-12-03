@@ -65,6 +65,8 @@ public class Controller {
 	//boolean settingUp;
 	File critterFileToLoad;
 	
+	int sessionId;
+	
 	
 	public Controller(Stage v, World m) {
 		view = v;
@@ -158,6 +160,49 @@ public class Controller {
 		
 		scene.setOnKeyPressed(new KeyPressHandler());
 		
+		String permLevel = loginDialog();
+		System.out.println(permLevel);
+	}
+	
+	/**Brings up login dialog. Sets sessionId.
+	 * 
+	 * @return The permission level logged into.
+	 */
+	private String loginDialog() {
+		ChoiceDialog<String> permissionDialog = new ChoiceDialog<String>(
+				"Choose a permission level...",
+				"read",
+				"write",
+				"admin");
+		permissionDialog.initOwner(view);
+		permissionDialog.setContentText("What permission level would you like to log in to?");
+		permissionDialog.setHeaderText(null);
+		permissionDialog.setGraphic(null);
+		permissionDialog.setTitle("Login");
+		Optional<String> methodInput = permissionDialog.showAndWait();
+		
+		if (! methodInput.isPresent()) {
+			System.exit(0);
+		}
+		
+		String toLogIn = methodInput.get();
+		boolean notSuccessful = true;
+		
+		while (notSuccessful) {
+			TextInputDialog numCrittersDialog = new TextInputDialog();
+			numCrittersDialog.initOwner(view);
+			numCrittersDialog.setContentText("Enter password:");
+			numCrittersDialog.setHeaderText(null);
+			numCrittersDialog.setGraphic(null);
+			numCrittersDialog.setTitle("Login");
+			Optional<String> passwordInput = numCrittersDialog.showAndWait();
+			
+			if (passwordInput.isPresent()) {
+				//TODO Send GET to see if log in successful
+			}
+		}
+		
+		return toLogIn;
 	}
 	
 	public void onHexClicked(int row, int col) {
