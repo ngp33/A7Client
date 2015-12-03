@@ -1,4 +1,4 @@
-package gui;
+package clientRequestHandler;
 
 public class AdminBundles {
 	public static class login {

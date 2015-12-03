@@ -1,67 +1,29 @@
-package gui;
+package clientRequestHandler;
 
 import java.util.Collection;
 
 import ast.Program;
+import gui.Controller;
 import world.Critter;
 import world.World;
 
 /**Creates a bundle factory which bundles information into specific classes*/
 public class BundleFactory {
-	World w;
 	
-	public BundleFactory(World w) {
-		this.w = w;
-	}
-	
-	
-	/**Makes a new critListBundle*/
-	public critListBundle getCritListBundle() {
-		return new critListBundle();
-	}
-	
-	/**Makes a new Critter bundle*/
-	public critBundle getCritBundle(int critID) {
-		return new critBundle(critID);
-	}
-	
-	/**Gets the world or the subsection of the world since some number of timesteps
-	 * if the specifications are the world boundaries (0, w.rowmax, 0, w.colmax) this will
-	 * return the dif for the whole world (hopefully)*/
-	public worldBundle getWorldBundle(int rowinit, int rowfin, int colinit, int colfin, int ts) {
-		return null;
+	public BundleFactory() {
 		
 	}
 	
-	private class critListBundle {
+	public class critListBundle {
 		//Linkedlist to hold the critters? //Nah it should be good
 		critBundle [] cb; //this is probably incompatible with the info given in the API //Nah it should be good
-		public critListBundle() {
-			Collection<Critter> critterList = w.critters.values();
-			cb = new critBundle[critterList.size()];
-			int i = 0;
-			for (Critter c : critterList) {
-				cb[i] = new critBundle(c.id);
-			}
-		}
 	}
 	
-	private class critBundle extends inhabitants {
-		public critBundle(int critID) {
-			//TODO form the bundle based on the critter ID.
-			Critter c= w.critters.get(critID);
-			id = critID;
-			row = c.row;
-			col = c.col;
-			species_id = c.name;
-			direction = c.direction;
-			mem = c.mem;
-			String [] str = c.genes.toString().split("\n");
-			recently_executed_rule = c.mostrecentruleplace;
-		}
+	public class critBundle extends inhabitants {
+		
 	}
 	
-	private class worldBundle {
+	public class worldBundle {
 		int current_timestep;
 		int current_version_number;
 		//int update_since not really sure what to do about this.

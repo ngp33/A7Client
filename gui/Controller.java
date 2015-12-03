@@ -7,6 +7,7 @@ import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import clientRequestHandler.ClientRequestHandler;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -66,6 +67,7 @@ public class Controller {
 	File critterFileToLoad;
 	
 	int sessionId;
+	ClientRequestHandler requestHandler;
 	
 	
 	public Controller(Stage v, World m) {
@@ -73,6 +75,8 @@ public class Controller {
 		model = m;
 		continuousSimHandler = new PlayPauseHandler();
 		stepHandler = new StepHandler();
+		
+		requestHandler = new ClientRequestHandler(this);
 		
 		Scene scene = v.getScene();
 		
@@ -161,7 +165,14 @@ public class Controller {
 		scene.setOnKeyPressed(new KeyPressHandler());
 		
 		String permLevel = loginDialog();
-		System.out.println(permLevel);
+		if (permLevel != "admin") {
+			loadWorld.setDisable(true);
+			if (permLevel == "read") {
+				loadCritter.setDisable(true);
+				playAndPause.setDisable(true);
+				step.setDisable(true);
+			}
+		}
 	}
 	
 	/**Brings up login dialog. Sets sessionId.
@@ -198,7 +209,11 @@ public class Controller {
 			Optional<String> passwordInput = numCrittersDialog.showAndWait();
 			
 			if (passwordInput.isPresent()) {
-				//TODO Send GET to see if log in successful
+				int sessId = requestHandler.login(toLogIn, passwordInput.get());
+				if (sessId != -1) {
+					sessionId = sessId;
+					notSuccessful = false;
+				}
 			}
 		}
 		
