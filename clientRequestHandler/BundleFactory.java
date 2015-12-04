@@ -41,11 +41,11 @@ public class BundleFactory {
 	
 	/**Will be used in getting the world I assume...*/
 	public static class WorldBundle {
-		int current_timestep;
-		int current_version_number;
+		public int current_timestep;
+		public int current_version_number;
 		//int update_since not really sure what to do about this.
 		float rate;
-		String name;
+		public String name;
 		int population;
 		int rows;
 		int cols;
@@ -57,14 +57,14 @@ public class BundleFactory {
 	 * that any inhabitant would need, so all inhabitants can be
 	 * unpacked using this class. Used so far in create_entity among other things*/
 	public static class Inhabitant {
-		int row;
-		int col;
-		String type;
+		public int row;
+		public int col;
+		public String type;
 		int id;
 		String species_id;
 		int direction;
 		int [] mem;
-		int value;
+		public int value;
 		int recently_executed_rule;
 		String program; //should this be a string?
 		int amount;

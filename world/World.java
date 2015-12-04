@@ -4,19 +4,21 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Observable;
 
+import clientRequestHandler.BundleFactory.Inhabitant;
 import parse.Parser;
 import parse.ParserImpl;
 
 public class World extends Observable {
 	
 	Hex[][] grid;
-	ArrayList<Critter> critters;
+	HashMap<Integer, Critter> critters;
 	ArrayList<Critter> firstgencrits;
-	ArrayList<Critter> crittersToRemove = new ArrayList<Critter>();
+	ArrayList<Integer> crittersToRemove = new ArrayList<Integer>();
 	
-	String name; // Not sure what this is for yet but it's included in the world file.
+	public String name; // Not sure what this is for yet but it's included in the world file.
 	int time = 0;
 	int rows;
 	int columns;
@@ -44,7 +46,7 @@ public class World extends Observable {
 	
 	public World() {
 		name = "Untitled";
-		critters = new ArrayList<Critter>();
+		critters = new HashMap<Integer, Critter>();
 		firstgencrits = new ArrayList<Critter>();
 		
 		// This would look cleaner in its own method, but I need to do it inside the constructor.
@@ -80,7 +82,7 @@ public class World extends Observable {
 	
 	public World(int numRows, int numCols, String n) {
 		name = n;
-		critters = new ArrayList<Critter>();
+		critters = new HashMap<Integer, Critter>();
 		firstgencrits = new ArrayList<Critter>();
 		
 		try {
@@ -140,6 +142,10 @@ public class World extends Observable {
 	
 	public int getTime() {
 		return time;
+	}
+	
+	public void setTime(int t) {
+		time = t;
 	}
 	
 	public int getNumCritters() {
@@ -316,36 +322,7 @@ public class World extends Observable {
 	 * @param c
 	 */
 	public void addCritter(Critter c) {
-		critters.add(c);
-	}
-	
-	/**Adds a critter mid-time step*/
-	public void addMidStep(Critter c) {
-		firstgencrits.add(c);
-	}
-	
-	public void advance() {
-		for (Critter c : critters) {
-			c.timestep(); // Executes critter's program?
-		}
-		for (Critter c : firstgencrits) {
-			c.timestep();
-			addCritter(c);
-		}
-		firstgencrits.clear();
-		time++;
-		for (Critter c : crittersToRemove) {
-			critters.remove(c);
-		}
-		crittersToRemove.clear();
-		setChanged();
-		notifyObservers();
-	}
-	
-	public void advanceTime(int amount) {
-		for (int i = 0; i < amount; i++) {
-			advance();
-		}
+		critters.put(c.id, c);
 	}
 	
 	public StringBuilder getInfo() {
@@ -380,6 +357,33 @@ public class World extends Observable {
 				i--;
 			}
 			even = !even;
+		}
+	}
+	
+	public void killCritters(int[] critterIDs) {
+		for (int i : critterIDs) {
+			critters.remove(i);
+		}
+	}
+	
+	public void updateHexes(Inhabitant[] state) {
+		for (Inhabitant update : state) {
+			Hex updatedHex = null;
+			if (update.type.equals("rock")) {
+				updatedHex = new Rock();
+			} else if (update.type.equals("food")) {
+				updatedHex = new Food(update.value);
+			} else if (update.type.equals("nothing")) {
+				updatedHex = new Food(0);
+			} else if (update.type.equals("critter")) {
+				//TODO
+				//Check if the critter's ID exists
+				//If it does, update that critter
+				//If not, add new critter
+			}
+			updatedHex.row = update.row;
+			updatedHex.col = update.col;
+			setHex(update.row, update.col, updatedHex);
 		}
 	}
 

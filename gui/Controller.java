@@ -7,6 +7,7 @@ import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import clientRequestHandler.BundleFactory;
 import clientRequestHandler.ClientRequestHandler;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
@@ -177,6 +178,9 @@ public class Controller {
 		}
 		
 		System.out.println("Logged into " + permLevel);
+		
+		timer = new Timer(true);
+		timer.schedule(new TimerStepHandler(), 0l, 100l/3l);
 	}
 	
 	/**Brings up login dialog. Sets sessionId.
@@ -345,15 +349,27 @@ public class Controller {
 		
 	}
 	
+	private void refreshWorld() {
+		BundleFactory.WorldBundle updatedWorld = requestHandler.getWorldState(version, sessionId);
+		synchronized (Controller.this) {
+			version = updatedWorld.current_version_number;
+			synchronized(model) {
+				model.setTime(updatedWorld.current_timestep);
+				model.name = updatedWorld.name;
+			}
+		}
+	}
+	
 	class TimerStepHandler extends TimerTask {
 
 		@Override
 		public void run() {
-			synchronized(model) {
+			/*synchronized(model) {
 				model.advance();
 				updateInspector();
 				updateBottomLabels();
-			}
+			}*/
+			refreshWorld();
 		}
 		
 	}
