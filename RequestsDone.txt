@@ -7,7 +7,7 @@ Get a subsection of the world *
 
 //POST//
 
-Log in to the server *
+Log in to the server **
 Create a Critter *
 Make a new world on the server *
 Create a food or rock object *

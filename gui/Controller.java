@@ -67,6 +67,7 @@ public class Controller {
 	File critterFileToLoad;
 	
 	int sessionId;
+	int version;
 	ClientRequestHandler requestHandler;
 	
 	
