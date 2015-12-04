@@ -166,6 +166,7 @@ public class Controller {
 		
 		String permLevel = loginDialog();
 		if (permLevel != "admin") {
+			newWorld.setDisable(true);
 			loadWorld.setDisable(true);
 			if (permLevel == "read") {
 				loadCritter.setDisable(true);
@@ -173,6 +174,8 @@ public class Controller {
 				step.setDisable(true);
 			}
 		}
+		
+		System.out.println("Logged into " + permLevel);
 	}
 	
 	/**Brings up login dialog. Sets sessionId.

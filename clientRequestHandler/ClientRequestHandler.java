@@ -120,9 +120,9 @@ public class ClientRequestHandler {
 		try {
 			url = new URL(serverURL + "login");
 			connection = (HttpURLConnection) url.openConnection();
-			connection.connect();
 			connection.setDoOutput(true); // send a POST message
 			connection.setRequestMethod("POST");
+			connection.connect();
 			PrintWriter w = new PrintWriter(connection.getOutputStream());
 			
 			AdminBundles.login loginBody = new AdminBundles.login(level, password);
@@ -154,9 +154,9 @@ public class ClientRequestHandler {
 		try {
 			url = new URL(serverURL + "critters?session_id=" + sessionId);
 			connection = (HttpURLConnection) url.openConnection();
-			connection.connect();
 			connection.setDoOutput(true); // send a POST message
 			connection.setRequestMethod("POST");
+			connection.connect();
 			PrintWriter w = new PrintWriter(connection.getOutputStream());
 			
 			BundleFactory.CritPlacementBundle body = new BundleFactory.CritPlacementBundle(c, pos);
@@ -184,9 +184,9 @@ public class ClientRequestHandler {
 		try {
 			url = new URL(serverURL + "critters?session_id=" + sessionId);
 			connection = (HttpURLConnection) url.openConnection();
-			connection.connect();
 			connection.setDoOutput(true); // send a POST message
 			connection.setRequestMethod("POST");
+			connection.connect();
 			PrintWriter w = new PrintWriter(connection.getOutputStream());
 			
 			BundleFactory.CritPlacementBundle body = new BundleFactory.CritPlacementBundle(c, num);
@@ -213,9 +213,9 @@ public class ClientRequestHandler {
 		try {
 			url = new URL(serverURL + "world?session_id=" + sessionId);
 			connection = (HttpURLConnection) url.openConnection();
-			connection.connect();
 			connection.setDoOutput(true); // send a POST message
 			connection.setRequestMethod("POST");
+			connection.connect();
 			PrintWriter w = new PrintWriter(connection.getOutputStream());
 			
 			w.println("{");
@@ -237,9 +237,9 @@ public class ClientRequestHandler {
 		try {
 			url = new URL(serverURL + "world/create_entity?session_id=" + sessionId);
 			connection = (HttpURLConnection) url.openConnection();
-			connection.connect();
 			connection.setDoOutput(true); // send a POST message
 			connection.setRequestMethod("POST");
+			connection.connect();
 			PrintWriter w = new PrintWriter(connection.getOutputStream());
 			
 			BundleFactory.Inhabitant body = new BundleFactory.Inhabitant(f);
@@ -258,9 +258,9 @@ public class ClientRequestHandler {
 		try {
 			url = new URL(serverURL + "world/create_entity?session_id=" + sessionId);
 			connection = (HttpURLConnection) url.openConnection();
-			connection.connect();
 			connection.setDoOutput(true); // send a POST message
 			connection.setRequestMethod("POST");
+			connection.connect();
 			PrintWriter w = new PrintWriter(connection.getOutputStream());
 			
 			BundleFactory.Inhabitant body = new BundleFactory.Inhabitant(r);
@@ -279,9 +279,9 @@ public class ClientRequestHandler {
 		try {
 			url = new URL(serverURL + "step?session_id=" + sessionId);
 			connection = (HttpURLConnection) url.openConnection();
-			connection.connect();
 			connection.setDoOutput(true); // send a POST message
 			connection.setRequestMethod("POST");
+			connection.connect();
 			PrintWriter w = new PrintWriter(connection.getOutputStream());
 			
 			w.println("{ }");
@@ -297,9 +297,9 @@ public class ClientRequestHandler {
 		try {
 			url = new URL(serverURL + "step?session_id=" + sessionId);
 			connection = (HttpURLConnection) url.openConnection();
-			connection.connect();
 			connection.setDoOutput(true); // send a POST message
 			connection.setRequestMethod("POST");
+			connection.connect();
 			PrintWriter w = new PrintWriter(connection.getOutputStream());
 			
 			w.println("{ \"count\": " + count + " }");
@@ -315,9 +315,9 @@ public class ClientRequestHandler {
 		try {
 			url = new URL(serverURL + "step?session_id=" + sessionId);
 			connection = (HttpURLConnection) url.openConnection();
-			connection.connect();
 			connection.setDoOutput(true); // send a POST message
 			connection.setRequestMethod("POST");
+			connection.connect();
 			PrintWriter w = new PrintWriter(connection.getOutputStream());
 			
 			w.println("{ \"rate\": " + rate + " }");
