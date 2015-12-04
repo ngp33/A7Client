@@ -250,6 +250,24 @@ public class ClientRequestHandler {
 		}
 	}
 	
+	public void runContinuously(float rate, int sessionId) {
+		URL url;
+		HttpURLConnection connection;
+		try {
+			url = new URL(serverURL + "step?session_id=" + sessionId);
+			connection = (HttpURLConnection) url.openConnection();
+			connection.connect();
+			connection.setDoOutput(true); // send a POST message
+			connection.setRequestMethod("POST");
+			PrintWriter w = new PrintWriter(connection.getOutputStream());
+			
+			w.println("{ \"rate\": " + rate + " }");
+			w.flush();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	
 	//DELETE
 	

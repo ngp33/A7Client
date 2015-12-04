@@ -11,8 +11,8 @@ Log in to the server *
 Create a Critter *
 Make a new world on the server *
 Create a food or rock object *
-Advance the world by steps
-Run the world continuously/change the rate
+Advance the world by steps *
+Run the world continuously/change the rate *
 
 //DELETE//
 
