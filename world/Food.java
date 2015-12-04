@@ -22,6 +22,10 @@ public class Food extends Hex { //Rock value is assumed to be -1 here.
 	void addFood(int qty) {
 		quantity += qty;
 	}
+	
+	public int getQuantity() {
+		return quantity;
+	}
 
 	@Override
 	char getASCIIRep() {

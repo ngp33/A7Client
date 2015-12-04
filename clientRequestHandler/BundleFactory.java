@@ -5,6 +5,9 @@ import java.util.Collection;
 import ast.Program;
 import gui.Controller;
 import world.Critter;
+import world.Food;
+import world.Hex;
+import world.Rock;
 import world.World;
 
 /**Creates a bundle factory which bundles information into specific classes*/
@@ -15,7 +18,7 @@ public class BundleFactory {
 	}
 	
 	//Used in getting the critterList I assume
-	public class CritListBundle {
+	public static class CritListBundle {
 		Inhabitant [] cb;
 	}
 	
@@ -37,7 +40,7 @@ public class BundleFactory {
 	}*/
 	
 	/**Will be used in getting the world I assume...*/
-	private class worldBundle {
+	private static class worldBundle {
 		int current_timestep;
 		int current_version_number;
 		//int update_since not really sure what to do about this.
@@ -53,7 +56,7 @@ public class BundleFactory {
 	/**A general class for the inhabitants. It has all the fields
 	 * that any inhabitant would need, so all inhabitants can be
 	 * unpacked using this class. Used so far in create_entity among other things*/
-	public class Inhabitant {
+	public static class Inhabitant {
 		int row;
 		int col;
 		String type;
@@ -65,10 +68,23 @@ public class BundleFactory {
 		int recently_executed_rule;
 		String program; //should this be a string?
 		int amount;
+		
+		public Inhabitant(Rock r) {
+			row = r.row;
+			col = r.col;
+			type = "rock";
+		}
+		
+		public Inhabitant(Food f) {
+			row = f.row;
+			col = f.col;
+			type = "food";
+			amount = f.getQuantity();
+		}
 	}
 	
 	/**A bundle of critters which is used in the Post method*/
-	public class CritPlacementBundle {
+	public static class CritPlacementBundle {
 		String species_id;
 		String program;
 		int [] mem;
@@ -92,9 +108,14 @@ public class BundleFactory {
 		
 	}
 	
-	public class Placement {
+	public static class Placement {
 		int row;
 		int col;
+	}
+	
+	public static class SpeciesAndIDs {
+		String species_id;
+		int[] ids;
 	}
 	
 }
