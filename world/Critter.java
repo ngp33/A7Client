@@ -54,6 +54,15 @@ public class Critter extends Hex {
 		this.r = r;
 	}
 	
+	public Critter(int id, String species, int row, int col, int dir, int[] mem) {
+		this.id = id;
+		name = species;
+		this.row = row;
+		this.col = col;
+		direction = dir;
+		this.mem = mem;
+	}
+	
 	/**Effect: updates the critter's instance variables according to its rules. 
 	 * It pretty much just handles everything that should happen to a critter when
 	 * a time step passes.

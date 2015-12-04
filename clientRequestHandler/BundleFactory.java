@@ -60,13 +60,13 @@ public class BundleFactory {
 		public int row;
 		public int col;
 		public String type;
-		int id;
-		String species_id;
-		int direction;
-		int [] mem;
+		public int id;
+		public String species_id;
+		public int direction;
+		public int [] mem;
 		public int value;
-		int recently_executed_rule;
-		String program; //should this be a string?
+		public int recently_executed_rule = -1;
+		public String program = null; //should this be a string?
 		int amount;
 		
 		public Inhabitant(Rock r) {

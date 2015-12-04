@@ -3,12 +3,16 @@ package world;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Observable;
 
+import ast.ProgramImpl;
+import ast.Rule;
 import clientRequestHandler.BundleFactory.Inhabitant;
 import parse.Parser;
+import parse.ParserFactory;
 import parse.ParserImpl;
 
 public class World extends Observable {
@@ -22,6 +26,8 @@ public class World extends Observable {
 	int time = 0;
 	int rows;
 	int columns;
+	
+	Parser parser = ParserFactory.getParser();
 	
 	public final int BASE_DAMAGE;
 	public final float DAMAGE_INC;
@@ -376,10 +382,21 @@ public class World extends Observable {
 			} else if (update.type.equals("nothing")) {
 				updatedHex = new Food(0);
 			} else if (update.type.equals("critter")) {
-				//TODO
-				//Check if the critter's ID exists
-				//If it does, update that critter
-				//If not, add new critter
+				int critterId = update.id;
+				Critter changed = critters.get(critterId);
+				if (changed == null) {
+					changed = new Critter(update.id, update.species_id, update.row, update.col,
+							update.direction, update.mem);
+				} else {
+					changed.name = update.species_id;
+					changed.direction = update.direction;
+					changed.mem = update.mem;
+				}
+				if (update.program != null) {
+					changed.genes = (ProgramImpl) parser.parse(new StringReader(update.program));
+					changed.mostrecentrule = (Rule) changed.genes.children[update.recently_executed_rule];
+				}
+				updatedHex = changed;
 			}
 			updatedHex.row = update.row;
 			updatedHex.col = update.col;
