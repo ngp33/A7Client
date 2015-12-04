@@ -40,7 +40,7 @@ public class BundleFactory {
 	}*/
 	
 	/**Will be used in getting the world I assume...*/
-	private static class worldBundle {
+	public static class WorldBundle {
 		int current_timestep;
 		int current_version_number;
 		//int update_since not really sure what to do about this.

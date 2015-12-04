@@ -10,7 +10,9 @@ import java.net.URL;
 
 import com.google.gson.Gson;
 
+import clientRequestHandler.BundleFactory.CritListBundle;
 import clientRequestHandler.BundleFactory.CritPlacementBundle;
+import clientRequestHandler.BundleFactory.Inhabitant;
 import clientRequestHandler.BundleFactory.Placement;
 import clientRequestHandler.BundleFactory.SpeciesAndIDs;
 import gui.Controller;
@@ -44,17 +46,74 @@ public class ClientRequestHandler {
 		return result.toString();
 	}
 	
+	private Object basicGet(String URIEnding, Class<?> classOfT) {
+		URL url;
+		HttpURLConnection connection;
+		try {
+			url = new URL(serverURL + URIEnding);
+			connection = (HttpURLConnection) url.openConnection();
+			connection.connect();
+			BufferedReader r = new BufferedReader(new InputStreamReader(
+					connection.getInputStream()));
+			
+			return gson.fromJson(r, classOfT);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		return null;
+	}
+	
 	
 	//GETs
 	
-	public BundleFactory.CritListBundle getCritter(int id) {
-		//TODO
-		return null;
+	public BundleFactory.CritListBundle getAllCritters(int sessionId) {
+		String URIEnding = "critters?session_id=" + sessionId;
+		return (CritListBundle) basicGet(URIEnding, CritListBundle.class);
+	}
+	
+	public BundleFactory.Inhabitant getCritter(int id, int sessionId) {
+		String URIEnding = "critter/" + id + "?session_id=" + sessionId;
+		return (Inhabitant) basicGet(URIEnding, BundleFactory.Inhabitant.class);
+	}
+	
+	public BundleFactory.WorldBundle getWorldState(int sessionId) {
+		String URIEnding = "world?session_id=" + sessionId;
+		return (BundleFactory.WorldBundle) basicGet(URIEnding, BundleFactory.WorldBundle.class);
+	}
+	
+	public BundleFactory.WorldBundle getWorldState(int updateSince, int sessionId) {
+		String URIEnding = "world?update_since=" + updateSince + "&session_id=" + sessionId;
+		return (BundleFactory.WorldBundle) basicGet(URIEnding, BundleFactory.WorldBundle.class);
+	}
+	
+	public BundleFactory.WorldBundle getWorldSubsectionState(int rowMin, int rowMax,
+			int colMin, int colMax, int sessionId) {
+		String URIEnding = "world?from_row=" + rowMin
+				+ "&to_row=" + rowMax
+				+ "&from_col=" + colMin
+				+ "&to_col=" + colMax
+				+ "&session_id=" + sessionId;
+		return (BundleFactory.WorldBundle) basicGet(URIEnding, BundleFactory.WorldBundle.class);
+	}
+	
+	public BundleFactory.WorldBundle getWorldSubsectionState(int updateSince, int rowMin,
+			int rowMax, int colMin, int colMax, int sessionId) {
+		String URIEnding = "world?update_since=" + updateSince
+				+ "&from_row=" + rowMin
+				+ "&to_row=" + rowMax
+				+ "&from_col=" + colMin
+				+ "&to_col=" + colMax
+				+ "&session_id=" + sessionId;
+		return (BundleFactory.WorldBundle) basicGet(URIEnding, BundleFactory.WorldBundle.class);
 	}
 	
 	
 	//POSTs
 	
+	/**Sends a login request to the server. Returns -1 if login failed. Else, returns session ID
+	 * given by the server.
+	 */
 	public int login(String level, String password) {
 		URL url;
 		HttpURLConnection connection;

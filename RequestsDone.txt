@@ -1,9 +1,9 @@
 //GET//
 
-List all Critters
-Retrieve a Critter
-Get the state of the world
-Get a subsection of the world
+List all Critters *
+Retrieve a Critter *
+Get the state of the world *
+Get a subsection of the world *
 
 //POST//
 
