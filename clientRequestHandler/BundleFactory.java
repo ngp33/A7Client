@@ -49,8 +49,8 @@ public class BundleFactory {
 		int population;
 		int rows;
 		int cols;
-		int [] dead_critters;
-		Inhabitant [] state;
+		public int [] dead_critters;
+		public Inhabitant [] state;
 	}
 	
 	/**A general class for the inhabitants. It has all the fields

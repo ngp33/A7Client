@@ -356,6 +356,10 @@ public class Controller {
 			synchronized(model) {
 				model.setTime(updatedWorld.current_timestep);
 				model.name = updatedWorld.name;
+				model.killCritters(updatedWorld.dead_critters);
+				model.updateHexes(updatedWorld.state);
+				updateInspector();
+				updateBottomLabels();
 			}
 		}
 	}
@@ -378,11 +382,11 @@ public class Controller {
 
 		@Override
 		public void handle(ActionEvent arg0) {
-			synchronized(model) {
+			/*synchronized(model) {
 				model.advance();
 				updateInspector();
 				updateBottomLabels();
-			}
+			}*/
 		}
 		
 	}

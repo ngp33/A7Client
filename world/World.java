@@ -387,6 +387,7 @@ public class World extends Observable {
 				if (changed == null) {
 					changed = new Critter(update.id, update.species_id, update.row, update.col,
 							update.direction, update.mem);
+					critters.put(changed.id, changed);
 				} else {
 					changed.name = update.species_id;
 					changed.direction = update.direction;
