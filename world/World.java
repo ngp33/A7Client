@@ -374,7 +374,7 @@ public class World extends Observable {
 	
 	public void updateHexes(Inhabitant[] state) {
 		for (Inhabitant update : state) {
-			System.out.println(update.type + " AT " + update.row + ", " + update.col);
+			//System.out.println(update.type + " at " + update.row + ", " + update.col);
 			Hex updatedHex = null;
 			if (update.type.equals("rock")) {
 				updatedHex = new Rock();
@@ -396,7 +396,15 @@ public class World extends Observable {
 				}
 				if (update.program != null) {
 					changed.genes = (ProgramImpl) parser.parse(new StringReader(update.program));
-					changed.mostrecentrule = (Rule) changed.genes.children[update.recently_executed_rule];
+					//System.out.println(update.program);
+					//System.out.println(update.recently_executed_rule);
+					if (update.recently_executed_rule == -1) {
+						changed.mostrecentrule = null;
+					} else {
+						//System.out.println(changed.genes);
+						//System.out.println(changed.genes.children.length);
+						changed.mostrecentrule = (Rule) changed.genes.children[update.recently_executed_rule];
+					}
 				}
 				updatedHex = changed;
 			}

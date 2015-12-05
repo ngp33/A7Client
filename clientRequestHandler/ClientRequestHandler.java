@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.io.Reader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -168,6 +169,7 @@ public class ClientRequestHandler {
 			BufferedReader r = new BufferedReader(new InputStreamReader(
 					connection.getInputStream()));
 			String responseBodyText = gatherResponse(r);
+			System.out.println(responseBodyText);
 			
 			return gson.fromJson(responseBodyText, BundleFactory.SpeciesAndIDs.class);
 		} catch (IOException e) {
@@ -218,14 +220,26 @@ public class ClientRequestHandler {
 			connection.connect();
 			PrintWriter w = new PrintWriter(connection.getOutputStream());
 			
-			w.println("{");
+			/*w.println("{");
 			w.println("\"description\":");
 			String worldFileLine = worldFileReader.readLine();
 			while (worldFileLine != null) {
 				w.println(worldFileLine);
+				worldFileLine = worldFileReader.readLine();
 			}
 			w.println("}");
+			w.flush();*/
+			
+			String worldDef = gatherResponse(worldFileReader);
+			BundleFactory.WorldDefinition body = new BundleFactory.WorldDefinition(worldDef);
+			String bodyText = gson.toJson(body, BundleFactory.WorldDefinition.class);
+			System.out.println(bodyText);
+			
+			w.println(w);
 			w.flush();
+			
+			connection.getInputStream();
+			System.out.println(connection.getResponseCode());
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -247,6 +261,8 @@ public class ClientRequestHandler {
 			
 			w.println(bodyJSON);
 			w.flush();
+			
+			connection.getInputStream();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -268,6 +284,8 @@ public class ClientRequestHandler {
 			
 			w.println(bodyJSON);
 			w.flush();
+			
+			connection.getInputStream();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -286,6 +304,9 @@ public class ClientRequestHandler {
 			
 			w.println("{ }");
 			w.flush();
+			
+			connection.getInputStream();
+			System.out.println(connection.getResponseCode());
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -304,6 +325,8 @@ public class ClientRequestHandler {
 			
 			w.println("{ \"count\": " + count + " }");
 			w.flush();
+			
+			connection.getInputStream();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -323,10 +346,9 @@ public class ClientRequestHandler {
 			w.println("{ \"rate\": " + rate + " }");
 			w.flush();
 			
-			BufferedReader r = new BufferedReader(new InputStreamReader(
-					connection.getInputStream()));
-			System.out.println(r.readLine());
-			System.out.println(connection.getResponseCode());
+			connection.getInputStream();
+			//System.out.println(r.readLine());
+			//System.out.println(connection.getResponseCode());
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

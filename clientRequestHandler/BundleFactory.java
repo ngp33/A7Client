@@ -53,6 +53,13 @@ public class BundleFactory {
 		public Inhabitant [] state;
 	}
 	
+	public static class WorldDefinition {
+		String description;
+		public WorldDefinition(String desc) {
+			description = desc;
+		}
+	}
+	
 	/**A general class for the inhabitants. It has all the fields
 	 * that any inhabitant would need, so all inhabitants can be
 	 * unpacked using this class. Used so far in create_entity among other things*/
@@ -111,6 +118,11 @@ public class BundleFactory {
 	public static class Placement {
 		int row;
 		int col;
+		
+		public Placement(int r, int c) {
+			row = r;
+			col = c;
+		}
 	}
 	
 	public static class SpeciesAndIDs {

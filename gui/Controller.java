@@ -1,6 +1,9 @@
 package gui;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.util.Optional;
 import java.util.Random;
@@ -8,6 +11,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import clientRequestHandler.BundleFactory;
+import clientRequestHandler.BundleFactory.Placement;
 import clientRequestHandler.ClientRequestHandler;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
@@ -175,8 +179,8 @@ public class Controller {
 		scene.setOnKeyPressed(new KeyPressHandler());
 		
 		String permLevel = loginDialog();
+		newWorld.setDisable(true);
 		if (permLevel != "admin") {
-			newWorld.setDisable(true);
 			loadWorld.setDisable(true);
 			if (permLevel == "read") {
 				loadCritter.setDisable(true);
@@ -247,10 +251,12 @@ public class Controller {
 				
 				try {
 					Critter c = WorldCritterLoader.createCritter(critterFileToLoad.getPath(), model);
-					model.replace(c, h);
+					/*model.replace(c, h);
 					model.addCritter(c);
 					worldUpdater.update(null, null);
-					updateBottomLabels();
+					updateBottomLabels();*/
+					
+					requestHandler.makeCritter(c, new Placement[] {new Placement(row, col)}, sessionId);
 				} catch (NumberFormatException | IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -368,7 +374,7 @@ public class Controller {
 			updateBottomButtons();
 			synchronized(model) {
 				model.setTime(updatedWorld.current_timestep);
-				System.out.println(updatedWorld.current_timestep);
+				//System.out.println(updatedWorld.current_timestep);
 				model.name = updatedWorld.name;
 				model.killCritters(updatedWorld.dead_critters);
 				model.updateHexes(updatedWorld.state);
@@ -397,7 +403,8 @@ public class Controller {
 
 		@Override
 		public void handle(ActionEvent arg0) {
-			requestHandler.worldStep(sessionId);
+			//requestHandler.worldStep(sessionId);
+			requestHandler.worldStep(1, sessionId);
 		}
 		
 	}
@@ -406,21 +413,7 @@ public class Controller {
 
 		@Override
 		public void handle(ActionEvent event) {
-			model = new World();
-	    	
-	    	int rows = model.getNumRows();
-	    	int cols = model.getNumColumns();
-	    	
-	    	Random rand = new Random();
-	    	
-	    	for (int i = 0; i < cols; i++) {
-	    		for (int j = 0; j < rows; j++) {
-	    			model.setHex(j, i, rand.nextFloat() < .15 ? new Rock() : new Food(0)); //15% chance of Rock
-	    		}
-	    	}
-	    	
-	    	worldUpdater = new WorldObject((ScrollPane) view.getScene().lookup("#arena"), model, Controller.this);
-	    	updateBottomLabels();
+			//requestHandler.makeNewWorld(worldFileReader, sessionId);
 		}
 		
 	}
@@ -438,9 +431,13 @@ public class Controller {
 				return;
 			}
 			
-			model = WorldCritterLoader.loadWorld(selectedFile.getPath());
-	    	worldUpdater = new WorldObject((ScrollPane) view.getScene().lookup("#arena"), model, Controller.this);
-	    	updateBottomLabels();
+			try {
+				FileReader r = new FileReader(selectedFile);
+				requestHandler.makeNewWorld(new BufferedReader(r), sessionId);
+			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			
 		}
 		
@@ -495,9 +492,19 @@ public class Controller {
 				String numInputStr = numInput.get();
 				int numCritters = Integer.parseInt(numInputStr);
 				
-				WorldCritterLoader.loadCrittersOntoWorld(selectedFile.getPath(), numCritters, model);
+				/*WorldCritterLoader.loadCrittersOntoWorld(selectedFile.getPath(), numCritters, model);
 				worldUpdater.update(null, null);
-				updateBottomLabels();
+				updateBottomLabels();*/
+				
+				try {
+					Critter modelCritter = WorldCritterLoader.createCritter(selectedFile.getPath(), model);
+					requestHandler.makeCritter(modelCritter, numCritters, sessionId);
+				} catch (NumberFormatException | IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				
+				
 				
 				return;
 			case 'P':
