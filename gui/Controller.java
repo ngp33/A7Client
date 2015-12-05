@@ -70,6 +70,11 @@ public class Controller {
 	int sessionId;
 	int version;
 	ClientRequestHandler requestHandler;
+	boolean continuous;
+	
+	Button stepButton;
+	ImageView playPauseGraphic;
+
 	
 	
 	public Controller(Stage v, World m) {
@@ -163,6 +168,9 @@ public class Controller {
 		
 		sourceButton.setOnAction(new SourceButtonHandler());
 		
+		stepButton = (Button) view.getScene().lookup("#step");
+		playPauseGraphic = (ImageView) ((Button) view.getScene().lookup("#play")).getGraphic();
+		
 		
 		scene.setOnKeyPressed(new KeyPressHandler());
 		
@@ -177,10 +185,10 @@ public class Controller {
 			}
 		}
 		
-		System.out.println("Logged into " + permLevel);
+		System.out.println("Logged into " + permLevel + " with ID " + sessionId);
 		
 		timer = new Timer(true);
-		timer.schedule(new TimerStepHandler(), 0l, 100l/3l);
+		timer.schedule(new TimerStepHandler(), 0l, 30l);
 	}
 	
 	/**Brings up login dialog. Sets sessionId.
@@ -315,35 +323,38 @@ public class Controller {
             }
       	});
 	}
+	
+	private void updateBottomButtons() {
+		Platform.runLater(new Runnable() {
+            public void run() {
+		
+		if (continuous) {
+			stepButton.setDisable(true);
+			playPauseGraphic.setImage(new Image("gui/Images/Pause-01.png"));
+		} else {
+			stepButton.setDisable(false);
+			playPauseGraphic.setImage(new Image("gui/Images/Play-01.png"));
+		}
+		
+            }
+      	});
+	}
 
 	class PlayPauseHandler implements EventHandler<ActionEvent> {
 		
-		boolean playing = false;
-		Button step = (Button) view.getScene().lookup("#step");
-		ImageView playPauseGraphic = (ImageView) ((Button) view.getScene().lookup("#play")).getGraphic();
+		//Button step = (Button) view.getScene().lookup("#step");
+		//ImageView playPauseGraphic = (ImageView) ((Button) view.getScene().lookup("#play")).getGraphic();
 
 		@Override
 		public void handle(ActionEvent arg0) {
-			if (playing) {
-				playing = false;
-				
-				step.setDisable(false);
-				playPauseGraphic.setImage(new Image("gui/Images/Play-01.png"));
-				
-				timer.cancel();
+			if (continuous) {				
+				requestHandler.runContinuously(0l, sessionId);
 			} else {
-				playing = true;
-				
-				step.setDisable(true);
-				playPauseGraphic.setImage(new Image("gui/Images/Pause-01.png"));
-				
 				TextField speedInput = (TextField) view.getScene().lookup("#speed");
 				String speedStr = speedInput.getText();
-				double freq = Double.parseDouble(speedStr);
-				long period = (long) (1000d/freq + .5d); //Round
+				float freq = Float.parseFloat(speedStr);
 				
-				timer = new Timer(true);
-				timer.schedule(new TimerStepHandler(), 0l, period);
+				requestHandler.runContinuously(freq, sessionId);
 			}
 		}
 		
@@ -353,11 +364,15 @@ public class Controller {
 		BundleFactory.WorldBundle updatedWorld = requestHandler.getWorldState(version, sessionId);
 		synchronized (Controller.this) {
 			version = updatedWorld.current_version_number;
+			continuous = updatedWorld.rate != 0;
+			updateBottomButtons();
 			synchronized(model) {
 				model.setTime(updatedWorld.current_timestep);
+				System.out.println(updatedWorld.current_timestep);
 				model.name = updatedWorld.name;
 				model.killCritters(updatedWorld.dead_critters);
 				model.updateHexes(updatedWorld.state);
+				worldUpdater.update(model, null);
 				updateInspector();
 				updateBottomLabels();
 			}
@@ -382,11 +397,7 @@ public class Controller {
 
 		@Override
 		public void handle(ActionEvent arg0) {
-			/*synchronized(model) {
-				model.advance();
-				updateInspector();
-				updateBottomLabels();
-			}*/
+			requestHandler.worldStep(sessionId);
 		}
 		
 	}

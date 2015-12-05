@@ -313,7 +313,7 @@ public class ClientRequestHandler {
 		URL url;
 		HttpURLConnection connection;
 		try {
-			url = new URL(serverURL + "step?session_id=" + sessionId);
+			url = new URL(serverURL + "run?session_id=" + sessionId);
 			connection = (HttpURLConnection) url.openConnection();
 			connection.setDoOutput(true); // send a POST message
 			connection.setRequestMethod("POST");
@@ -322,6 +322,11 @@ public class ClientRequestHandler {
 			
 			w.println("{ \"rate\": " + rate + " }");
 			w.flush();
+			
+			BufferedReader r = new BufferedReader(new InputStreamReader(
+					connection.getInputStream()));
+			System.out.println(r.readLine());
+			System.out.println(connection.getResponseCode());
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

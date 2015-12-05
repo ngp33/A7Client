@@ -44,7 +44,7 @@ public class BundleFactory {
 		public int current_timestep;
 		public int current_version_number;
 		//int update_since not really sure what to do about this.
-		float rate;
+		public float rate;
 		public String name;
 		int population;
 		int rows;

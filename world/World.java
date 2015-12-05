@@ -374,6 +374,7 @@ public class World extends Observable {
 	
 	public void updateHexes(Inhabitant[] state) {
 		for (Inhabitant update : state) {
+			System.out.println(update.type + " AT " + update.row + ", " + update.col);
 			Hex updatedHex = null;
 			if (update.type.equals("rock")) {
 				updatedHex = new Rock();
